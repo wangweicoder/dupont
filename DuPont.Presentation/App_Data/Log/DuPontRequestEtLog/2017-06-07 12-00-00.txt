@@ -1,0 +1,21 @@
+FarmerRequirement/SaveRequirement
+---------06/07/2017 12:59:42,187---------
+大农户的订单
+Acreage:30
+Address:116.41369487374,39.92232913727
+Brief:6月5号
+Chunk:1
+CreateTime:2017/6/7 4:59:28
+CropId:100302
+DemandTypeId:100103
+EndDate:2017-06-03
+Expect_price:0
+Machine_sum:1
+Name:王伟😁
+OrderId:644
+PhoneNum:13161203896
+SourceType:1
+StartDate:2017-06-02
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+UserId:58
+Encrypt:b16c97fafab398bce205b3d5c38aac2c17f2c0c061943b6ff48a194aded697b5

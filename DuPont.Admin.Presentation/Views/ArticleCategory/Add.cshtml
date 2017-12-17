@@ -1,0 +1,84 @@
+﻿@model DuPont.Models.Models.SingleModel<DuPont.Models.Dtos.Background.LearningWorld.ArticleCategory>
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@using DuPont.Extensions
+@using DuPont.Models.Enum
+
+@section HTML_Header{
+    <style>
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary:hover {
+                color: #fff;
+                background-color: #48A13C;
+                border-color: #48A13C;
+            }
+    </style>
+}
+
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 学习园地</li>
+    <li><i class="fa fa-dashboard"></i> 文章类别管理</li>
+    <li class="active">文章类别@(Model.ActionType.GetDescription())</li>
+}
+
+<div class="container-fluid">
+    @if (Model.IsSuccess || Model.ActionType == ActionType.Add)
+    {
+        using (Html.BeginForm(Model.ActionType.ToString(), "ArticleCategory", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <div class="row">
+                <div class="col-xs-6">
+                    <fieldset>
+                        <div id="legend" class="">
+                            <input type="hidden" name="form_name" value="" class="form-control" leipiplugins="form_name">
+                            <legend class="leipiplugins-orgvalue">文章类别@(Model.ActionType.GetDescription())</legend>
+                        </div>
+                        @if (Model.ActionType == ActionType.Edit)
+                        {
+                            <div class="form-group hidden">
+                                <!-- Text -->
+                                <label class="control-label leipiplugins-orgname">分类编号</label>
+                                <div class="controls">
+                                    <input type="hidden" name="CatId" value="@Model.Data.CatId" class="form-control" />
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <!-- Text -->
+                            <label class="control-label col-xs-3">分类名称</label>
+                            <div class="col-xs-6">
+                                @if (Model.ActionType == ActionType.Add)
+                                {
+                                    <input name="CatName" type="text" placeholder="例如：农艺资讯" title="分类名称" class="form-control" leipiplugins="text">
+                                }
+                                else if (Model.ActionType == ActionType.Edit)
+                                {
+                                    <input name="CatName" type="text" placeholder="例如：农艺资讯" title="分类名称" value="@Model.Data.CatName" class="form-control" leipiplugins="text">
+                                }
+                            </div>
+                            <div class="col-xs-3">
+                                <button type="submit" class="btn btn-block btn-primary ">@Model.ActionType.GetDescription()分类</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="bg-danger">未找到匹配的数据!</p>
+    }
+
+</div>
+@section HTML_Footer{
+
+}

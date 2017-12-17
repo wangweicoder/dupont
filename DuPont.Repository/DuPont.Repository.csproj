@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{99EDC827-2093-4CCC-A15F-7626313740F4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DuPont.Repository</RootNamespace>
+    <AssemblyName>DuPont.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LinqKit">
+      <HintPath>..\Library\LinqKit.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminUserRepository.cs" />
+    <Compile Include="APP_VersionRepository.cs" />
+    <Compile Include="AreaRepository.cs" />
+    <Compile Include="ArticleCategoryRepository.cs" />
+    <Compile Include="ArticleRepository.cs" />
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="BusinessDemand_ResponseRepository.cs" />
+    <Compile Include="BusinessRepository.cs" />
+    <Compile Include="BusinessVerificationRepository.cs" />
+    <Compile Include="CarouselRepository.cs" />
+    <Compile Include="CommonRepository.cs" />
+    <Compile Include="ExpertPermissionRepository.cs" />
+    <Compile Include="ExpertQuestionReplyRepository.cs" />
+    <Compile Include="ExpertQuestionRepository.cs" />
+    <Compile Include="FarmAreaRepository.cs" />
+    <Compile Include="FarmBookingRepository.cs" />
+    <Compile Include="FarmerDemandResponseRepository.cs" />
+    <Compile Include="FarmerVerficationInfoRepository.cs" />
+    <Compile Include="FarmRepository.cs" />
+    <Compile Include="FileInfoRepository.cs" />
+    <Compile Include="LearningGardenCarouselRepository.cs" />
+    <Compile Include="LogRepository.cs" />
+    <Compile Include="LogsRepository.cs" />
+    <Compile Include="MachineDemandTypeRLRepository.cs" />
+    <Compile Include="NotificationRepository.cs" />
+    <Compile Include="OperatorInfoVerificationRepository.cs" />
+    <Compile Include="OperatorRepository.cs" />
+    <Compile Include="PermissionRepository.cs" />
+    <Compile Include="PersonalNotificationRepository.cs" />
+    <Compile Include="PublicNotificationRepository.cs" />
+    <Compile Include="Published_DemandRepository.cs" />
+    <Compile Include="MenuRepository.cs" />
+    <Compile Include="Menu_RoleRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FarmerRequirementRepository.cs" />
+    <Compile Include="QQUserRepository.cs" />
+    <Compile Include="RoleVerificationRepository.cs" />
+    <Compile Include="RongLianYunSmsRepository.cs" />
+    <Compile Include="SendNotificationResultRepository.cs" />
+    <Compile Include="SmsMessageRepository.cs" />
+    <Compile Include="SqlStrings.cs" />
+    <Compile Include="Suppliers_SareaRepository.cs" />
+    <Compile Include="SysLogRepository.cs" />
+    <Compile Include="SysSettingRepository.cs" />
+    <Compile Include="Sys_DictionaryRepository.cs" />
+    <Compile Include="UserRepository.cs" />
+    <Compile Include="UserRoleDemandTypeLevelRLRepository.cs" />
+    <Compile Include="User_Password_HistoryRepository.cs" />
+    <Compile Include="User_TokenRepository.cs" />
+    <Compile Include="User_RoleRepository.cs" />
+    <Compile Include="VisitNotificationRepository.cs" />
+    <Compile Include="WeChatUserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DuPont.Extensions\DuPont.Extensions.csproj">
+      <Project>{1ea44f16-a4a4-4888-9c38-dc12dbadaf1e}</Project>
+      <Name>DuPont.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DuPont.Global\DuPont.Global.csproj">
+      <Project>{98d6ebf1-2c3a-4224-b32f-bde92778eb46}</Project>
+      <Name>DuPont.Global</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DuPont.Interface\DuPont.Interface.csproj">
+      <Project>{12893a21-45d8-451a-a104-65da8e1ae93c}</Project>
+      <Name>DuPont.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DuPont.Models\DuPont.Models.csproj">
+      <Project>{b468a183-87cb-4cae-b03d-e9c1132c340a}</Project>
+      <Name>DuPont.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DuPont.Utility\DuPont.Utility.csproj">
+      <Project>{8797a53a-109a-4e50-aed5-eeaa4139dd12}</Project>
+      <Name>DuPont.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

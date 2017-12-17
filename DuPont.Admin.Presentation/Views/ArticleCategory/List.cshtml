@@ -1,0 +1,82 @@
+﻿@model DuPont.Models.Models.MultiModel<List<DuPont.Models.Dtos.Background.LearningWorld.ArticleCategory>>
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+
+@section HTML_Header{
+    <style>
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary:hover {
+                color: #fff;
+                background-color: #48A13C;
+                border-color: #48A13C;
+            }
+    </style>
+
+}
+
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 学习园地</li>
+    <li><i class="fa fa-dashboard"></i> 文章类别管理</li>
+    <li class="active">文章类别列表</li>
+}
+
+<div class="container-fluid">
+    <div class="col-xs-10">
+        <a href="/ArticleCategory/Add" class="btn btn-primary"><span class="glyphicon glyphicon-plus"> </span>添加分类</a>
+        <table class="table table-bordered table-hover text-center" style="margin-top:15px">
+            <thead style="background-color: #48A13C; height: 36px;color: #FFFFFF; font-size: 13px; ">
+                <tr>
+                    <td>编号</td>
+                    <td>分类名称</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.IsSuccess || Model.Data == null || Model.RecordCount == 0)
+                {
+                    <tr>
+                        <td colspan="2" align="center">没有匹配的结果!</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var category in Model.Data)
+                    {
+                        <tr>
+                            <td>@category.CatId</td>
+                            <td>@category.CatName</td>
+                            <td>@Html.ActionLink("修改", "Edit", new { CatId = category.CatId }) &nbsp;|&nbsp; <a href="javascript:;" onclick="Delete(@category.CatId)">删除</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section HTML_Footer{
+    <script src="~/Content/Styles/plugins/layer/layer.js"></script>
+
+    <script>
+
+        function Delete(id) {
+            if (id === 1) {
+                top.window.Warn('默认分类不可删除!');
+                return false;
+            }
+
+            layer.confirm('确认要删除?', { icon: 3, title: '提示' }, function() {
+                location.href = '/ArticleCategory/Delete?CatId=' + id;
+            });
+        }
+    </script>
+}
+

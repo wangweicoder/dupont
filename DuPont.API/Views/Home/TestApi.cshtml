@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewBag.Title = "Test API";
+}
+
+<style>
+    .testform {
+        background-color: #909090;
+        margin: 10px;
+        border: 1px solid #2E363F;
+        -moz-border-radius: 5px; /* Gecko browsers */
+        -webkit-border-radius: 5px; /* Webkit browsers */
+        border-radius: 5px;
+        -moz-box-shadow: 1px 5px 8px #999;
+        -webkit-box-shadow: 1px 5px 8px #999;
+        box-shadow: 1px 5px 8px #999;
+        padding: 5px;
+    }
+
+        .testform .category {
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .testform .name {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+    .name a {
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+    .testform .form {
+        /*display: none;*/
+    }
+
+    .result {
+        background-color: #F3F3F3;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+
+    .json {
+        overflow: auto;
+        word-break:break-all;
+        word-wrap:break-word;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .separated {
+        padding: 5px 10px;
+        font-weight: bold;
+        color: green;
+        font-size: 20px;
+    }
+
+    .title {
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+        font-size: 30px;
+        font-weight: bold;
+    }
+</style>
+<script type="text/javascript">
+    function query_api(apiform, post_or_get, api_url) {
+        $.ajax({
+            cache: false,
+            type: post_or_get,
+            url: api_url,
+            data: $('#' + apiform).serialize(),// 你的formid
+            async: false,
+            error: function (request) {
+                console.log(request.responseText);
+                console.log("form info=", $("#" + apiform).serialize());
+                alert("Connection error");
+            },
+            success: function (data) {
+                $("#testform_" + apiform + " .result .json").html(JSON.stringify(data));
+                $("#testform_" + apiform + " .result").removeClass("hidden");
+            }
+        });
+    }
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="separated">登录注册</div>
+        <div class="testform" id="testform_account_register">
+            <div class="category">api path</div>
+            <div class="name">account/register  <a href="javascript:query_api('account_register','POST','/account/register')" id="query_account_register">[Qeury]</a></div>
+            <div class="form">
+                <form id="account_register">
+                    <input type="text" name="PhoneNumber" id="phone_number" value="13312345678" />
+                    <input type="text" name="Password" value="123456" id="Password" />
+                    <input type="text" name="ValidateCode" value="1234" id="ValidateCode" />
+                </form>
+            </div>
+            <div class="result hidden">
+                <div class="json"></div>
+                <div class="is_success"></div>
+            </div>
+        </div>
+
+        <div class="testform" id="testform_account_login">
+            <div class="category">api path</div>
+            <div class="name">account/login  <a href="javascript:query_api('account_login','POST','/account/login')" id="query_account_login">[Qeury]</a></div>
+            <div class="form">
+                <form id="account_login">
+                    <input type="text" name="PhoneNumber"  value="13312345678" />
+                    <input type="text" name="Password" value="123456"  />
+                </form>
+            </div>
+            <div class="result hidden">
+                <div class="json"></div>
+                <div class="is_success"></div>
+            </div>
+        </div>
+
+        <div class="testform" id="testform_account_logout">
+            <div class="category">api path</div>
+            <div class="name">account/logout  <a href="javascript:query_api('account_logout','POST','/account/logout')" id="query_account_logout">[Qeury]</a></div>
+            <div class="form">
+                <form id="account_logout">
+                    <input type="text" name="Token" value="13312345678" />
+                </form>
+            </div>
+            <div class="result hidden">
+                <div class="json"></div>
+                <div class="is_success"></div>
+            </div>
+        </div>
+
+        <div class="separated">Common</div>
+        <div class="testform" id="testform_Common_GetDictionaryItems">
+            <div class="category">api path</div>
+            <div class="name">Common/GetDictionaryItems  <a href="javascript:query_api('account_logout','POST','/Common/GetDictionaryItems')" id="query_Common_GetDictionaryItems">[Qeury]</a></div>
+            <div class="form">
+                <form id="account_logout">
+                    <input type="text" name="Code" value="0" />
+                </form>
+            </div>
+            <div class="result hidden">
+                <div class="json"></div>
+                <div class="is_success"></div>
+            </div>
+        </div>
+
+
+        <div class="separated">大农户角色认证</div>
+        <div class="testform" id="testform_FarmerRequirement_SaveRequirement">
+            <div class="category">api path</div>
+            <div class="name">account/logout  <a href="javascript:query_api('account_logout','POST','/FarmerRequirement/SaveRequirement')" id="query_account_SaveRequirement">[Qeury]</a></div>
+            <div class="form">
+                <form id="account_logout">
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="userId" value="5" />
+                    <input type="text" name="type" value="2" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                </form>
+            </div>
+            <div class="result hidden">
+                <div class="json"></div>
+                <div class="is_success"></div>
+            </div>
+        </div>
+        <div class="separated">农机手角色认证</div>
+        <div class="testform" id="testform_FarmerRequirement_SaveRequirement">
+            <div class="category">api path</div>
+            <div class="name">account/logout  <a href="javascript:query_api('account_logout','POST','/FarmerRequirement/SaveRequirement')" id="query_account_SaveRequirement">[Qeury]</a></div>
+            <div class="form">
+                <form id="account_logout">
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="userId" value="5" />
+                    <input type="text" name="type" value="2" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                </form>
+            </div>
+            <div class="result hidden">
+                <div class="json"></div>
+                <div class="is_success"></div>
+            </div>
+        </div>
+        <div class="separated">产业商角色认证</div>
+        <div class="testform" id="testform_FarmerRequirement_SaveRequirement">
+            <div class="category">api path</div>
+            <div class="name">account/logout  <a href="javascript:query_api('account_logout','POST','/FarmerRequirement/SaveRequirement')" id="query_account_SaveRequirement">[Qeury]</a></div>
+            <div class="form">
+                <form id="account_logout">
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="userId" value="5" />
+                    <input type="text" name="type" value="2" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                    <input type="text" name="id" value="0" />
+                </form>
+            </div>
+            <div class="result hidden">
+                <div class="json"></div>
+                <div class="is_success"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

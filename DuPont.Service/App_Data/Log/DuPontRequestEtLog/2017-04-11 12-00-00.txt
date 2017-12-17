@@ -1,0 +1,20 @@
+FarmerRequirement/CommentRequirementForOperator
+---------04/11/2017 11:52:47,528---------
+先锋帮大农户评价靠谱作业的农机手
+CommentString:评价靠谱作业农机手
+FarmerUserId:
+Id:165
+OperatorUserId:
+Score:5
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:c9a76091aa870a799d8ff6d44d7ca610afd0a3e3d4eea9ff4faef6140e9c10ca
+FarmerRequirement/CommentRequirementForOperator
+---------04/11/2017 12:20:35,423---------
+先锋帮大农户评价靠谱作业的农机手
+CommentString:评价靠谱作业农机手
+FarmerUserId:
+Id:165
+OperatorUserId:
+Score:5
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:c9a76091aa870a799d8ff6d44d7ca610afd0a3e3d4eea9ff4faef6140e9c10ca

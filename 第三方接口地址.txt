@@ -1,0 +1,28 @@
+ <!--ww-->
+    <!--天气预报接口地址-->
+    <add key="WeatherUrl" value="http://wthrcdn.etouch.cn/weather_mini"/>
+    <!--百度地图开放平台AK-->
+    <add key="baiduAK" value="OeVOCTiZuhgC3RyRlnmnXGMGGGxr65rS"/>
+    <!--百度地图开放平台根据经纬度查询城市名称地址-->
+    <add key="BaiduGeocoderUrl" value="http://api.map.baidu.com/geocoder/v2/"/>
+    <!--E田接口地址-->
+    <add key="EtApiUrl" value="http://front.etian365.com"/>
+    <!--E田加密key-->
+    <add key="ETencryptKey" value="(@jerei)#!5" />
+    <!--E田获得Token的用户名-->
+    <add key="EtUserName" value="DupontServerUser"/>
+    <!--E田获得Token的密码-->
+    <add key="EtPassword" value="123456"/>
+    <!--调用E田接口有特殊字符的字段-->
+    <add key="specialstr" value="Brief,Name,NickName,CommentString" />
+    <!--E田登录 Token有效时间 单位：分钟-->
+    <add key="ValidLoginToken" value="500"/>
+    <!--订单超期时间 单位：天-->
+    <add key="ExtendedTime" value="30" />
+    <!--心知天气url-->
+    <add key="WeatherUrlNew" value="https://api.thinkpage.cn/v3"/>
+    <!--心知 实时天气key-->
+    <add key="WeatherUrlKey1" value="rh6xi7k6gatp0e5i"/>
+    <!--心知 5天天气key-->
+    <add key="WeatherUrlKey" value="lw6omzu3fdeno31y"/>
+    <!--ww-->

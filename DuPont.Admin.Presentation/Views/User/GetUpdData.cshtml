@@ -1,0 +1,639 @@
+﻿@model DuPont.Models.Models.UserInfoModel
+
+@{
+    ViewBag.Title = "GetUpdData";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@section HTML_Header
+{
+    <link href="/Content/Styles/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="/Content/Styles/plugins/zoom/css/zoom.css" rel="stylesheet" />
+    <style>
+        .pt8 {
+            padding-top: 8px;
+        }
+
+        .h1 {
+            height: 1px;
+        }
+
+        .bg-gray {
+            background-color: gray;
+        }
+
+
+        .mr10 {
+            margin-right: 10px;
+        }
+
+        .mr20 {
+            margin-right: 20px;
+        }
+
+        .border-dashed {
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .fmyahei {
+            font-family: 'Microsoft YaHei';
+        }
+
+        .pt0 {
+            padding-top: 0px;
+        }
+
+        .mt0 {
+            margin-top: 0px !important;
+        }
+
+        .mb0 {
+            margin-bottom: 0px;
+        }
+
+        .p0 {
+            padding: 0px !important;
+        }
+
+        .p-l0 {
+            padding-left: 0px;
+        }
+
+        .p-r0 {
+            padding-right: 0px;
+        }
+
+        .wauto {
+            width: auto;
+        }
+
+        .mb20 {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #00A65A;
+            border-color: #00A65A;
+        }
+
+        .gallery-container {
+            width: 505px;
+            margin: 0 auto;
+            height: auto;
+        }
+
+        .gallery {
+            list-style-type: none;
+            float: left;
+            background: #ffffff;
+            padding: 20px 20px 10px 20px;
+            margin: 0;
+            -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+            .gallery li {
+                float: left;
+                padding: 0 10px 10px 0;
+            }
+
+                .gallery li:nth-child(6n) {
+                    padding-right: 0;
+                }
+
+                .gallery li a, .gallery li img {
+                    float: left;
+                }
+
+        #zoom {
+            top: 5%;
+            left: 10%;
+            height: 60%;
+            width: 80%;
+        }
+
+            #zoom .content {
+            }
+
+                #zoom .content img {
+                    display: block;
+                    height: 400px;
+                }
+
+        .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+            color: #fff;
+            background-color: #28902D;
+            border-color: #28902D;
+        }
+
+        .tip {
+            margin-left: 45px;
+        }
+    </style>
+}
+@section Breadcrumb
+{
+    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+    <li class="active">个人信息维护</li>
+}
+<h3 class="h3 col-xs-offset-2 fmyahei">个人信息维护</h3>
+<div class="h1 border-dashed" style="background-color:green; width:938px;margin-left:55px"></div>
+@using (Html.BeginForm("UpdUserInfo", "User"))
+{
+    <div class="container" style="width:1048px;height:948px">
+        <div class="row">
+            <label class="control-label col-md-2">姓名</label>
+            <div class="col-md-2" style="margin-left: -100px; margin-top: -5px">
+                <input type="text" value="@Model.UserName" id="UserName" name="UserName" class="form-control" />
+            </div>
+            <label class="control-label col-md-2" style="margin-left:15px">手机号</label>
+            <div class="col-md-2" style="margin-left: -85px; margin-top: -5px">
+                <input type="text" value="@Model.PhoneNumber" id="PhoneNumber" readonly="readonly" disabled="disabled" class="form-control" />
+            </div>
+            <label class="control-label col-md-2">先锋币</label>
+            <div class="col-md-2 ">
+                <input type="text" value="@Model.DPoint" id="DPoint" name="DPoint" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+            <label class="control-label col-md-2">地址</label>
+            <div class="col-md-3" style="margin-left:-100px">
+                <select id="selProvince" name="Province" style="width :150px">
+                    <option value="0">--请选择省份--</option>
+                </select>
+            </div>
+            <label class="control-label col-md-2" style="margin-left: -85px; margin-top: 3px">省</label>
+            <div class="col-md-3" style="margin-left:-100px">
+                <select id="selCity" name="City" style="width :150px">
+                    <option value="0">--请选择城市--</option>
+                </select>
+            </div>
+            <label class="control-label col-md-2" style="margin-left: -85px; margin-top: 3px">市</label>
+
+            <div class="col-md-3" style="margin-left:-100px">
+                <select id="selRegion" name="Region" style="width :150px">
+                    <option value="0">--请选择区/县--</option>
+                </select>
+            </div>
+            <label class="control-label col-md-2" style="margin-left: -85px; margin-top: 3px">区/县</label>
+            <div class="col-md-3" style="margin-left:62px; margin-top:10px">
+                <select id="selTownship" name="Township" style="width :185px">
+
+                    <option value="0">--请选择乡镇--</option>
+                </select>
+            </div>
+            <label class="control-label col-md-2" style="margin-left: -53px; margin-top: 13px">乡镇</label>
+            <div class="col-md-5" style=" margin-left: -50px; margin-top: 10px">
+                <select id="selVillage" name="Village" style="width :187px">
+                    <option value="0">--请选择村--</option>
+                </select>
+            </div>
+            <label class="control-label col-md-2" style="margin-left: -213px; margin-top: 13px">村</label>
+        </div>
+        <div class="h1 border-dashed" style="background-color:green"></div>
+        <h4>角色：</h4>
+        @{int renumber = 0;}
+        @for (var roleindex = 0; roleindex < Model.SkillInfo.Count; roleindex++)
+        {
+
+            <div class="row">
+                @*大农户角色特殊处理*@
+                @if (Model.SkillInfo[roleindex].RoleId == 3)
+                {
+                    <div class="col-md-5 checkbox col-md-offset-2 skill">
+                        <label class="col-md-3" style="margin-left:-162px">
+                            <input type="checkbox" id="check_farmer" name="demandLevelInfoList[0].Key"
+                                   disabled="disabled" />
+                            @Model.SkillInfo[roleindex].RoleName
+                            <input type="hidden" name="demandLevelInfoList[0].Key" value="0" />
+                        </label>
+                        <label class="col-md-6" style="margin-left:91px; margin-top:-1px">
+                            级别:
+                            <select name="demandLevelInfoList[0].Value" id="selectFarmer">
+                                <option value="0">请选择</option>
+                                <option value="1">一星</option>
+                                <option value="2">二星</option>
+                                <option value="3">三星</option>
+                                <option value="4">四星</option>
+                                <option value="5">五星</option>
+                            </select>
+                        </label>                       
+                    </div>
+                <div class="col-md-5 checkbox col-md-offset-2">
+                    @*ww*@
+                    @if (Model.RoleList[0].RoleId == 3)
+                    {
+                        string checke = "";
+                        if (Model.LandAuditState == 1)
+                        {
+                            checke = "checked";
+                        }
+
+                        <label class="col-md-3" style="margin-left: -166px; margin-top: 30px;">
+                            <input type="checkbox" id="check_Land" @checke
+                                   disabled="disabled" />
+                            亩数:
+                        </label>
+                        <label class="col-md-6" style="margin-left:91px; margin-top:18px">
+                            <input type="text" value="@Model.Land" id="Land" name="Land" class="form-control" />
+                        </label>
+                        <input type="button" class="btn btn-primary" style="margin-top: 18px;" value="审核通过" id="btnPassLand" />
+                    }
+                </div>
+
+                }
+                else
+                {
+                    <div class="col-md-5 checkbox" style="margin-top:8px; width:100px">
+                        <label>
+                            <input type="checkbox" id="check_@Model.SkillInfo[roleindex].RoleId"
+                                   disabled="disabled" />
+                            @Model.SkillInfo[roleindex].RoleName
+                        </label>
+                    </div>
+                    for (var skillindex = 0; skillindex < Model.SkillInfo[roleindex].Skill.Count; skillindex++)
+                    {
+                        renumber = renumber + 1;
+                        if (Model.SkillInfo[roleindex].Skill[skillindex].Code == 100101 || Model.SkillInfo[roleindex].Skill[skillindex].Code == 100201)
+                        {
+                            <div class="col-md-5 checkbox col-md-offset-2 skill" style="margin-top:8px;margin-left:61px">
+                                <label class="col-md-3">
+                                    <input class="check_@Model.SkillInfo[roleindex].RoleId" type="checkbox" disabled="disabled" id="check_@Model.SkillInfo[roleindex].Skill[skillindex].Code" />@Model.SkillInfo[roleindex].Skill[skillindex].DisplayName
+                                    <input type="hidden" name="demandLevelInfoList[@renumber].Key" value="@Model.SkillInfo[roleindex].Skill[skillindex].Code" />
+                                </label>
+                                <label class="col-md-6" style="margin-top:-2px">
+                                    级别:
+                                    <select class="select_@Model.SkillInfo[roleindex].RoleId" name="demandLevelInfoList[@renumber].Value" id="select_@Model.SkillInfo[roleindex].Skill[skillindex].Code">
+                                        <option value='0'>请选择</option>
+                                        <option value='1'>一星</option>
+                                        <option value='2'>二星</option>
+                                        <option value='3'>三星</option>
+                                        <option value='4'>四星</option>
+                                        <option value='5'>五星</option>
+                                    </select>
+                                </label>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-5 checkbox col-md-offset-2 skill" style="margin-top:8px">
+                                <label class="col-md-3">
+                                    <input class="check_@Model.SkillInfo[roleindex].RoleId" type="checkbox" disabled="disabled" id="check_@Model.SkillInfo[roleindex].Skill[skillindex].Code" />@Model.SkillInfo[roleindex].Skill[skillindex].DisplayName
+                                    <input type="hidden" name="demandLevelInfoList[@renumber].Key" value="@Model.SkillInfo[roleindex].Skill[skillindex].Code" />
+                                </label>
+                                <label class="col-md-6">
+                                    级别:
+                                    <select class="select_@Model.SkillInfo[roleindex].RoleId" name="demandLevelInfoList[@renumber].Value" id="select_@Model.SkillInfo[roleindex].Skill[skillindex].Code">
+                                        <option value='0'>请选择</option>
+                                        <option value='1'>一星</option>
+                                        <option value='2'>二星</option>
+                                        <option value='3'>三星</option>
+                                        <option value='4'>四星</option>
+                                        <option value='5'>五星</option>
+                                    </select>
+                                </label>
+                            </div>
+                        }
+
+                    }
+                    if (Model.SkillInfo[roleindex].RoleId == 4)
+                    {
+                        <div class="well col-md-5 col-md-offset-2 checkbox skill">
+                            @if (Model.MachineList.Count > 0)
+                            {
+                                <h5>农机信息：</h5>
+                                <div>
+                                    @foreach (var machine in Model.MachineList)
+                                    {
+                                        <p>@machine.Name<span>----------</span>@(machine.Quantity)亩/小时</p>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class="h1 border-dashed" style="margin-top: -5px; width: 940px; margin-left: 17px"></div>
+                }
+            </div>
+
+        }
+
+
+
+        <div class="form-group" style="margin-left:125px">
+            <input type="hidden" id="userId" name="Id" value="@Model.Id" />
+            <button type="submit" class="btn btn-primary col-xs-2 col-md-offset-1" name="btn_submit">提交</button>
+        </div>
+    </div>
+}
+@section HTML_Footer{
+
+    @for (var rolelistindex = 0; rolelistindex < Model.RoleList.Count; rolelistindex++)
+    {//如果当前用户包含大农户角色
+        if (Model.RoleList[rolelistindex].RoleId == 3)
+        {
+            <script type="text/javascript">
+                //设置星星数
+                $("#selectFarmer").val(@Model.RoleList[rolelistindex].Star);
+                //设置指定角色被选中
+                $("#check_farmer").attr("checked", true);
+            </script>
+            break;
+        }
+    }
+    @for (var oneuserindex = 0; oneuserindex < Model.OneUserSkillInfo.Count; oneuserindex++)
+    {
+        <script type="text/javascript">
+            $(function () {
+                var roleid = "@Model.OneUserSkillInfo[oneuserindex].RoleId";
+                var star = "@Model.OneUserSkillInfo[oneuserindex].Star";
+                var skillcode = "@Model.OneUserSkillInfo[oneuserindex].SkillCode";
+                //设置星星数
+                $("#select_" + skillcode).val(star);
+                //设置指定技能被选中
+                $("#check_@Model.OneUserSkillInfo[oneuserindex].SkillCode").attr("checked", true);
+                //设置指定角色被选中
+                $("#check_@Model.OneUserSkillInfo[oneuserindex].RoleId").attr("checked", true);
+            });
+        </script>
+    }
+
+
+    <script src="/Content/Styles/plugins/select2/select2.min.js"></script>
+    <script src="/Content/Styles/plugins/select2/i18n/zh-CN.js"></script>
+    <script src="~/Content/Styles/plugins/zoom/zoom.min.js"></script>
+   <script src="~/Content/Styles/plugins/layer/layer.js"></script>
+    @*五级联动脚本*@
+    <script type="text/javascript">
+        var $province = null;
+        var $city = null;
+        var $region = null;
+        var $township = null;
+        var $village = null;
+        var provincevalue = null;
+        var cityvalue = null;
+        var regionvalue = null;
+        var townshipvalue = null;
+        var villagevalue = null;
+        //获取城市
+        function getcity(id) {
+            var selValue = $province.val();
+            if (selValue == "0") {
+                return;
+            }
+            $("#selCity option:gt(0)").remove();
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": selValue },
+                success: function (data) {//data在这
+                    if (data && data.Entity) {
+                        var html = '';
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $city.append(html);
+                        if (id == 0) {
+                            if (cityvalue != "") {
+                                $city.val(cityvalue).trigger('change');
+                            }
+                            else {
+                                $city.val("0").trigger('change');
+                            }
+                        }
+                        else {
+                            $city.val("0").trigger('change');
+                        }
+                    };
+                },
+            };
+            $.ajax(options);
+        }
+        //获取区县
+        function getregion(id) {
+            var selValue = $city.val();
+            if (selValue == "0") {
+                return;
+            }
+            $("#selRegion option:gt(0)").remove();
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": selValue },
+                success: function (data) {//data在这
+                    if (data && data.Entity) {
+                        var html = '';
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $region.append(html);
+                        if (id == 0) {
+                            if (cityvalue != "") {
+                                $region.val(regionvalue).trigger('change');
+                            }
+                            else {
+                                $region.val("0").trigger('change');
+                            }
+                        }
+                        else {
+                            $region.val("0").trigger('change');
+                        }
+                    };
+                },
+            };
+            $.ajax(options);
+        }
+        //获取乡镇
+        function gettownship(id) {
+            var selValue = $region.val();
+            if (selValue == "0") {
+                return;
+            }
+            $("#selTownship option:gt(0)").remove();
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": selValue },
+                success: function (data) {//data在这
+                    if (data && data.Entity) {
+                        var html = '';
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $township.append(html);
+                        if (id == 0) {
+                            if (townshipvalue != "") {
+                                $township.val(townshipvalue).trigger('change');
+                            }
+                            else {
+                                $township.val("0").trigger('change');
+                            }
+                        }
+                        else {
+                            $township.val("0").trigger('change');
+                        }
+                    };
+                },
+            };
+            $.ajax(options);
+        }
+        //获取村
+        function getvillage(id) {
+            var selValue = $township.val();
+            if (selValue == "0") {
+                return;
+            }
+            $("#selVillage option:gt(0)").remove();
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": selValue },
+                success: function (data) {//data在这
+                    if (data && data.Entity) {
+                        var html = '';
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $village.append(html);
+                        if (id == 0) {
+                            if (villagevalue != "") {
+                                $village.val(villagevalue).trigger('change');
+                            }
+                            else {
+                                $village.val("0").trigger('change');
+                            }
+                        }
+                        else {
+                            $village.val("0").trigger('change');
+                        }
+                    };
+                },
+            };
+            $.ajax(options);
+        }
+        $(function () {
+            $province = $("#selProvince");
+            $city = $("#selCity");
+            $region = $("#selRegion");
+            $township = $("#selTownship");
+            $village = $("#selVillage");
+            provincevalue = "@Model.Province";
+            cityvalue = "@Model.City";
+            regionvalue = "@Model.Region";
+            townshipvalue = "@Model.Township";
+            villagevalue = "@Model.Village";
+            options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": "0" },
+                success: function (data) {
+                    if (data && data.Entity) {
+                        var html = '';
+                        $.each(data.Entity, function (i, v) {
+
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+
+                        });
+                        $province.append(html);
+                        if (provincevalue != "") {
+                            $province.val(provincevalue).trigger('change');
+                        }
+                        else {
+                            $province.val("0").trigger('change');
+                        }
+                    };
+                },
+            }
+            $.ajax(options);
+            var i = 0;
+            //选择省份获取对应的城市
+            $province.change(function () {
+                getcity(i);
+
+            });
+            //选择城市获取对应的区县
+            $city.change(function () {
+                getregion(i);
+            });
+            //选择区县获取乡镇
+            $region.change(function () {
+                gettownship(i);
+            });
+            //选择乡镇获取村
+            $township.change(function () {
+                getvillage(i);
+                i++;
+            });
+            //ww 审核土地亩数
+            $("#btnPassLand").click(function () {
+                $.ajax({
+                    url: '/User/UpdateLand',
+                    type: 'post',
+                    data: {
+                        "UserId": '@Model.Id',
+                        "Land": $("#Land").val(),
+                    },
+                    dataType: "json",
+                    success: function (data, state) {//data在这
+                        if (state == "success") {
+                            if (data.responseText == "审核成功") {
+                                layer.alert(data.responseText);
+                                $("#check_Land").attr("checked", true);
+                            }
+                            else {
+                                layer.alert(data.responseText);
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        layer.alert(data);
+                    }
+                });
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('select').select2({
+                language: 'zh-CN'
+            });
+            $('.skill').each(function (index, value) {
+                var $checkBox = $(':checkbox', value);
+                var $select = $('select', value);
+                $select.change(function () {
+                    $checkBox.prop('checked', $select.val() !== "0");
+                });
+            });
+            $("select.select_4").change(function () {
+                $("input.check_4").each(function () {
+                    if ($("#" + this.id).is(':checked')) {
+                        $("#check_4").prop("checked", true);
+                        return false;
+                    }
+                    else {
+                        $("#check_4").prop("checked", false);
+                    }
+                });
+
+            });
+            $("select.select_5").change(function () {
+                $("input.check_5").each(function () {
+                    if ($("#" + this.id).is(':checked')) {
+                        $("#check_5").prop("checked", true);
+                        return false;
+                    }
+                    else {
+                        $("#check_5").prop("checked", false);
+                    }
+                });
+
+            });
+        });
+    </script>
+}
+
+

@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "error";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+@section HTML_Header{
+    <style>
+        body {
+            min-height: 600px;
+        }
+
+        .divider {
+            background: green;
+            height: 1px;
+            margin: 10px 0px;
+        }
+
+        a {
+            font-size: 13px;
+        }
+
+            a:link {
+                color: #48A13C;
+                text-decoration: none;
+            }
+
+            /*未访问：蓝色、无下划线*/
+            a:active {
+                color: red;
+            }
+
+            /*激活：红色*/
+            a:visited {
+                color: purple;
+                text-decoration: none;
+            }
+
+            /*已访问：purple、无下划线*/
+            a:hover {
+                color: blue;
+                text-decoration: underline;
+            }
+
+        /*鼠标移近：红色、下划线*/
+        #tb_userlist {
+            width: 952px;
+            color: #3C3C3C;
+            font-size: 13px;
+            text-align: center;
+        }
+
+
+        .box2 {
+            border: 1px solid #9ECC00;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            z-index: 2;
+            color: #fff;
+            cursor: default;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+    </style>
+
+    <script>
+        var isFirstLoad = 1;
+    </script>
+}
+
+
+<div class="container-fluid" style="width: 1000px;">
+    <div class="col-lg-offset-0" style="margin-top:50px">
+        <img src="~/Images/error.jpg" />
+    </div>
+</div>
+

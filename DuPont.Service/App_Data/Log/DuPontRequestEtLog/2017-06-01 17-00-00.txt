@@ -1,0 +1,32 @@
+FarmerRequirement/CommentOrderForOperator:应为来自命名空间“”的元素“root”。。遇到名称为“”、命名空间为“”的“None”。FarmerRequirement/CommentRequirementForOperator
+---------06/01/2017 17:21:27,979---------
+先锋帮大农户评价靠谱作业的农机手
+CommentString:评价靠谱作业农机手
+FarmerUserId:58
+Id:613
+OperatorUserId:150640
+Score:5
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:0141911b431666705adff7591349b56f7dc1991f23cd9776ad02c6bcef8d0442
+FarmerRequirement/CommentOrderForOperator:应为来自命名空间“”的元素“root”。。遇到名称为“”、命名空间为“”的“None”。FarmerRequirement/CommentRequirementForOperator
+---------06/01/2017 17:36:21,344---------
+先锋帮大农户评价靠谱作业的农机手
+CommentString:评价靠谱作业农机手
+FarmerUserId:58
+Id:613
+OperatorUserId:150640
+Score:5
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:0141911b431666705adff7591349b56f7dc1991f23cd9776ad02c6bcef8d0442
+
+---------06/01/2017 17:49:52,865---------
+靠谱作业的农机手评价先锋帮大农户
+CommentString:评价11233
+cur_time:1496288421077
+FarmerUserId:58
+id:613
+OperatorUserid:145
+Score:5
+SourceType:1
+Token:C8D039FDFEFC47E38C630F1411CF3A18
+encrypt:9228a1f31ed2b8ef72a294a2f5caf5343ce0e066ab5b3bf12abeb0b0bcabd424

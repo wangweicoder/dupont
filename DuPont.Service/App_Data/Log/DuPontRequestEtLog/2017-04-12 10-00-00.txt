@@ -1,0 +1,20 @@
+FarmerRequirement/CommentOrderForOperator:已添加了具有相同键的项。FarmerRequirement/CommentRequirementForOperator
+---------04/12/2017 10:23:34,003---------
+先锋帮大农户评价靠谱作业的农机手
+CommentString:
+FarmerUserId:62
+Id:165
+OperatorUserId:123
+Score:5
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:0bb1fc28f1fcb0464b130f05e4b97e7236750b07e658569bb2a34e8cad642980
+FarmerRequirement/CommentRequirementForOperator
+---------04/12/2017 10:24:52,016---------
+先锋帮大农户评价靠谱作业的农机手
+CommentString:
+FarmerUserId:62
+Id:165
+OperatorUserId:123
+Score:5
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:0bb1fc28f1fcb0464b130f05e4b97e7236750b07e658569bb2a34e8cad642980

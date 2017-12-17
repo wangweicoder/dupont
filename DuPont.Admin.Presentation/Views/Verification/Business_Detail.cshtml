@@ -1,0 +1,417 @@
+﻿@model DuPont.Admin.Presentation.Models.BusinessVerificationInfoViewModel
+@using DuPont.Entity.Enum
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@section HTML_Header
+{
+    <link href="/Content/Styles/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="/Content/Styles/plugins/zoom/css/zoom.css" rel="stylesheet" />
+    <style>
+        .pt8 {
+            padding-top: 8px;
+        }
+
+        .h1 {
+            height: 1px;
+        }
+
+        .bg-gray {
+            background-color: gray;
+        }
+
+        .select2 {
+            width: auto !important;
+            height: 32px !important;
+        }
+
+        .mr10 {
+            margin-right: 10px;
+        }
+
+        .mr20 {
+            margin-right: 20px;
+        }
+
+        .border-dashed {
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .fmyahei {
+            font-family: 'Microsoft YaHei';
+        }
+
+        .pt0 {
+            padding-top: 0px;
+        }
+
+        .mt0 {
+            margin-top: 0px !important;
+        }
+
+        .mb0 {
+            margin-bottom: 0px;
+        }
+
+        .p0 {
+            padding: 0px !important;
+        }
+
+        .p-l0 {
+            padding-left: 0px;
+        }
+
+        .p-r0 {
+            padding-right: 0px;
+        }
+
+        .wauto {
+            width: auto;
+        }
+
+        .mb20 {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #00A65A;
+            border-color: #00A65A;
+        }
+
+        .gallery-container {
+            width: 505px;
+            margin: 0 auto;
+        }
+
+        .gallery {
+            list-style-type: none;
+            float: left;
+            background: #ffffff;
+            padding: 20px 20px 10px 20px;
+            margin: 0;
+            -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+            .gallery li {
+                float: left;
+                padding: 0 10px 10px 0;
+            }
+
+                .gallery li:nth-child(6n) {
+                    padding-right: 0;
+                }
+
+                .gallery li a, .gallery li img {
+                    float: left;
+                }
+
+        #zoom {
+            top: 5%;
+            left: 10%;
+            height: 60%;
+            width: 80%;
+        }
+
+            #zoom .content {
+            }
+
+                #zoom .content img {
+                    display: block;
+                    height: 400px;
+                }
+
+        .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+            color: #fff;
+            background-color: #28902D;
+            border-color: #28902D;
+        }
+    </style>
+}
+@section Breadcrumb
+{
+    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+    <li class="active">用户提交信息审核（产业商）</li>
+}
+<h3 class="h3 col-xs-offset-2 fmyahei">用户提交信息审核（产业商）</h3>
+<div class="h1 border-dashed" style="background-color:green; width:935px;margin-left:58px"></div>
+<div class="container" style="width:1048px;height:695.2px">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-7">
+                    <label class="control-label col-md-2">姓名</label>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="col-md-5">
+                    <label class="control-label col-md-3">手机号</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-7">
+                    <label class="control-label col-md-2">地址</label>
+                    <div class="col-md-10">
+                        <div class="col-md-2  p-l0 wauto" style="position:relative">
+                            <select class="form-control" disabled="disabled">
+                                <option>@Model.ProvinceName</option>
+                            </select>
+                        </div>
+                        <label class="control-label col-md-1 p-l0">省</label>
+
+                        <div class="col-md-2  p-l0 wauto">
+                            <select class="form-control" disabled="disabled">
+                                <option value="value">@Model.CityName</option>
+                            </select>
+                        </div>
+                        <label class="control-label col-md-1 p-l0">市</label>
+
+                        <div class="col-md-2  p-l0 wauto">
+                            <select class="form-control" disabled="disabled">
+                                <option value="value">@Model.RegionName</option>
+                            </select>
+                        </div>
+                        <label class="control-label col-md-1 p-l0 p-r0 wauto">区/县</label>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <label class="control-label col-md-3">详细地址</label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.DetailAddress, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-7">
+                    <label class="col-md-2 control-label">申请角色</label>
+                    <div class="col-md-4">
+                        <input type="text" name="role" value="产业商" disabled="disabled" readonly="readonly" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-7">
+                    <label class="control-label col-md-2">收购类型</label>
+                    <div class="checkbox col-md-5">
+                        <label>
+                            <input type="checkbox" name="" @(Model.PurchaseType.Contains("100201") ? "checked=\"checked\"" : "") disabled="disabled" />收粮
+                        </label>
+                        <label>
+                            <input type="checkbox" name="" @(Model.PurchaseType.Contains("100202") ? "checked=\"checked\"" : "") disabled="disabled" value=" " />收青贮
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-5">
+
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-7">
+                    <label class="control-label col-md-2">我的业务描述</label>
+                    <div class="col-md-5">
+                        @Html.TextAreaFor(m => m.Introduction, new { disabled = "disabled", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-7">
+                    <label class="col-md-2 control-label">附件</label>
+                    <div class="col-md-10">
+                        <!-- 代码开始 -->
+                        <div class="gallery-container">
+                            <ul class="gallery">
+                                @if (Model.Pictures != null && Model.Pictures.Length > 0)
+                                {
+                                    for (var pictureIndex = 0; pictureIndex < Model.Pictures.Length; pictureIndex++)
+                                    {
+                                        var picture = Model.Pictures[pictureIndex].TrimStart('/');
+                                        var extension = Path.GetExtension(picture);
+                                        var newPicture = picture.Replace(extension, "");
+                                        <li>
+                                            <a href="@(Model.RemoteApiUrl+ picture)">
+                                                <img alt="附件图片 @(pictureIndex+1)" src="@(Model.RemoteApiUrl + newPicture + "_69x69" + extension)" />
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="h1 border-dashed" style="background-color:green; width:943px;margin-left:-1px"></div>
+        <h4>角色及权限设定：</h4>
+        @using (Html.BeginForm())
+        {
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label class="control-label col-md-2 ">确定角色</label>
+                        <div class="col-md-5 checkbox">
+                            <label>
+                                <input type="checkbox" name="name" value=" " checked="checked" disabled="disabled" />产业商
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            if (Model.PurchaseType.Contains("100201"))
+            {
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-5 checkbox col-md-offset-2  skill">
+                            <label class="col-md-3">
+                                <input type="checkbox" name="" value="" disabled="disabled" />收粮
+                                <input type="hidden" name="demandLevelInfoList[0].Key" value="100201" />
+                            </label>
+                            <label class="col-md-6">
+                                级别:
+                                <select name="demandLevelInfoList[0].Value">
+                                    <option value="0">请选择</option>
+                                    <option value="1">一星</option>
+                                    <option value="2">二星</option>
+                                    <option value="3">三星</option>
+                                    <option value="4">四星</option>
+                                    <option value="5">五星</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            if (Model.PurchaseType.Contains("100202") && Model.PurchaseType.Contains("100201"))
+            {
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-5 checkbox col-md-offset-2 skill">
+                            <label class="col-md-3">
+                                <input type="checkbox" name="" value="" disabled="disabled" />收青贮
+                                <input type="hidden" name="demandLevelInfoList[1].Key" value="100202" />
+                            </label>
+                            <label class="col-md-6">
+                                级别:
+                                <select name="demandLevelInfoList[1].Value">
+                                    <option value="0">请选择</option>
+                                    <option value="1">一星</option>
+                                    <option value="2">二星</option>
+                                    <option value="3">三星</option>
+                                    <option value="4">四星</option>
+                                    <option value="5">五星</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-5 checkbox col-md-offset-2 skill">
+                            <label class="col-md-3">
+                                <input type="checkbox" name="" value="" disabled="disabled" />收青贮
+                                <input type="hidden" name="demandLevelInfoList[0].Key" value="100202" />
+                            </label>
+                            <label class="col-md-6">
+                                级别:
+                                <select name="demandLevelInfoList[0].Value">
+                                    <option value="0">请选择</option>
+                                    <option value="1">一星</option>
+                                    <option value="2">二星</option>
+                                    <option value="3">三星</option>
+                                    <option value="4">四星</option>
+                                    <option value="5">五星</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="form-group">
+                <input type="hidden" name="verificationId" value="@Model.Id" />
+                <input type="hidden" name="roleType" value="@((int)RoleType.Business)" />
+                <button type="submit" class="btn btn-primary col-xs-2 col-md-offset-1" name="ApproveForBusiness">同意</button>
+                <button type="submit" class="btn btn-danger col-xs-2 col-md-offset-1" name="Reject">拒绝</button>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section HTML_Footer{
+    <script src="/Content/Styles/plugins/select2/select2.min.js"></script>
+    <script src="/Content/Styles/plugins/select2/i18n/zh-CN.js"></script>
+    <script src="~/Content/Styles/plugins/zoom/zoom.min.js"></script>
+    <script>
+        $(function () {
+            $('select').select2({
+                language: 'zh-CN'
+            });
+
+            $('.gallery>li a').bind('click', function () {
+                var parentHeight = $(window.parent.document.body).outerHeight(true);
+                var scrollTop = $(window.parent.document.body).scrollTop();
+                var offset = 100;
+                if (scrollTop === 0) {
+                    offset += 107;
+                }
+
+                var $zoom = $('#zoom');
+                var zoomHeight = $zoom.outerHeight(true);
+                $zoom.css('top', ((parentHeight + scrollTop - zoomHeight) / 2 - offset) + 'px');
+
+                return false;
+            });
+
+            $('.skill').each(function (index, value) {
+                var $checkBox = $(':checkbox', value);
+                var $select = $('select', value);
+                $select.change(function () {
+                    $checkBox.prop('checked', $select.val() !== "0");
+                });
+            });
+
+            var isRejectTrigger = false;
+            $('form').submit(function (event) {
+                if (!isRejectTrigger) {
+                    var hasCheckedLength = $(':checkbox:checked', '.skill').length;
+                    if (!hasCheckedLength) {
+                        top.window.Warn("请至少选择一个已评星的技能");
+                    }
+
+                    return hasCheckedLength > 0;
+                }
+
+            });
+
+            //拒绝
+            $(':submit[name=Reject]').click(function () {
+                isRejectTrigger = true;
+            });
+        });
+    </script>
+}

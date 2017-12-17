@@ -1,0 +1,153 @@
+﻿@model DuPont.Admin.Presentation.Models.ListLogViewModel
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@using Webdiyer.WebControls.Mvc;
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 系统管理</li>
+    <li class="active">日志查看</li>
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>日志列表</title>
+    <style>
+        .center {
+            margin: 0 auto;
+        }
+
+        .divider {
+            background: green;
+            height: 1px;
+            margin: 10px 0px;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            background-color: #00A65A;
+            border-color: #00A65A;
+        }
+
+        .select {
+            float: left;
+        }
+
+        .tr1 {
+            padding-bottom: 10px;
+        }
+
+        a {
+            font-size: 13px;
+        }
+
+            a:link {
+                color: #48A13C;
+                text-decoration: none;
+            }
+
+            /*未访问：蓝色、无下划线*/
+            a:active {
+                color: red;
+            }
+
+            /*激活：红色*/
+            a:visited {
+                color: purple;
+                text-decoration: none;
+            }
+
+            /*已访问：purple、无下划线*/
+            a:hover {
+                color: blue;
+                text-decoration: underline;
+            }
+
+        /*鼠标移近：红色、下划线*/
+        #tb_rolelist {
+            width: 952px;
+            color: #3C3C3C;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            z-index: 2;
+            color: #fff;
+            cursor: default;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h3 style="margin-left:36px;margin-top:5px"><b>日志列表</b></h3>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-hover" id="tb_rolelist">
+                    <thead style="background-color: #48A13C; height: 36px;color: #FFFFFF; font-size: 13px; ">
+                        <tr>
+                            <td style="width:90px">日志级别</td>
+                            <td style="width:120px">错误概述</td>
+                            <td style="width:80px">错误详情</td>
+                            <td style="width:120px">时间</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.listModel)
+                        {
+                            <tr>
+                                <td>@Html.ActionLink(item.Level, "Detail", new { Level = item.Level, StackTrace = item.StackTrace, Message = item.Message, CreateTime = item.CreateTime })</td>
+                                <td>@(String.IsNullOrEmpty(item.StackTrace) ? "无" : (item.StackTrace.Length > 40 ? item.StackTrace.Substring(0, 40) + "..." : item.StackTrace))</td>
+                                <td>@(String.IsNullOrEmpty(item.Message) ? "无" : (item.Message.Length > 40 ? item.Message.Substring(0, 40) + "..." : item.Message))</td>
+                                <td>@(item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <div>
+                    @Html.Pager(Model.Pager).Options(o =>
+                           {
+                               o.SetPageIndexParameterName("PageIndex");
+                               o.SetContainerTagName("ul");
+                               o.SetCssClass("pagination");
+                               o.SetCurrentPagerItemTemplate("<li class=\"active\"><a href=\"#\">{0}</a></li>");
+                               o.SetDisabledPagerItemTemplate("<li class=\"disabled\"><a>{0}</a></li>");
+                               o.SetPagerItemTemplate("<li>{0}</li>");
+                               o.SetId("bootstrappager");
+                               o.SetFirstPageText("首页");
+                               o.SetPrevPageText("上一页");
+                               o.SetNextPageText("下一页");
+                               o.SetLastPageText("最后一页");
+                           })
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+@*设置table行样式*@
+<link href="/Content/Styles/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+<script src="/Content/Styles/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="/Content/Styles/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script>
+
+    var table = document.getElementById("tb_rolelist")
+    var tbody = table.getElementsByTagName("tbody")[0]
+    var trs = tbody.getElementsByTagName("tr")
+    for (var i = 0; i < trs.length; i++) {
+        if (i % 2 == 0) {
+            trs[i].style.backgroundColor = "#ECF0F5";
+        }
+        else {
+            trs[i].style.backgroundColor = "#FFFFFF";
+        }
+    }
+
+
+</script>

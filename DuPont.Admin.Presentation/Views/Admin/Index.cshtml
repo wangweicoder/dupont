@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Site.cshtml";
+}
+@section HTML_Header{
+    <title>
+        先锋帮管理系统
+    </title>
+    <script>
+        var timeOut;
+        function setRight() {
+            try {
+                if (timeOut != null) {
+                    clearTimeout(timeOut);
+                }
+                TuneHeight('content_right');
+            } catch (e) {
+
+            }
+            timeOut = setTimeout(function () {
+                setRight();
+            }, 1000);
+        }
+        function TuneHeight(iframeName) {
+            var frm = document.getElementById(iframeName);
+            var subWeb = document.frames ? document.frames[iframeName].document : frm.contentDocument;
+            if (frm != null && subWeb != null) {
+                frm.height = subWeb.body.scrollHeight;
+            }
+        }
+        setRight();
+    </script>
+}
+<style type="text/css">
+    .content {
+        padding: 35px;
+    }
+</style>
+@*<script src="~/Scripts/Common.js" type="text/javascript"></script>*@
+<div class="wrapper-right-content">
+    <iframe id="content_right" style="width:100%" frameborder="0" scrolling="no" name="content_right" onload="setRight()"></iframe>
+</div>
+
+

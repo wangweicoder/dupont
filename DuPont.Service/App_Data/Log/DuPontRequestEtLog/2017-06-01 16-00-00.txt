@@ -1,0 +1,11 @@
+FarmerRequirement/CommentRequirementForOperator
+---------06/01/2017 16:08:39,836---------
+先锋帮大农户评价靠谱作业的农机手
+CommentString:评价靠谱作业农机手
+FarmerUserId:58
+Id:613
+OperatorUserId:150640
+Score:5
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:0141911b431666705adff7591349b56f7dc1991f23cd9776ad02c6bcef8d0442
+FarmerRequirement/CommentOrderForOperator:应为来自命名空间“”的元素“root”。。遇到名称为“”、命名空间为“”的“None”。

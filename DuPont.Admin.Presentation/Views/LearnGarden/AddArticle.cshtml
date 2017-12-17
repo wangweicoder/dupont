@@ -1,0 +1,182 @@
+﻿@model DuPont.Models.Dtos.Background.LearningWorld.ArticleInput
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+<link href="~/Content/Styles/plugins/ueditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
+@section HTML_Header{
+    <style>
+        table {
+            table-layout: fixed; /* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+        }
+
+        td {
+            width: 100%;
+            word-break: keep-all; /* 不换行 */
+            white-space: nowrap; /* 不换行 */
+            overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+            text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary:hover {
+                color: #fff;
+                background-color: #48A13C;
+                border-color: #48A13C;
+            }
+
+        #myEditor {
+            min-height: 300px;
+            width: 100%;
+        }
+
+        ul.edui-tab-nav {
+            height: 35px;
+        }
+    </style>
+    <link href="~/Content/Styles/plugins/iCheck/flat/green.css" rel="stylesheet" />
+   <meta charset="utf-8" />
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 学习园地</li>
+    <li class="active">新增文章</li>
+}
+<h3 style="margin-left:36px;margin-top:5px"><b>@ViewBag.PageTitle</b></h3>
+<div class="container-fluid">
+    @using (Html.BeginForm("AddArticle", "LearnGarden", FormMethod.Post))
+    {
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <label class="control-label col-xs-2 text-right">标题</label>
+                <div class="col-xs-9">
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <label class="control-label col-xs-2 text-right">分类</label>
+                <input type="hidden" id="CatName" name="CatName" />
+                <div class="col-xs-4">
+                    <select class="form-control" id="article-category" name="CatId"></select>                   
+                </div>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <label class="control-label col-xs-2 text-right" for="AddToCarousel">推荐到首页轮播</label>
+                <div class="col-xs-6">
+                    @Html.CheckBoxFor(m => m.AddToCarousel, new { @class = "minimal" })
+                    <span style="color: red">*</span><label style="font-size: 10px; font-weight: normal;">内容中的首张图片建议为矩形图片</label>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <label class="control-label col-xs-2 text-right" for="AddToPushNotification">是否推送</label>
+                <div class="col-xs-6">
+                    @Html.CheckBoxFor(m => m.AddToPushNotification, new { @class = "minimal" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <label class="control-label col-xs-2 text-right" for="addToCarousel">内容</label>
+                <div class="col-xs-9">
+                    @Html.Raw("<script type=\"text/plain\" id=\"myEditor\" name=\"Content\"></script>")
+                </div>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-2 col-xs-offset-2">
+                <button class="btn btn-primary btn-block" type="submit">发表文章</button>
+            </div>
+
+        </div>
+    }
+
+</div>
+
+@section HTML_Footer{
+    <script src="~/Content/Styles/plugins/ueditor/umeditor.config.js"></script>
+    <script src="~/Content/Styles/plugins/ueditor/umeditor.min.js"></script>
+    <script src="~/Content/Styles/plugins/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script src="~/Content/Styles/plugins/iCheck/icheck.min.js"></script>
+
+    <script>
+        //绑定复选框
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat'
+        });
+        var um = UM.getEditor('myEditor');
+        um.addListener('blur', function () {
+            // $('#focush2').html('编辑器失去焦点了')
+        });
+        um.addListener('focus', function () {
+            // $('#focush2').html('')
+        });
+        @if (Model != null && Model.Content != null)
+        {
+            <text>
+        um.setContent(HtmlUtil.htmlDecodeByRegExp('@(Model.Content.Replace("'", "\"").Replace("\r\n", ""))'));
+        </text>
+
+        }
+
+        var $addToCarousel = $('#AddToCarousel');
+        var $articleCategory = $('#article-category');
+        $articleCategory.change(function () {
+            var needDisabled = $articleCategory.val() == "-1";
+            //$addToCarousel.prop({ disabled: needDisabled });
+            if (needDisabled) {
+                //$addToCarousel.prop({ checked: !needDisabled });
+                $addToCarousel.iCheck('disable');
+                $addToCarousel.iCheck('uncheck');
+            } else {
+                var articleCategory = $articleCategory[0];
+                //$addToCarousel.prop({ disabled: needDisabled });
+                $addToCarousel.iCheck('enable');
+                $('#CatName').val(articleCategory.options[articleCategory.selectedIndex].innerHTML);
+            }
+        });
+
+        $.get("/ArticleCategory/ListJson", function (data) {
+            if (data.Entity && data.IsSuccess) {
+                var $articleCategory = $('#article-category');
+                var html = '<option value="-1">请选择分类</option>';
+                for (var i = 1; i < data.Entity.length; i++) {
+                    var dataItem = data.Entity[i];
+                    html += '<option value="' + dataItem.CatId + '">' + dataItem.CatName + '</option>';
+                }
+
+                $articleCategory.html(html);
+                @if (Model != null)
+                {
+                    <text>
+                $articleCategory.val(@Model.CatId);
+                </text>
+                }
+                else
+                {
+                    <text>
+                $articleCategory.trigger('change');;
+                </text>
+                }
+            }
+        });
+
+        //禁用网络传图片的功能
+        $('ul.edui-tab-nav>edui-tab-item:eq(1)').remove();
+    </script>
+}
+

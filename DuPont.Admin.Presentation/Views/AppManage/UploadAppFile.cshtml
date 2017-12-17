@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "UploadAppFile";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+<script type="text/javascript">
+    window.onload = function () {
+
+        if(@ViewBag.State==1)
+            alert("上传成功！");
+        else if(@ViewBag.State==2)
+            alert("上传失败！");
+    };
+</script>
+
+@section HTML_Header{
+    <style>
+        body {
+            min-height: 600px;
+        }
+
+        .divider {
+            background: green;
+            height: 1px;
+            margin: 10px 0px;
+        }
+
+        a {
+            font-size: 13px;
+        }
+
+            a:link {
+                color: #48A13C;
+                text-decoration: none;
+            }
+
+            /*未访问：蓝色、无下划线*/
+            a:active {
+                color: red;
+            }
+
+            /*激活：红色*/
+            a:visited {
+                color: purple;
+                text-decoration: none;
+            }
+
+            /*已访问：purple、无下划线*/
+            a:hover {
+                color: blue;
+                text-decoration: underline;
+            }
+
+        /*鼠标移近：红色、下划线*/
+        #tb_userlist {
+            width: 952px;
+            color: #3C3C3C;
+            font-size: 13px;
+            text-align: center;
+        }
+
+
+        .box2 {
+            border: 1px solid #9ECC00;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            z-index: 2;
+            color: #fff;
+            cursor: default;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+    </style>
+
+    <script>
+        var isFirstLoad = 1;
+    </script>
+}
+
+@section Breadcrumb
+{
+    <li><a href="#"><i class="fa fa-dashboard"></i> APP管理</a></li>
+    <li class="active">上传APP</li>
+}
+
+<h3 style="margin-left:36px;margin-top:5px"><b>APP详细信息</b></h3>
+<div class="container" style="width: 1000px;">
+    <form action="/AppManage/UploadAppFile" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <label class="col-md-2">版本号</label>
+            <div class="col-md-3">
+                <input type="text" id="txtVersionCode" name="versionCode" value="" class="form-control" />
+            </div>
+            <label class="col-md-2">详细版本号</label>
+            <div class="col-md-3">
+                <input type="text" id="txtVersion" name="version" value="" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-2">平台</label>
+            <div class="col-md-3">
+                <select name="platform" id="selPlateform" class="form-control">
+                    <option value="0">--请选择平台--</option>
+                    <option value="android" selected>Android</option>
+                    <option value="ios">IOS</option>
+                    <option value="windowsphone">Windows Phone</option>
+                </select>
+            </div>
+            <div class="col-md-1" style="">
+                <label class="control-label">是否公布</label>
+            </div>
+            <div class="col-md-3" style="margin-left:89px">
+                <select name="isOpen" id="selIsOpen" class="form-control">
+                    <option value="false" selected>否</option>
+                    <option value="true">是</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1" style="">
+                <label class="control-label">文件</label>
+            </div>
+            <div class="col-md-3" style="margin-left:89px">
+                <input id="txtFile" type="file" name="appFile" value="" class="form-control" />
+            </div>
+        </div>
+        <div>
+            <label class="col-md-2">修改日志</label>
+            <div class="col-md-3">
+                <textarea name="changeLog" id="txtChangeLog" cols="80" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="row" style="text-align:center">
+            <input style="background-color: #48A13C; text-align: center" class="btn btn-primary pull-right" type="submit" name="name" value="上传" />
+        </div>
+    </form>
+</div>
+
+
+

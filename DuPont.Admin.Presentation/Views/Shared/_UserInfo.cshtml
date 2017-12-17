@@ -1,0 +1,41 @@
+﻿@model DuPont.Models.Models.T_ADMIN_USER
+@{
+    Layout = null;
+}
+<div class="navbar-custom-menu">
+    <ul class="nav navbar-nav">
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu" style="margin-left:20px">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-top:-10px; ">
+                <img src="/Content/Styles/dist/img/user2-160x160.jpg" class="user-image" alt="User Image" />
+                <span class="hidden-xs" style="font-size: 13px; font-family: 微软雅黑 "><b>@Model.UserName</b></span>
+                <br /><span class="hidden-xs" style=" font-size: 10px; font-family: 微软雅黑;"><b>在线</b></span>
+            </a>
+            <ul class="dropdown-menu" style="">
+                <!-- User image -->
+                <li class="user-header">
+                    <img src="@(string.IsNullOrEmpty(Model.AvartarUrl) ? "/Content/Styles/dist/img/user2-160x160.jpg" : Model.AvartarUrl)" class="img-circle" alt="User Image" />
+                    <p>
+                        @Model.RealName??@Model.UserName
+                    </p>
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <div class="pull-left">
+                        <a href="#" class="btn btn-default btn-flat">个人信息</a>
+                    </div>
+                    <div class="pull-left">
+                        <a href="/Account/SavePwd" target="content_right" class="btn btn-default btn-flat">修改密码</a>
+                    </div>
+                    <div class="pull-left">
+                        @Html.ActionLink("退出", "LoginOut", "Account", null, new { @class = "btn btn-warning btn-flat", style = "margin-right:-10px;margin-bottom:-10px" })
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <!-- Control Sidebar Toggle Button -->
+        @*<li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            </li>*@
+    </ul>
+</div>

@@ -1,0 +1,92 @@
+﻿@model DuPont.Models.Models.LogModel
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+@section HTML_Header
+{
+    <style type="text/css">
+        .line {
+            border: 1px solid #4A9D33;
+        }
+
+        .panel-heading {
+            padding: 0px;
+        }
+        .background-white {
+            background-color: white;
+            border-radius: 6px;
+        }
+        .row{
+            margin-bottom:10px;
+        }
+    </style>
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 系统管理</li>
+    <li><i class="fa fa-dashboard"></i> 日志查看</li>
+}
+<div class="container">
+    <h3>日志详情</h3>
+    <hr class="line" />
+    <div class="row">
+        <label class="control-label col-md-2">日志级别：</label>
+        @{
+            var level = Model.Level.ToLower();
+            var level_message = "";
+            switch (level)
+            {
+                case "info":
+                    level_message = "消息";
+                    break;
+                case "error":
+                case "fatal":
+                    level_message = "错误";
+                    level = "danger";
+                    break;
+                case "debug":
+                case "warn":
+                    level = "warning";
+                    level_message = "警告";
+                    break;
+                default:
+                    level = "error";
+                    level = "错误";
+                    break;
+            }
+        }
+        <div class="col-md-1 panel-@level">
+            <p class="panel-heading text-center">@level_message</p>
+        </div>
+    </div>
+    <div class="row">
+        <label class="control-label col-md-2">
+            日志概述:
+        </label>
+        <div class="col-md-8 background-white">
+            @Model.Message
+        </div>
+    </div>
+    <div class="row">
+        <label class="control-label col-md-2">
+            日志详情:
+        </label>
+        <div class="col-md-8 background-white">
+            @Model.StackTrace
+        </div>
+    </div>
+    <div class="row">
+        <label class="control-label col-md-2">
+            发生的时间:
+        </label>
+        <div class="col-md-8 text-left">
+            @Model.CreateTime.ToString("yyyy年MM月dd日 HH时mm分ss秒")
+        </div>
+    </div>
+</div>
+
+@section HTML_Footer{
+
+}

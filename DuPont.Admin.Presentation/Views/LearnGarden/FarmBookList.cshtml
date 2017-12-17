@@ -1,0 +1,115 @@
+﻿@model DuPont.Models.Models.MultiModel<DuPont.Models.Dtos.Background.LearningWorld.FarmBookListOutput>
+@{
+    ViewBag.PageTitle = "示范农场报名列表";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+@using Webdiyer.WebControls.Mvc;
+@section HTML_Header{
+    <style>
+        table {
+            table-layout: fixed; /* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+        }
+
+        td {
+            width: 100%;
+            word-break: keep-all; /* 不换行 */
+            white-space: nowrap; /* 不换行 */
+            overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+            text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #3E7B36;
+                border-color: #3E7B36;
+            }
+
+        .lightgreen {
+            background-color: #B4DAAC !important;
+        }
+    </style>
+    <link href="~/Content/Styles/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+    <link href="~/Content/Styles/plugins/iCheck/square/green.css" rel="stylesheet" />
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i>示范农场列表</li>
+    <li class="active">@ViewBag.PageTitle</li>
+}
+<h3 style="margin-top: 5px;" class="text-center">
+    <b>
+        @if (Model.Data != null)
+        {<text>@Model.Data.FarmName</text><text> - 预约报名列表</text>}
+    </b>
+</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-bordered table-hover text-center">
+                <thead style="background-color: #48A13C; height: 36px;color: #FFFFFF; font-size: 13px; ">
+                    <tr>
+                        <th class="col-sm-1">
+                            预约人
+                        </th>
+                        <th class="col-sm-2">
+                            预约人电话
+                        </th>
+                        <th class="col-sm-2">
+                            参观时间
+                        </th>
+                        <th class="col-sm-2">
+                            预约时间
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.IsSuccess && Model.Data != null && Model.Data.FarmBookList != null && Model.Data.FarmBookList.Any())
+                    {
+                        foreach (var farmBook in Model.Data.FarmBookList)
+                        {
+                            <tr>
+                                <td>@farmBook.Visitor</td>
+                                <td>@farmBook.PhoneNumber</td>
+                                <td>@farmBook.VisitDate.ToString("yyyy.MM.dd")</td>
+                                <td>@farmBook.BookDate.ToString("yyyy.MM.dd")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" align="center">没有匹配的结果!</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            @if (Model != null && Model.IsSuccess)
+            {
+                @Html.Pager(Model.Pager).Options(o =>
+                        {
+                            o.SetPageIndexParameterName("PageIndex");
+                            o.SetContainerTagName("ul");
+                            o.SetCssClass("pagination");
+                            o.SetCurrentPagerItemTemplate("<li class=\"active\"><a  href=\"#\">{0}</a></li>");
+                            o.SetDisabledPagerItemTemplate("<li class=\"disabled\"><a >{0}</a></li>");
+                            o.SetPagerItemTemplate("<li >{0}</li>");
+                            o.SetId("bootstrappager");
+                            o.SetFirstPageText("首页");
+                            o.SetPrevPageText("上一页");
+                            o.SetNextPageText("下一页");
+                            o.SetLastPageText("最后一页");
+                        })
+            }
+
+        </div>
+    </div>
+</div>

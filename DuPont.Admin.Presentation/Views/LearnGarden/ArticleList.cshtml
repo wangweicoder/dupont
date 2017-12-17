@@ -1,0 +1,322 @@
+﻿@model DuPont.Admin.Presentation.Models.ListViewModel<DuPont.Models.Dtos.Background.LearningWorld.Article>
+@using Webdiyer.WebControls.Mvc;
+@{
+    ViewBag.Title = "ArticleList";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+@section HTML_Header{
+    <style>
+        table {
+            table-layout: fixed; /* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+        }
+
+        td {
+            width: 100%;
+            word-break: keep-all; /* 不换行 */
+            white-space: nowrap; /* 不换行 */
+            overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+            text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary:hover {
+                color: #fff;
+                background-color: #48A13C;
+                border-color: #48A13C;
+            }
+
+        .lightgreen {
+            background-color: #B4DAAC !important;
+        }
+
+        .deleted {
+            background-color: #E8BBBB;
+        }
+    </style>
+
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 学习园地</li>
+    <li class="active">文章列表</li>
+}
+<h3 class="text-center"><b>文章列表</b></h3>
+<div class="container-fluid">
+    @using (Html.BeginForm("ArticleList", "LearnGarden", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-sm-1 text-nowrap">文章分类</label>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" id="article-category"></select>
+                </div>
+                <label class="control-label col-xs-12 col-sm-1 text-nowrap">排序</label>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" id="article-orderby">
+                        <option value="-date">按时间倒序</option>
+                        <option value="-click">按点击量倒序</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-sm-1 text-nowrap">
+                    关键词
+                </label>
+                <div class="col-xs-12 col-sm-3">
+                    <input type="text" name="name" id="keywords" class="form-control" />
+                </div>
+                <label class="control-label col-xs-12 col-sm-1 text-nowrap">
+                    删除状态
+                </label>
+                <div class="col-xs-12 col-sm-3">
+                    @Html.DropDownList("IsDeleted", new List<SelectListItem>{
+                    new SelectListItem{Text="--请选择删除状态--",Value=""},
+                    new SelectListItem{Text="已删除",Value="true"},
+                    new SelectListItem{Text="未删除",Value="false"}
+                }, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+
+                <div class="col-xs-12 col-sm-2">
+                    <button class="btn btn-block btn-primary" type="button" id="btnSearch"><span class="glyphicon glyphicon-search"></span> 搜 索</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-6">
+                    <button class="btn btn-sm btn-default" type="button" disabled id="btnAddToCarousel">添加到轮播</button>
+                    <button class="btn btn-sm btn-danger" type="button" disabled id="btnDeleteArticle">删 除</button>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <table class="table table-bordered table-hover text-center" id="tb_articlelist">
+            <thead style="background-color: #48A13C; height: 36px;color: #FFFFFF; font-size: 13px; ">
+                <tr>
+                    <td>选择</td>
+                    <td>标题</td>
+                    <td class="hidden-xs">内容</td>
+                    <td>所属分类</td>
+                    <td>是轮播图</td>
+                    <td>创建时间</td>
+                    <td class="hidden-xs">更新时间</td>
+                    <td class="hidden-xs">删除状态</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model == null || !Model.Success || Model.TotalCount == 0)
+                {
+                    <tr>
+                        <td colspan="9" align="center">没有匹配的结果!</td>
+                    </tr>
+                }
+                else
+                {
+                    for (int i = 0; i < Model.Data.Count; i++)
+                    {
+                        var article = Model.Data[i];
+                        <tr>
+                            <td><input type="checkbox" id="chk_article_@article.Id" /></td>
+                            <td>@article.Title</td>
+                            <td class="hidden-xs">@article.Content</td>
+                            <td>@article.CatName</td>
+                            <td><input type="checkbox" name="name" disabled @(article.IsPutOnCarousel ? "checked" : "") /></td>
+                            <td>@article.CreateTime.ToShortDateString()</td>
+                            <td class="hidden-xs">@article.UpdateTime.ToShortDateString()</td>
+                            <td class="hidden-xs">@Html.Raw(article.IsDeleted ? "<span style=\"color:red\"><s>已删除</s></span>" : "正常")</td>
+                            <td><a href="/LearnGarden/Article?id=@article.Id">查看</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            @if (Model != null && Model.Success && Model.TotalCount > 0)
+            {
+            @Html.Pager(Model.Pager).Options(o =>
+                   {
+                       o.SetPageIndexParameterName("PageIndex");
+                       o.SetContainerTagName("ul");
+                       o.SetCssClass("pagination");
+                       o.SetCurrentPagerItemTemplate("<li class=\"active\"><a  href=\"#\">{0}</a></li>");
+                       o.SetDisabledPagerItemTemplate("<li class=\"disabled\"><a >{0}</a></li>");
+                       o.SetPagerItemTemplate("<li >{0}</li>");
+                       o.SetId("bootstrappager");
+                       o.SetFirstPageText("首页");
+                       o.SetPrevPageText("上一页");
+                       o.SetNextPageText("下一页");
+                       o.SetLastPageText("最后一页");
+                   })
+            }
+        </div>
+    </div>
+</div>
+
+@section HTML_Footer{
+    <script src="~/Content/Styles/plugins/layer/layer.js"></script>
+    <script>
+        //搜索框参数绑定
+        var search_CategoryValue = getQueryStringByName("CatId");
+        var search_OrderByValue = getQueryStringByName("OrderBy");
+        var search_KeywordsValue = getQueryStringByName("Keywords");
+        var search_IsDeletedValue = getQueryStringByName("IsDeleted");
+        var searchParameters = {
+            "CatId": search_CategoryValue,
+            "OrderBy": search_OrderByValue,
+            "Keywords": search_KeywordsValue,
+            "IsDeleted": search_IsDeletedValue
+        };
+        for (var key in searchParameters) {
+            var value = searchParameters[key]
+            if (value != "") {
+                switch (key) {
+                    //case "CatId":
+                    //    $('#article-category').val(value)
+                    //    break;
+                    case "OrderBy":
+                        $('#article-orderby').val(value);
+                        break;
+                    case "Keywords":
+                        $('#keywords').val(decodeURIComponent(value));
+                        break;
+                    case "IdDeleted":
+                        $('#IsDeleted').val('search_IsDeletedValue');
+                        break;
+                }
+            }
+        }
+
+        function getQueryStringByName(name) {
+            var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+            if (result == null || result.length < 1) {
+
+                return "";
+            }
+            return result[1];
+        }
+
+        $.get("/ArticleCategory/ListJson", function (data) {
+            if (data.Entity && data.IsSuccess) {
+                var $articleCategory = $('#article-category');
+                var html = '<option value="-1">请选择分类</option>';
+                for (var i = 1; i < data.Entity.length; i++) {
+                    var dataItem = data.Entity[i];
+                    html += '<option value="' + dataItem.CatId + '">' + dataItem.CatName + '</option>';
+
+                }
+
+                $articleCategory.html(html);
+                if (search_CategoryValue) {
+                    $articleCategory.val(search_CategoryValue);
+                }
+            }
+        });
+
+
+        $("#btnSearch").click(function () {
+            var category = $('#article-category').val();
+            var orderBy = $('#article-orderby').val();
+            var keywords = $('#keywords').val();
+            var isDeleted = $('#IsDeleted').val();
+            var parameters = { "CatId": category, "OrderBy": orderBy, "Keywords": keywords, "IsDeleted": isDeleted };
+
+            location.href = '/LearnGarden/ArticleList?' + $.param(parameters) + '&timestamp=' + Math.random();
+        });
+
+        var $checkboxList = $('[id^=chk_article_]');
+        var $btnAddToCarousel = $('#btnAddToCarousel');
+        var $btnDeleteArticle = $('#btnDeleteArticle');
+        $checkboxList.change(function () {
+            var selectCount = 0;
+            $checkboxList.each(function () {
+                if (this.checked) {
+                    selectCount++;
+                }
+            });
+            $btnDeleteArticle.text('删除' + selectCount + '条');
+            if (this.checked) {
+                $btnAddToCarousel.prop({ disabled: false });
+                $btnDeleteArticle.prop({ disabled: false });
+            } else {
+
+                if (selectCount == 0) {
+                    $btnDeleteArticle.prop({ disabled: true });
+                    $btnAddToCarousel.prop({ disabled: true });
+                    $btnDeleteArticle.text('删除');
+                }
+            }
+
+            $(this).closest('tr')[this.checked ? 'addClass' : 'removeClass']('lightgreen');
+        });
+
+        //删除选中的文章
+        $btnDeleteArticle.click(function () {
+            var selectCount = 0;
+            var articleIds = [];
+            $checkboxList.each(function () {
+                if (this.checked) {
+                    articleIds[selectCount++] = $(this).attr('id').replace('chk_article_', '');
+                }
+            });
+            layer.confirm('确认要删除这' + selectCount + '条?', { icon: 3, title: '提示' }, function (index) {
+                var parameter = "articleId=" + articleIds.join('&articleId=');
+                var index = layer.msg('处理中,请稍后...', { icon: 16, time: 15 * 1000 });
+                $.post('/LearnGarden/DeleteArticle', parameter, function (data) {
+                    if (data == "1") {
+                        top.window.Success("删除成功!");
+                        layer.close(index);
+                        location.reload();
+                    }
+                });
+            });
+        });
+
+        //添加选中的文章到轮播图
+        $btnAddToCarousel.click(function () {
+            var selectCount = 0;
+            var articleIds = [];
+            $checkboxList.each(function () {
+                if (this.checked) {
+                    articleIds[selectCount++] = $(this).attr('id').replace('chk_article_', '');
+                }
+            });
+            layer.confirm('确认要添加这' + selectCount + '条文章到轮播图?', { icon: 3, title: '提示' }, function (index) {
+                var parameter = "articleId=" + articleIds.join('&articleId=');
+                var index = layer.msg('处理中,请稍后...', { icon: 16, time: 15 * 1000 });
+                $.post('/LearnGarden/AddArticleToCarousel', parameter, function (data) {
+                    if (data == "1") {
+                        top.window.Success("操作成功!");
+                        layer.close(index);
+                        location.reload();
+                    }
+                });
+            });
+        });
+
+
+        $('tr').click(function (event) {
+            if (event.target.tagName === 'INPUT')
+                return;
+
+            var $chk = $(this).find(':checkbox:eq(0)');
+            $chk.prop({ checked: !$chk.prop('checked') }).triggerHandler('change');
+        });
+    </script>
+}

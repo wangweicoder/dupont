@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+<button class="btn btn-primary" type="button" id="btnRepairOperatorDemandTypeData">修复农机手服务能力对应关系</button>
+<button class="btn btn-primary" type="button" id="btnRepairUserRoleStarData">修复用户角色等级数据</button>
+
+@section HTML_Footer{
+    <script>
+        $('#btnRepairOperatorDemandTypeData').click(function () {
+            $.post('RepairOperatorMachineAndDemandTypeMapping', function (data) {
+                if (data == "ok") {
+                    alert('修复成功!');
+                } else {
+                    alert('修复失败!');
+                    try {
+                        console.log(data);
+                    } catch (e) {
+
+                    }
+                }
+            });
+        });
+
+        $('#btnRepairUserRoleStarData').click(function () {
+            $.post('RepairOriginalUserStar', function (data) {
+                if (data == "ok") {
+                    alert('修复成功!');
+                } else {
+                    alert('修复失败!');
+                    try {
+                        console.log(data);
+                    } catch (e) {
+
+                    }
+                }
+            });
+        });
+    </script>
+}

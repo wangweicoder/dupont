@@ -1,0 +1,27 @@
+Operator/ReplyFarmerRequirement
+---------06/02/2017 14:41:45,009---------
+靠谱作业农机手接受订单
+Address:116.405285,39.904989
+Credit:1
+cur_time:1496372238826
+id:617userId
+Name:贺祥
+NickName:Max • ♪
+OtherMachinery:动力机械 雷沃 1234,轮式拖拉机 雷沃 jjdjd,动力机械 雷沃 123,动力机械 雷沃 gjgdybc
+PhoneNumber:18612970779
+Token:A687783A42B043ECB9C42496CA8858EA
+encrypt:350b613bf7a077f3a881c0b4f928739b46d42f4e56ef655e5cef95a97e9da5ea
+Operator/ReplyFarmerRequirement基础连接已经关闭: 接收时发生错误。Operator/ReplyFarmerRequirement
+---------06/02/2017 14:48:58,397---------
+靠谱作业农机手接受订单
+Address:116.405285,39.904989
+Credit:1
+cur_time:1496372238826
+id:617userId
+Name:贺祥
+NickName:Max • ♪
+OtherMachinery:动力机械 雷沃 1234,轮式拖拉机 雷沃 jjdjd,动力机械 雷沃 123,动力机械 雷沃 gjgdybc
+PhoneNumber:18612970779
+Token:A687783A42B043ECB9C42496CA8858EA
+encrypt:350b613bf7a077f3a881c0b4f928739b46d42f4e56ef655e5cef95a97e9da5ea
+Operator/ReplyFarmerRequirement操作超时

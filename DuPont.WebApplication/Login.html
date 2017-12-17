@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="Content/css/Login.css" rel="stylesheet" />
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script src="Scripts/layer/layer.js"></script>   
+    <script charset="utf-8" type="text/javascript">
+        $(function () {
+            var date = new Date('2017/4/5');
+            console.log(!date) //返回false 
+            console.log(date.getFullYear());
+            $(".but").click(function () {
+                var  LoginUserName=$("input[type='text']").val();
+                var  Password=$("input[type='password'").val();
+                if (LoginUserName != "" && Password != "") {
+                    var options = {
+                        type: 'get',
+                        dataType: "json",
+                        //async: true,
+                        //url: "Values/Login",api/Login.ashx
+                        //url: "Models/20170714.json",
+                        //data: {
+                        //    "LoginUserName": LoginUserName,
+                        //    "Password": Password,
+                        //},
+                        success: function (data, state) {                           
+                            alert(data.Message);
+                            if (state == "success") {
+                               
+                                if (data == "ok") {
+                                    //layer.alert(data);
+                                    window.location.href = "/DuPontApiTest.aspx";
+                                }
+                                else {
+                                    layer.alert("用户名或密码不对");
+                                }
+                            }
+                        },
+                        error: function (e) {
+                            alert(e);
+                            console.log(e);
+                        }
+                    };
+                    $.ajax(options);
+                }
+                else {
+                    layer.alert("用户名或密码不对");
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div id="login">
+             <h1>Login</h1>             
+               <input type="text" required="required" placeholder="用户名" name="u"/>
+               <input type="password" required="required" placeholder="密码" name="p"/>
+               <button class="but" type="submit">登录</button>             
+    </div>
+
+</body>
+</html>

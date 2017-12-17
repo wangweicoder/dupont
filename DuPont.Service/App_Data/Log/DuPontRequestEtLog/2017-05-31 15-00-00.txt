@@ -1,0 +1,20 @@
+Operator/ReplyRequirement
+---------05/31/2017 15:07:25,569---------
+先锋帮的农机手接受订单CommentString:
+FarmerName:58
+Id:608
+OperatoName:张硕
+OrderState:100502
+Score:0
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:197a66e3e0a4b392676c0d681bc331b13983442290305c6d7c4e6a5e1639ca2e
+Operator/CommentOrder:应为来自命名空间“”的元素“root”。。遇到名称为“”、命名空间为“”的“None”。Operator/CommentRequirement
+---------05/31/2017 15:39:37,044---------
+先锋帮的农机手评价大农户CommentString:评价608
+FarmerName:58
+Id:608
+OperatoName:张硕
+OrderState:100508
+Score:4
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:3b789cedccddc2d8cc988bc8ccf91bad7e6a196fa9635ecfb21439dc018caf75

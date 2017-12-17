@@ -1,0 +1,497 @@
+﻿@model DuPont.Models.Models.MultiModel<List<DuPont.Models.Dtos.Background.User.SearchExpertListOutput>>
+@{
+    ViewBag.Title = "ExpertList";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@using Webdiyer.WebControls.Mvc;
+@using DuPont.Extensions;
+@section HTML_Header{
+    <style>
+        /*设置表格为固定布局*/
+        .table-fixed {
+            table-layout: fixed; /* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+        }
+
+            .table-fixed td {
+                width: 100%;
+                word-break: keep-all; /* 不换行 */
+                white-space: nowrap; /* 不换行 */
+                overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+                text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+            }
+
+        /*行高30*/
+        .lh30 {
+            line-height: 30px;
+        }
+
+        /*分割线*/
+        .line {
+            padding-top: 10px;
+            margin: 0px;
+            border-color: #3E7B36;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #3E7B36;
+                border-color: #3E7B36;
+            }
+
+        .table {
+            margin-bottom: 0px;
+        }
+
+        .lightgreen {
+            background-color: #B4DAAC !important;
+        }
+    </style>
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 用户管理</li>
+    <li class="active">专家管理</li>
+}
+<h3 style="margin-top:5px;" class="text-center"><b>专家管理</b></h3>
+<div class="container-fluid">
+    <div class="row">
+        @using (Html.BeginForm("ExpertList", "User", FormMethod.Get, new { @class = "form-horizontal" }))
+        {
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-1 text-nowrap">角色类别</label>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" id="RoleId" name="RoleId">
+                        <option value="0">--请选择角色--</option>
+                        <option value="3">大农户</option>
+                        <option value="4">农机手</option>
+                        <option value="5">产业商</option>
+                        <option value="6">经销商</option>
+                        <option value="2">管理员</option>
+                    </select>
+                </div>
+                <label class="col-xs-12 col-sm-1 text-nowrap">手机号</label>
+                <div class="col-xs-12 col-sm-3">
+                    <input type="tel" name="PhoneNumber" class="form-control" id="PhoneNumber" placeholder="请输入手机号" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-1 lh30">省份</label>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" name="Province" id="selProvince">
+                        <option value="0">--请选择省份--</option>
+                    </select>
+                </div>
+                <label class="col-xs-12 col-sm-1 lh30">城市</label>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" name="City" id="selCity">
+                        <option value="0">--请选择城市--</option>
+                    </select>
+                </div>
+                <label class="col-xs-12 col-sm-1 lh30">地区</label>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" name="Region" id="selDistrict">
+                        <option value="0">--请选择区/县--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-1 text-nowrap lh30">注册时间</label>
+                <div class="col-xs-12 col-sm-4">
+                    <div class="input-group input-daterange">
+                        <input type="text" class="form-control input-sm form-control" name="StartTime" id="StartTime" />
+                        <span class="input-group-addon">到</span>
+                        <input type="text" class="form-control input-sm form-control" name="EndTime" id="EndTime" />
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-2 hidden-xs">
+                    <button class="btn btn-block btn-primary btn_submit">检 索 <span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </div>
+            <div class="form-group visible-xs">
+                <div class="col-xs-12 col-sm-2">
+                    <button class="btn btn-block btn-primary btn_submit">检 索 <span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </div>
+        }
+    </div>
+    <hr class="line" />
+    <div class="row">
+        <button type="button" class="btn btn-warning" id="btnGrantExpert">指定为专家</button>
+        <button type="button" class="btn btn-danger" id="btnCancelExpert">取消专家</button>
+    </div>
+    <div class="row">
+        <table class="table table-fixed table-bordered table-hover table-striped" id="expertList">
+            <thead style="background-color:#48A13C;color:#fff">
+                <tr>
+                    <th>
+                        <label for="chkAll">
+                            <input type="checkbox" name="name" id="chkAll" />全选
+                        </label>
+                    </th>
+                    <th>
+                        用户名
+                    </th>
+                    <th>
+                        专家
+                    </th>
+                    <th>
+                        手机号
+                    </th>
+                    <th>
+                        省
+                    </th>
+                    <th class="hidden-xs">
+                        市
+                    </th>
+                    <th class="hidden-xs">
+                        区/县
+                    </th>
+                    <th class="hidden-xs">
+                        乡镇
+                    </th>
+                    <th class="hidden-xs">
+                        村
+                    </th>
+                    <th>
+                        注册时间
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.IsSuccess)
+                {
+                    if (Model.Data != null && Model.Data.Count > 0)
+                    {
+                        foreach (var user in Model.Data)
+                        {
+
+                            <tr>
+                                @{var emptyAlternateString = "<span style=\"color:#cdcdcd;\">未设置</span>";}
+                                <td><input type="checkbox" id="chk_user_@user.UserId" /></td>
+                                <td>@(Html.Raw(user.UserName.DefaultIfEmpty(emptyAlternateString)))</td>
+                                <td>@(user.IsExpert ? "是" : "否")</td>
+                                <td>@user.PhoneNumber</td>
+                                <td>@(Html.Raw(user.Province.DefaultIfEmpty(emptyAlternateString)))</td>
+                                <td class="hidden-xs">@(Html.Raw(user.City.DefaultIfEmpty(emptyAlternateString)))</td>
+                                <td class="hidden-xs">@(Html.Raw(user.Region.DefaultIfEmpty(emptyAlternateString)))</td>
+                                <td class="hidden-xs">@(Html.Raw(user.Township.DefaultIfEmpty(emptyAlternateString)))</td>
+                                <td class="hidden-xs">@(Html.Raw(user.Village.DefaultIfEmpty(emptyAlternateString)))</td>
+                                <td>@user.CreateTime.ToString("yyyy.MM.dd")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="10" align="center">没有匹配的结果!</td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+        @Html.Pager(Model.Pager).Options(o =>
+                        {
+                            o.SetPageIndexParameterName("PageIndex");
+                            o.SetContainerTagName("ul");
+                            o.SetCssClass("pagination");
+                            o.SetCurrentPagerItemTemplate("<li class=\"active\"><a  href=\"#\">{0}</a></li>");
+                            o.SetDisabledPagerItemTemplate("<li class=\"disabled\"><a >{0}</a></li>");
+                            o.SetPagerItemTemplate("<li >{0}</li>");
+                            o.SetId("bootstrappager");
+                            o.SetFirstPageText("首页");
+                            o.SetPrevPageText("上一页");
+                            o.SetNextPageText("下一页");
+                            o.SetLastPageText("最后一页");
+                        })
+    </div>
+</div>
+
+@section HTML_Footer{
+    <link href="/Content/Styles/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+    <script src="/Content/Styles/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="/Content/Styles/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+    <script src="~/Content/Styles/plugins/layer/layer.js"></script>
+    <script>
+        //获取url中的参数
+        function getQueryStringByName(name) {
+            var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+            if (result == null || result.length < 1) {
+
+                return "";
+            }
+            return result[1];
+        }
+
+        $(function () {
+            //绑定日期输入框
+            $('.input-daterange').datepicker({
+                todayBtn: true,
+                clearBtn: true,
+                language: "zh-CN",
+                orientation: "top auto"
+
+            });
+
+            //全选复选框
+            var $chkAll = $('#chkAll');
+            $chkAll.change(function () {
+                var that = this;
+                $('#expertList>tbody :checkbox').prop({ checked: that.checked }).trigger('change');
+            });
+
+            var $checkboxList = $('[id^=chk_user_]');
+            $checkboxList.change(function () {
+                var selectCount = 0;
+                $checkboxList.each(function () {
+                    if (this.checked) {
+                        selectCount++;
+                    }
+                });
+                $(this).closest('tr')[this.checked ? 'addClass' : 'removeClass']('lightgreen');
+
+                if (selectCount > 0 && selectCount == $checkboxList.length) {
+                    $chkAll.prop({ checked: true });
+                } else {
+                    $chkAll.prop({ checked: false });
+                }
+            });
+
+            //专家授权
+            $('#btnGrantExpert').click(function () {
+                var selectCount = 0;
+                var userIds = [];
+                $checkboxList.each(function () {
+                    if (this.checked) {
+                        userIds[selectCount++] = $(this).attr('id').replace('chk_user_', '');
+                    }
+                });
+
+                if (selectCount > 0) {
+                    layer.confirm('确定要指定这' + selectCount + '个用户为专家?', { icon: 3, title: '提示' }, function () {
+                        var parameter = "userIds=" + userIds.join('&userIds=');;
+                        $.post('/User/GrantExpert', parameter, function (data) {
+                            if (data && data.IsSuccess) {
+                                top.window.Success(data.Message);
+                                location.reload();
+                            }
+                        });
+                    });
+                }
+            });
+
+            //取消专家资格
+            $('#btnCancelExpert').click(function () {
+                var selectCount = 0;
+                var userIds = [];
+                $checkboxList.each(function () {
+                    if (this.checked) {
+                        userIds[selectCount++] = $(this).attr('id').replace('chk_user_', '');
+                    }
+                });
+
+                if (selectCount > 0) {
+                    layer.confirm('确定要取消这' + selectCount + '个用户的专家身份?', { icon: 3, title: '提示' }, function () {
+                        var parameter = "userIds=" + userIds.join('&userIds=');;
+                        $.post('/User/CancelExpert', parameter, function (data) {
+                            if (data && data.IsSuccess) {
+                                top.window.Success(data.Message);
+                                location.reload();
+                            }
+                        });
+
+
+                    });
+                }
+            });
+
+            //检索
+            $(".btn_submit").click(function () {
+                var url = "/User/ExpertList?RoleId=" + $("#RoleId").val() + "&PhoneNumber=" + $("#PhoneNumber").val() + "&Province=" + $("#selProvince").val() + "&City=" + $("#selCity").val() + "&Region=" + $("#selDistrict").val() + "&StartTime=" + $("#StartTime").val() + "&EndTime=" + $("#EndTime").val();
+                location.href = url;
+            });
+
+
+            $('tr').click(function (event) {
+                if (event.target.tagName === 'INPUT')
+                    return;
+
+                var $chk = $(this).find(':checkbox:eq(0)');
+                $chk.prop({ checked: !$chk.prop('checked') }).triggerHandler('change');
+            });
+        });
+
+
+    </script>
+
+
+    <script type="text/javascript">
+        var $province = null;
+        var $city = null;
+        var $region = null;
+        var $role = null;
+        $(function () {
+            $province = $("#selProvince");
+            $city = $("#selCity");
+            $region = $("#selDistrict");
+            $role = $('#RoleId');
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": "0" },
+                success: function (data) {
+                    if (data && data.Entity) {
+                        var html = "<option value='0'>--请选择省份--</option>";
+                        var province = getQueryStringByName('Province');
+                        $.each(data.Entity, function (i, v) {
+
+                            if (v.AID == province) {
+                                html += '<option selected value="' + v.AID + '">' + v.DisplayName + '</option>';
+                            }
+                            else {
+                                html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                            }
+                        });
+
+                        $province.empty().append(html);
+                        $province.val(province == "" ? "0" : province);
+                        getcity(1);
+                    };
+                },
+            };
+            $.ajax(options);
+
+            getcity();
+
+            getregion();
+            //选择省份获取对应的城市
+            $province.change(function () {
+                if ($province.val() == 0) {
+                    $city.empty().append("<option value='0'>--请选择区/县--</option>");
+                }
+                else {
+                    getcity(0);
+                }
+                $region.empty().append("<option value='0'>--请选择区/县--</option>");
+            });
+            //选择城市获取对应的区县
+            $city.change(function () {
+                if ($city.val() == 0) {
+                    $region.empty().append("<option value='0'>--请选择区/县--</option>");
+                }
+                else {
+                    getregion(0);
+                }
+
+            });
+
+            //给角色类别设置默认值
+            var roleId = getQueryStringByName('RoleId');
+            if (roleId != "") {
+                $role.val(roleId);
+            }
+
+            var phoneNumber = getQueryStringByName('PhoneNumber');
+            if (phoneNumber != "") {
+                $("#PhoneNumber").val();
+            }
+
+            //注册时间默认值设置
+            var startTime = decodeURIComponent(getQueryStringByName('StartTime')).replace('年', '-').replace('月', '-').replace('日', '');
+            var endTime = decodeURIComponent(getQueryStringByName('EndTime')).replace('年', '-').replace('月', '-').replace('日', '');
+            if (startTime != "") {
+                var stTime = new Date(startTime);
+                $("#StartTime").val(stTime.getFullYear() + '年' + (stTime.getMonth() + 1) + '月' + stTime.getDate() + '日');
+            }
+            if (endTime != "") {
+                var endTime = new Date(endTime);
+                $("#EndTime").val(endTime.getFullYear() + '年' + (endTime.getMonth() + 1) + '月' + endTime.getDate() + '日');
+            }
+        });
+        //获取城市
+        function getcity(state) {
+            var selValue = $province.val();;
+            if (selValue == "0") {
+                if (getQueryStringByName('Province') == "0" || getQueryStringByName('Province') == "") {
+                    return;
+                }
+                else {
+                    selValue = getQueryStringByName('Province');
+                }
+            }
+            $("#selCity option:gt(0)").remove();
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": selValue },
+                success: function (data) {//data在这
+                    if (data && data.Entity) {
+                        var html = '';
+                        var city = getQueryStringByName('City');
+                        $.each(data.Entity, function (i, v) {
+                            if (v.AID == city) {
+                                html += '<option selected value="' + v.AID + '">' + v.DisplayName + '</option>';
+                            }
+                            else {
+                                html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                            }
+
+                        });
+                        $city.append(html);
+
+                        if (city != 0 && state != 0) {
+                            $city.val(city);
+                            getregion(1);
+                        }
+                    };
+                },
+            };
+            $.ajax(options);
+        }
+        //获取区县
+        function getregion(state) {
+            var selValue = $city.val();;
+            if (selValue == "0") {
+                if (getQueryStringByName('City') == "0" || getQueryStringByName('City') == "") {
+                    return;
+                }
+                else {
+                    selValue = getQueryStringByName('City');
+                }
+            }
+            $("#selDistrict option:gt(0)").remove();
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": selValue },
+                success: function (data) {//data在这
+                    if (data && data.Entity) {
+                        var html = '';
+                        var region = getQueryStringByName('Region');
+                        $.each(data.Entity, function (i, v) {
+                            if (v.AID == region) {
+                                html += '<option selected value="' + v.AID + '">' + v.DisplayName + '</option>';
+                            }
+                            else {
+                                html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                            }
+                        });
+                        $region.append(html);
+
+                        if (region != 0 && state != 0) {
+                            $region.val(region);
+                        }
+                    };
+                },
+            };
+            $.ajax(options);
+        }
+    </script>
+}

@@ -1,0 +1,56 @@
+Operator/ReplyFarmerRequirement
+---------04/20/2017 10:31:44,148---------
+靠谱作业农机手接受订单
+id:412
+userId:420
+Name:e田农机手
+NickName:E田农机手
+Address:116.39564503788,39.92998577808
+PhoneNumber:15725505192
+OtherMachinery:ewwe
+Credit:1
+cur_time:1
+Token:FC1AAFE199F643BAB00B31596FDFE45D
+encrypt:1232131
+Operator/ReplyFarmerRequirement
+---------04/20/2017 10:32:44,195---------
+靠谱作业农机手接受订单
+id:412
+userId:420
+Name:e田农机手
+NickName:E田农机手
+Address:116.39564503788,39.92998577808
+PhoneNumber:15725505192
+OtherMachinery:ewwe
+Credit:1
+cur_time:1
+Token:FC1AAFE199F643BAB00B31596FDFE45D
+encrypt:1232131
+Operator/ReplyFarmerRequirement
+---------04/20/2017 10:33:48,043---------
+靠谱作业农机手接受订单
+id:403
+userId:420
+Name:e田农机手
+NickName:E田农机手
+Address:116.39564503788,39.92998577808
+PhoneNumber:15725505192
+OtherMachinery:ewwe
+Credit:1
+cur_time:1
+Token:FC1AAFE199F643BAB00B31596FDFE45D
+encrypt:1232131
+Operator/ReplyFarmerRequirement
+---------04/20/2017 10:34:59,673---------
+靠谱作业农机手接受订单
+id:380
+userId:420
+Name:e田农机手
+NickName:E田农机手
+Address:116.39564503788,39.92998577808
+PhoneNumber:15725505192
+OtherMachinery:ewwe
+Credit:1
+cur_time:1
+Token:FC1AAFE199F643BAB00B31596FDFE45D
+encrypt:1232131

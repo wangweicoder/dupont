@@ -1,0 +1,207 @@
+﻿@model DuPont.Models.Dtos.Background.LearningWorld.FarmAreaInput
+@{
+    ViewBag.PageTitle = "添加农场分区";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+@section HTML_Header{
+    <link href="~/Content/Styles/plugins/ueditor/themes/default/css/umeditor.min.css" rel="stylesheet" />
+    <link href="~/Content/Styles/plugins/iCheck/flat/green.css" rel="stylesheet" />
+    <style>
+        .lh30 {
+            line-height: 30px;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #3E7B36;
+                border-color: #3E7B36;
+            }
+
+        #myEditor {
+            min-height: 300px;
+            width: 100%;
+        }
+
+        ul.edui-tab-nav {
+            height: 35px;
+        }
+    </style>
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i>示范农场管理</li>
+    <li class="active">添加农场分区</li>
+}
+<h3 style="margin-top: 5px;" class="text-center"><b>@ViewBag.PageTitle</b></h3>
+<div class="container-fluid">
+    @using (Html.BeginForm("AddExhibitionAreaForDemonstateFarm", "LearnGarden", FormMethod.Post))
+    {
+        <div class="row form-group">
+            <label class="col-xs-12 col-sm-1 lh30 text-nowrap">农场名称</label>
+            <div class="col-xs-3">
+                @Html.HiddenFor(m => m.FarmId)
+                @Html.TextBoxFor(m => m.FarmName, new { @readonly = "readonly", @class = "form-control" })
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="Name" class="col-xs-12 col-sm-1 lh30 text-nowrap">分区名称</label>
+            <div class="col-xs-3">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "请输入分区名" })
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="Name" class="col-xs-12 col-sm-1 lh30 text-nowrap">已添分区</label>
+            <div class="col-xs-3">
+                <select id="exhibitionList" class="form-control"></select>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-danger" id="btnDelete" onclick="DeleteExhibitionArea()">删除</button>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <label for="IsOpen" class="control-label col-xs-12 col-sm-1 text-nowrap">农机区</label>
+            <div class="col-xs-12 col-sm-3">
+                @Html.CheckBoxFor(m => m.IsMachineryArea, new { @class = "minimal" })
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <label for="Content" class="col-xs-12 col-sm-1 lh30 text-nowrap">内容</label>
+            <div class="col-xs-12 col-sm-9">
+                @Html.Raw("<script type=\"text/plain\" id=\"myEditor\" name=\"Content\"></script>")
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-12 col-sm-2 col-sm-offset-1">
+                <button type="submit" class="btn btn-primary btn-block">添加分区</button>
+
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <a href="/LearnGarden/FarmList" class="btn btn-default btn-block"><span class="glyphicon glyphicon-arrow-left"></span> 返回</a>
+            </div>
+        </div>
+    }
+</div>
+@section HTML_Footer{
+    <script src="~/Content/Styles/plugins/ueditor/umeditor.config.js"></script>
+    <script src="~/Content/Styles/plugins/ueditor/umeditor.min.js"></script>
+    <script src="~/Content/Styles/plugins/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script src="~/Content/Styles/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/Content/Styles/plugins/layer/layer.js"></script>
+    <script>
+        //绑定复选框
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat'
+        })
+        var um = UM.getEditor('myEditor');
+
+
+        @if (Model != null && Model.Content != null)
+    {
+        <text>
+        um.setContent(HtmlUtil.htmlDecodeByRegExp('@(Model.Content.Replace("'", "\"").Replace("\r\n", ""))'));
+        </text>
+
+    }
+
+        //删除农场展区
+        function DeleteExhibitionArea() {
+            var $exhibitionSelect = $('#exhibitionList');
+            var result = $exhibitionSelect.val();
+            if (result == "") {
+                top.window.Warn("请选择一个分区!");
+                return;
+            }
+
+            layer.confirm('确认要删除该展区', { icon: 3, title: '提示' }, function (index) {
+                var parameter = { "farmId": "@Request["farmId"]", "areaId": result };
+                var index = layer.msg('处理中,请稍后...', { icon: 16, time: 15 * 1000 });
+                $.post('/LearnGarden/DeleteExhibitionArea', parameter, function (data) {
+                    if (data) {
+                        if (data.IsSuccess) {
+                            top.window.Success("删除成功!");
+                            $exhibitionSelect.empty();
+                            LoadFarmAreaList();
+                        } else {
+                            top.window.Warn(data.Message);
+                        }
+                        layer.close(index);
+                    } else {
+                        top.window.Warn("删除失败!");
+                    }
+                });
+            });
+
+        }
+
+        function LoadFarmAreaList() {
+            $.post("/LearnGarden/ExhibitionAreaList", { "farmId": "@Request["farmId"]" }, function (data) {
+                if (data) {
+                    if (data.IsSuccess) {
+                        if (data.Entity.length > 0) {
+                            var $exhibitionSelect = $('#exhibitionList');
+                            var html = '';
+                            for (var index in data.Entity) {
+                                var area = data.Entity[index];
+                                var areaName = area.ExhibitionAreaName;
+                                if (area.IsFarmMachinery) {
+                                    areaName = '(农机区)' + areaName;
+                                }
+
+                                html += '<option value=' + area.ExhibitionAreaId + '>' + areaName + '</option>';
+                                $('#btnDelete').prop({ disable: false });
+                                $('#exhibitionList').prop({ disable: false });
+                            }
+                            $exhibitionSelect.html(html);
+                        } else {
+                            $('#btnDelete').prop({ disabled: true });
+                            $('#exhibitionList').prop({ disabled: true });
+                        }
+                    } else {
+                        top.window.Warn(data.Message);
+                        $('#btnDelete').prop({ disabled: true });
+                        $('#exhibitionList').prop({ disabled: true });
+                    }
+                }
+            });
+        }
+
+        $(function () {
+            @if (!string.IsNullOrEmpty(Request["FarmName"]))
+            {
+                <text>
+            $('#FarmName').val('@Request["FarmName"]');
+            </text>
+            }
+
+            @if (!string.IsNullOrEmpty(Request["FarmId"]))
+            {
+                <text>
+            $('#FarmId').val('@Request["FarmId"]');
+            </text>
+            }
+
+            @if (Model!=null && string.IsNullOrEmpty(Model.Name))
+            {
+                <text>
+                    $('#Name').val('');
+                </text>
+            }
+
+            LoadFarmAreaList();
+
+
+        });
+    </script>
+}

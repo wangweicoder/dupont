@@ -1,0 +1,15 @@
+Operator/ReplyFarmerRequirement
+---------06/01/2017 14:26:54,640---------
+靠谱作业农机手接受订单
+Address:121.41852965881,37.417282264385
+Credit:1
+cur_time:1496288421077
+id:613
+Name:贺祥
+NickName:贺祥
+OtherMachinery:
+PhoneNumber:15725505192
+Token:C8D039FDFEFC47E38C630F1411CF3A18
+userId:150640
+encrypt:2c0705e09bed67e213f532b502bcf5626a40f19b2e86d8d5caf470a0c4bac678
+Operator/ReplyFarmerRequirement操作超时

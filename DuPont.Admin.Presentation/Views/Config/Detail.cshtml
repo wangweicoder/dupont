@@ -1,0 +1,62 @@
+﻿@model DuPont.Models.Dtos.Background.Config.SystemSettingViewModel
+@{
+    ViewBag.PageTitle = "修改系统配置";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@section HTML_Header{
+    <style>
+        .mt10 {
+            margin-top: 10px;
+        }
+
+        .control-label {
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #3DC32B;
+                border-color: #3DC32B;
+            }
+    </style>
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 后台管理</li>
+    <li class="active">配置项详情</li>
+}
+<h3 style="margin-top: 5px;" class="text-center"><b>@ViewBag.PageTitle</b></h3>
+<div class="container">
+    @using (Html.BeginForm("Update", "Config", FormMethod.Post))
+    {
+        @Html.HiddenFor(p => p.ID);
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label col-md-1">描述</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(p => p.COMMENT, new { @class = "form-control",@readonly="readonly" })
+                </div>
+            </div>
+        </div>
+        <div class="row mt10">
+            <div class="form-group">
+                <label class="control-label col-md-1">配置项值</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(p => p.SETTING_VALUE, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1 mt10">
+                <button class="btn btn-block btn-primary" type="submit">修改</button>
+            </div>
+        </div>
+    }
+</div>

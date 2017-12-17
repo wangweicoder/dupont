@@ -1,0 +1,503 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B468A183-87CB-4CAE-B03D-E9C1132C340A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DuPont.Models</RootNamespace>
+    <AssemblyName>DuPont.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Webdiyer.MvcPager">
+      <HintPath>..\Library\Webdiyer.MvcPager.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataAnotations\DateTimeAttribute.cs" />
+    <Compile Include="DataAnotations\DomainAttribute.cs" />
+    <Compile Include="DataAnotations\XSSJavaScriptAttribute.cs" />
+    <Compile Include="DataAnotations\IllegalJavaScriptAttribute.cs" />
+    <Compile Include="DataAnotations\PasswordAttribute.cs" />
+    <Compile Include="DataAnotations\PhoneNumberAttribute.cs" />
+    <Compile Include="DataAnotations\SQLValidate.cs" />
+    <Compile Include="Dtos\Background\Config\SystemSettingViewModel.cs" />
+    <Compile Include="Dtos\Background\Demand\BusinessListModel.cs" />
+    <Compile Include="Dtos\Background\Demand\BusinessSeachModel.cs" />
+    <Compile Include="Dtos\Background\Demand\DemandReplyItem.cs" />
+    <Compile Include="Dtos\Background\Demand\FarmerDemandModel.cs" />
+    <Compile Include="Dtos\Background\Demand\FarmerDemandReplyItem.cs" />
+    <Compile Include="Dtos\Background\Demand\FarmerSeachModel.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\Article.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\ArticleCategory.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\ArticleInput.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\ArticleListSearchInput.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\ArticleListSearchOutput.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\DemonstateFarmDetailOutput.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\DemonstateFarmDetailViewModel.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\ExhibitionAreaListOutput.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\FarmAreaInput.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\FarmBookListInput.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\FarmBookListOutput.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\FarmListOutput.cs" />
+    <Compile Include="Dtos\Background\LearningWorld\FarmListInput.cs" />
+    <Compile Include="Dtos\Background\LoginInputDto.cs" />
+    <Compile Include="Dtos\Background\Notification\CreatePublicNotificationTaskOutput.cs" />
+    <Compile Include="Dtos\Background\Notification\PersonalNotificationListOutput.cs" />
+    <Compile Include="Dtos\Background\Notification\PublicNotificationUserListOutput.cs" />
+    <Compile Include="Dtos\Background\Question\QuestionDetailWithReplyListOutput.cs" />
+    <Compile Include="Dtos\Background\Question\SearchQuestionInput.cs" />
+    <Compile Include="Dtos\Background\Question\SearchQutionOutput.cs" />
+    <Compile Include="Dtos\Background\User\BackgroundUserModel.cs" />
+    <Compile Include="Dtos\Background\User\OperatorProfile.cs" />
+    <Compile Include="Dtos\Background\User\SearchBackgroundUserListInput.cs" />
+    <Compile Include="Dtos\Background\User\SearchBackgroundUserListOutput.cs" />
+    <Compile Include="Dtos\Background\User\SearchExpertListInput.cs" />
+    <Compile Include="Dtos\Background\User\SearchExpertListOutput.cs" />
+    <Compile Include="Dtos\Background\User\SearchUserListInputDto.cs" />
+    <Compile Include="Dtos\Background\User\SearchUserListWithStateOutput.cs" />
+    <Compile Include="Dtos\Foreground\Account\RegisterInput.cs" />
+    <Compile Include="Dtos\Foreground\Account\SaveProfileInput.cs" />
+    <Compile Include="Dtos\Foreground\Account\UpdatePasswordInput.cs" />
+    <Compile Include="Dtos\Foreground\Account\UpdatePasswordOutput.cs" />
+    <Compile Include="Dtos\Foreground\BaseModel.cs" />
+    <Compile Include="Dtos\Foreground\Common\NearbyOperatorListInput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertMyQuestionListInput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertMyQuestionListOutput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertMyReplyListInput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertMyReplyListOutput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertPermissionCheckOutput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertQuestionCarouselOutput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertQuestionDetailOutput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertQuestionInput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertQuestionListOutput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertQuestionReplyAgreeInput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertQuestionReplyInput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertQuestionReplyListOutput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertQuestionReplyListSearchInput.cs" />
+    <Compile Include="Dtos\Foreground\Expert\ExpertQuestionSearchInput.cs" />
+    <Compile Include="Dtos\Foreground\LearningWorld\ArticleListSearchInput.cs" />
+    <Compile Include="Dtos\Foreground\LearningWorld\ArticleListSearchOutput.cs" />
+    <Compile Include="Dtos\Foreground\LearningWorld\CarouselPictureOutput.cs" />
+    <Compile Include="Dtos\Foreground\LearningWorld\CarouselPictureSearchInput.cs" />
+    <Compile Include="Dtos\Foreground\LearningWorld\FarmBookingInput.cs" />
+    <Compile Include="Dtos\Foreground\LearningWorld\FarmDetailInput.cs" />
+    <Compile Include="Dtos\Foreground\LearningWorld\FarmDetailOutput.cs" />
+    <Compile Include="Dtos\Foreground\LearningWorld\FarmListInput.cs" />
+    <Compile Include="Dtos\Foreground\LearningWorld\FarmListOutput.cs" />
+    <Compile Include="Dtos\Foreground\LearningWorld\NavigateMenuItemOutput.cs" />
+    <Compile Include="Dtos\Foreground\Notification\MyMessageInput.cs" />
+    <Compile Include="Dtos\Foreground\Notification\MyMessageOutput.cs" />
+    <Compile Include="Dtos\Foreground\Notification\RegisterTokenInput.cs" />
+    <Compile Include="Dtos\PaginationInput.cs" />
+    <Compile Include="Dtos\SearchModel.cs" />
+    <Compile Include="Enum\ActionType.cs" />
+    <Compile Include="Enum\DataKey.cs" />
+    <Compile Include="Enum\Enums.cs" />
+    <Compile Include="Enum\HttpMethod.cs" />
+    <Compile Include="Ex\T_QUESTION_REPLYEX.cs" />
+    <Compile Include="Migrations\201601120940594_v4.cs" />
+    <Compile Include="Migrations\201601120940594_v4.Designer.cs">
+      <DependentUpon>201601120940594_v4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601121010406_v5.cs" />
+    <Compile Include="Migrations\201601121010406_v5.Designer.cs">
+      <DependentUpon>201601121010406_v5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601131605134_v6.cs" />
+    <Compile Include="Migrations\201601131605134_v6.Designer.cs">
+      <DependentUpon>201601131605134_v6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601141720224_v7.cs" />
+    <Compile Include="Migrations\201601141720224_v7.Designer.cs">
+      <DependentUpon>201601141720224_v7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601150324440_v8.cs" />
+    <Compile Include="Migrations\201601150324440_v8.Designer.cs">
+      <DependentUpon>201601150324440_v8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601181516529_v9.cs" />
+    <Compile Include="Migrations\201601181516529_v9.Designer.cs">
+      <DependentUpon>201601181516529_v9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201601181912169_v10.cs" />
+    <Compile Include="Migrations\201601181912169_v10.Designer.cs">
+      <DependentUpon>201601181912169_v10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602011245147_v11.cs" />
+    <Compile Include="Migrations\201602011245147_v11.Designer.cs">
+      <DependentUpon>201602011245147_v11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602050632204_v12.cs" />
+    <Compile Include="Migrations\201602050632204_v12.Designer.cs">
+      <DependentUpon>201602050632204_v12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602170209522_v13.cs" />
+    <Compile Include="Migrations\201602170209522_v13.Designer.cs">
+      <DependentUpon>201602170209522_v13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602220624057_v14.cs" />
+    <Compile Include="Migrations\201602220624057_v14.Designer.cs">
+      <DependentUpon>201602220624057_v14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602240337594_v15.cs" />
+    <Compile Include="Migrations\201602240337594_v15.Designer.cs">
+      <DependentUpon>201602240337594_v15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602260353557_v16.cs" />
+    <Compile Include="Migrations\201602260353557_v16.Designer.cs">
+      <DependentUpon>201602260353557_v16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602260901489_v17.cs" />
+    <Compile Include="Migrations\201602260901489_v17.Designer.cs">
+      <DependentUpon>201602260901489_v17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603150746303_v18.cs" />
+    <Compile Include="Migrations\201603150746303_v18.Designer.cs">
+      <DependentUpon>201603150746303_v18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603180943429_19.cs" />
+    <Compile Include="Migrations\201603180943429_19.Designer.cs">
+      <DependentUpon>201603180943429_19.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603240900168_v20.cs" />
+    <Compile Include="Migrations\201603240900168_v20.Designer.cs">
+      <DependentUpon>201603240900168_v20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702170648365_v21.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Migrations\201702170648365_v21.Designer.cs">
+      <DependentUpon>201702170648365_v21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702230213138_v22.cs" />
+    <Compile Include="Migrations\201702230213138_v22.Designer.cs">
+      <DependentUpon>201702230213138_v22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703070918302_v23.cs" />
+    <Compile Include="Migrations\201703070918302_v23.Designer.cs">
+      <DependentUpon>201703070918302_v23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703090330473_v24.cs" />
+    <Compile Include="Migrations\201703090330473_v24.Designer.cs">
+      <DependentUpon>201703090330473_v24.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703090631066_v25.cs" />
+    <Compile Include="Migrations\201703090631066_v25.Designer.cs">
+      <DependentUpon>201703090631066_v25.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703090946391_v26.cs" />
+    <Compile Include="Migrations\201703090946391_v26.Designer.cs">
+      <DependentUpon>201703090946391_v26.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704130724450_v27.cs" />
+    <Compile Include="Migrations\201704130724450_v27.Designer.cs">
+      <DependentUpon>201704130724450_v27.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706051030113_v28.cs" />
+    <Compile Include="Migrations\201706051030113_v28.Designer.cs">
+      <DependentUpon>201706051030113_v28.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="MissingDllHack.cs" />
+    <Compile Include="Models\DuPont_TestContext.cs" />
+    <Compile Include="Models\MachineQuantityInfo.cs" />
+    <Compile Include="Models\Mapping\QQUserMap.cs" />
+    <Compile Include="Models\Mapping\T_ADMIN_USERMap.cs" />
+    <Compile Include="Models\Mapping\T_APP_VERSIONMap.cs" />
+    <Compile Include="Models\Mapping\T_AREAMap.cs" />
+    <Compile Include="Models\Mapping\T_ARTICLEMap.cs" />
+    <Compile Include="Models\Mapping\T_ARTICLE_CATEGORYMap.cs" />
+    <Compile Include="Models\Mapping\T_BUSINESS_DEMAND_RESPONSE_RELATIONMap.cs" />
+    <Compile Include="Models\Mapping\T_BUSINESS_PUBLISHED_DEMANDMap.cs" />
+    <Compile Include="Models\Mapping\T_BUSINESS_VERIFICATION_INFOMap.cs" />
+    <Compile Include="Models\Mapping\T_CAROUSELMap.cs" />
+    <Compile Include="Models\Mapping\T_DEMONSTRATION_FARMMap.cs" />
+    <Compile Include="Models\Mapping\T_EXPERTMap.cs" />
+    <Compile Include="Models\Mapping\T_FARMER_DEMAND_RESPONSE_RELATIONMap.cs" />
+    <Compile Include="Models\Mapping\T_FARMER_PUBLISHED_DEMANDMap.cs" />
+    <Compile Include="Models\Mapping\T_FARMER_VERIFICATION_INFOMap.cs" />
+    <Compile Include="Models\Mapping\T_FARM_AREAMap.cs" />
+    <Compile Include="Models\Mapping\T_FARM_BOOKINGMap.cs" />
+    <Compile Include="Models\Mapping\T_FileInfoMap.cs" />
+    <Compile Include="Models\Mapping\T_LEARNING_GARDEN_CAROUSELMap.cs" />
+    <Compile Include="Models\Mapping\T_MACHINERY_OPERATOR_VERIFICATION_INFOMap.cs" />
+    <Compile Include="Models\Mapping\T_MACHINE_DEMANDTYPE_RELATIONMap.cs" />
+    <Compile Include="Models\Mapping\T_MENUMap.cs" />
+    <Compile Include="Models\Mapping\T_MENU_ROLE_RELATIONMap.cs" />
+    <Compile Include="Models\Mapping\T_NOTIFICATIONMap.cs" />
+    <Compile Include="Models\Mapping\T_PIONEERCURRENCYHISTORYMap.cs" />
+    <Compile Include="Models\Mapping\T_QUESTIONMap.cs" />
+    <Compile Include="Models\Mapping\T_QUESTION_REPLYMap.cs" />
+    <Compile Include="Models\Mapping\T_ROLEMap.cs" />
+    <Compile Include="Models\Mapping\T_SEND_COMMON_NOTIFICATION_PROGRESSMap.cs" />
+    <Compile Include="Models\Mapping\T_SEND_NOTIFICATION_RESULTMap.cs" />
+    <Compile Include="Models\Mapping\T_SMS_MESSAGEMap.cs" />
+    <Compile Include="Models\Mapping\T_SUPPLIERS_AREAMap.cs" />
+    <Compile Include="Models\Mapping\T_SYS_ADMINMap.cs" />
+    <Compile Include="Models\Mapping\T_SYS_DICTIONARYMap.cs" />
+    <Compile Include="Models\Mapping\T_SYS_LOGMap.cs" />
+    <Compile Include="Models\Mapping\T_SYS_SETTINGMap.cs" />
+    <Compile Include="Models\Mapping\T_USERMap.cs" />
+    <Compile Include="Models\Mapping\T_USER_PASSWORD_HISTORYMap.cs" />
+    <Compile Include="Models\Mapping\T_USER_ROLE_DEMANDTYPELEVEL_RELATIONMap.cs" />
+    <Compile Include="Models\Mapping\T_USER_ROLE_RELATIONMap.cs" />
+    <Compile Include="Models\Mapping\T_User_TokenMap.cs" />
+    <Compile Include="Models\Mapping\T_VISITOR_RECEIVED_NOTIFICATIONMap.cs" />
+    <Compile Include="Models\Mapping\VM_GET_FARMER_TO_BUSINESS_DEMAND_TYPEMap.cs" />
+    <Compile Include="Models\Mapping\VM_GET_FARMER_TO_GET_MACHINERY_OPERATOR_DEMAND_TYPEMap.cs" />
+    <Compile Include="Models\Mapping\VM_GET_LARGE_FARMER_DEMAND_TYPEMap.cs" />
+    <Compile Include="Models\Mapping\VM_GET_PENDING_AUDIT_LISTMap.cs" />
+    <Compile Include="Models\Mapping\VM_GET_USER_ROLE_INFO_LISTMap.cs" />
+    <Compile Include="Models\Mapping\WeChatUserMap.cs" />
+    <Compile Include="Models\QQUser.cs" />
+    <Compile Include="Models\T_ADMIN_USER.cs" />
+    <Compile Include="Models\T_APP_VERSION.cs" />
+    <Compile Include="Models\T_AREA.cs" />
+    <Compile Include="Models\T_ARTICLE.cs" />
+    <Compile Include="Models\T_ARTICLE_CATEGORY.cs" />
+    <Compile Include="Models\T_BUSINESS_DEMAND_RESPONSE_RELATION.cs" />
+    <Compile Include="Models\T_BUSINESS_PUBLISHED_DEMAND.cs" />
+    <Compile Include="Models\T_BUSINESS_VERIFICATION_INFO.cs" />
+    <Compile Include="Models\T_CAROUSEL.cs" />
+    <Compile Include="Models\T_DEMONSTRATION_FARM.cs" />
+    <Compile Include="Models\T_EXPERT.cs" />
+    <Compile Include="Models\T_FARMER_DEMAND_RESPONSE_RELATION.cs" />
+    <Compile Include="Models\T_FARMER_PUBLISHED_DEMAND.cs" />
+    <Compile Include="Models\T_FARMER_VERIFICATION_INFO.cs" />
+    <Compile Include="Models\T_FARM_AREA.cs" />
+    <Compile Include="Models\T_FARM_BOOKING.cs" />
+    <Compile Include="Models\T_FileInfo.cs" />
+    <Compile Include="Models\T_LEARNING_GARDEN_CAROUSEL.cs" />
+    <Compile Include="Models\T_MACHINERY_OPERATOR_VERIFICATION_INFO.cs" />
+    <Compile Include="Models\T_MACHINE_DEMANDTYPE_RELATION.cs" />
+    <Compile Include="Models\T_MENU.cs" />
+    <Compile Include="Models\T_MENU_ROLE_RELATION.cs" />
+    <Compile Include="Models\T_NOTIFICATION.cs" />
+    <Compile Include="Models\T_PIONEERCURRENCYHISTORY.cs" />
+    <Compile Include="Models\T_QUESTION.cs" />
+    <Compile Include="Models\T_QUESTION_REPLY.cs" />
+    <Compile Include="Models\T_ROLE.cs" />
+    <Compile Include="Models\T_SEND_COMMON_NOTIFICATION_PROGRESS.cs" />
+    <Compile Include="Models\T_SEND_NOTIFICATION_RESULT.cs" />
+    <Compile Include="Models\T_SMS_MESSAGE.cs" />
+    <Compile Include="Models\T_SUPPLIERS_AREA.cs" />
+    <Compile Include="Models\T_SYS_ADMIN.cs" />
+    <Compile Include="Models\T_SYS_DICTIONARY.cs" />
+    <Compile Include="Models\T_SYS_LOG.cs" />
+    <Compile Include="Models\T_SYS_SETTING.cs" />
+    <Compile Include="Models\T_USER.cs" />
+    <Compile Include="Models\T_USER_FARMERDEMANDS.cs" />
+    <Compile Include="Models\T_USER_PASSWORD_HISTORY.cs" />
+    <Compile Include="Models\T_USER_ROLE_DEMANDTYPELEVEL_RELATION.cs" />
+    <Compile Include="Models\T_USER_ROLE_RELATION.cs" />
+    <Compile Include="Models\T_User_Token.cs" />
+    <Compile Include="Models\T_VISITOR_RECEIVED_NOTIFICATION.cs" />
+    <Compile Include="Models\VM_GET_FARMER_TO_BUSINESS_DEMAND_TYPE.cs" />
+    <Compile Include="Models\VM_GET_FARMER_TO_GET_MACHINERY_OPERATOR_DEMAND_TYPE.cs" />
+    <Compile Include="Models\VM_GET_LARGE_FARMER_DEMAND_TYPE.cs" />
+    <Compile Include="Models\VM_GET_PENDING_AUDIT_LIST.cs" />
+    <Compile Include="Models\VM_GET_USER_ROLE_INFO_LIST.cs" />
+    <Compile Include="Models\WeChatUser.cs" />
+    <Compile Include="Models_Old\AdminUserLoginInfo.cs" />
+    <Compile Include="Models_Old\AreaViewModel.cs" />
+    <Compile Include="Models_Old\BusinessPublishedDetailsModel.cs" />
+    <Compile Include="Models_Old\BusinessReplyDetailModel.cs" />
+    <Compile Include="Models_Old\CarouselFile.cs" />
+    <Compile Include="Models_Old\CommentDetailModel.cs" />
+    <Compile Include="Models_Old\DtoFarmerRequirementModel.cs" />
+    <Compile Include="Models_Old\CornDayUrlModel.cs" />
+    <Compile Include="Models_Old\DtoCommentFarmerDemandModel.cs" />
+    <Compile Include="Models_Old\DtoUpdateFarmerDemandModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models_Old\FarmerDemand.cs" />
+    <Compile Include="Models_Old\CommonReplyModel.cs" />
+    <Compile Include="Models_Old\ETResponseResult.cs" />
+    <Compile Include="Models_Old\ETStateInfo.cs" />
+    <Compile Include="Models_Old\WeatherAPIEntity.cs" />
+    <Compile Include="Models_Old\DtoGetWeather.cs" />
+    <Compile Include="Models_Old\FarmerPublishedDetailsModel.cs" />
+    <Compile Include="Models_Old\FarmerReplyDetailModel.cs" />
+    <Compile Include="Models_Old\ListDto.cs" />
+    <Compile Include="Models_Old\LogModel.cs" />
+    <Compile Include="Models_Old\MultiModel.cs" />
+    <Compile Include="Models_Old\OneUserSkillModel.cs" />
+    <Compile Include="Models_Old\PublishedModel.cs" />
+    <Compile Include="Models_Old\ReplyDetailModel.cs" />
+    <Compile Include="Models_Old\ReplyModel.cs" />
+    <Compile Include="Models_Old\ResponseResult.cs" />
+    <Compile Include="Models_Old\RoleModel.cs" />
+    <Compile Include="Models_Old\SingleModel.cs" />
+    <Compile Include="Models_Old\SkillModel.cs" />
+    <Compile Include="Models_Old\StateInfo.cs" />
+    <Compile Include="Models_Old\Suppliers_AreaModel.cs" />
+    <Compile Include="Models_Old\T_QUESTION.cs" />
+    <Compile Include="Models_Old\User.cs" />
+    <Compile Include="Models_Old\UserInfoModel.cs" />
+    <Compile Include="Models_Old\UserRoleDemandLevel.cs" />
+    <Compile Include="Models_Old\VersionUpgradeModel.cs" />
+    <Compile Include="Models_Old\WhereModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DuPont.Extensions\DuPont.Extensions.csproj">
+      <Project>{1ea44f16-a4a4-4888-9c38-dc12dbadaf1e}</Project>
+      <Name>DuPont.Extensions</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201601120940594_v4.resx">
+      <DependentUpon>201601120940594_v4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601121010406_v5.resx">
+      <DependentUpon>201601121010406_v5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601131605134_v6.resx">
+      <DependentUpon>201601131605134_v6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601141720224_v7.resx">
+      <DependentUpon>201601141720224_v7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601150324440_v8.resx">
+      <DependentUpon>201601150324440_v8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601181516529_v9.resx">
+      <DependentUpon>201601181516529_v9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201601181912169_v10.resx">
+      <DependentUpon>201601181912169_v10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602011245147_v11.resx">
+      <DependentUpon>201602011245147_v11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602050632204_v12.resx">
+      <DependentUpon>201602050632204_v12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602170209522_v13.resx">
+      <DependentUpon>201602170209522_v13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602220624057_v14.resx">
+      <DependentUpon>201602220624057_v14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602240337594_v15.resx">
+      <DependentUpon>201602240337594_v15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602260353557_v16.resx">
+      <DependentUpon>201602260353557_v16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602260901489_v17.resx">
+      <DependentUpon>201602260901489_v17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603150746303_v18.resx">
+      <DependentUpon>201603150746303_v18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603180943429_19.resx">
+      <DependentUpon>201603180943429_19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603240900168_v20.resx">
+      <DependentUpon>201603240900168_v20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702170648365_v21.resx">
+      <DependentUpon>201702170648365_v21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702230213138_v22.resx">
+      <DependentUpon>201702230213138_v22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703070918302_v23.resx">
+      <DependentUpon>201703070918302_v23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703090330473_v24.resx">
+      <DependentUpon>201703090330473_v24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703090631066_v25.resx">
+      <DependentUpon>201703090631066_v25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703090946391_v26.resx">
+      <DependentUpon>201703090946391_v26.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704130724450_v27.resx">
+      <DependentUpon>201704130724450_v27.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706051030113_v28.resx">
+      <DependentUpon>201706051030113_v28.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

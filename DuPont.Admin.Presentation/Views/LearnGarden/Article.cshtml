@@ -1,0 +1,76 @@
+﻿@model DuPont.Models.Dtos.Background.LearningWorld.Article
+
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@section HTML_Header{
+    <style type="text/css">
+        body{
+            background-color:#fff;
+            padding-bottom:50px;
+        }
+        h1, p {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        h1 {
+            font-size: 25px;
+            padding: 10px 0px;
+        }
+        .content{
+            background-color:#fff;
+        }
+        .article-description {
+            width: 80%;
+            margin: 0px auto;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .article-content {
+            margin-top: 20px;
+            width:80%;
+            margin:0px auto;
+            
+            overflow-wrap:break-word;
+        }
+
+        .wp50 {
+            width: 50%;
+        }
+
+        .ml20 {
+            margin-left: 20px;
+        }
+
+        .pt10 {
+            padding-top: 10px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+}
+
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 学习园地</li>
+    <li class="active">文章详情</li>
+}
+<h1 style="text-align:center">@Model.Title</h1>
+<div class="article-description">
+    <p><span class="ml20">文章分类：@Model.CatName</span></p>
+    <p class="pt10"><label>点击量：<span style="color:red">@Model.Click</span>次</label><label class="ml20">发布日期：<span style="color:blue">@Model.CreateTime.ToString("yyyy.MM.dd")</span></label><label class="ml20">更新日期：<span style="color:blue">@Model.UpdateTime.ToString("yyyy.MM.dd")</span></label></p>
+</div>
+<hr />
+<div class="article-content">
+    @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+</div>
+
+@section HTML_Footer{
+
+}

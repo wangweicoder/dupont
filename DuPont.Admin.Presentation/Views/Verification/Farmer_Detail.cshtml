@@ -1,0 +1,174 @@
+﻿@model DuPont.Admin.Presentation.Models.FarmerVerificationInfoViewModel
+@using DuPont.Entity.Enum
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+@section HTML_Header
+{
+    <link href="/Content/Styles/plugins/select2/select2.min.css" rel="stylesheet" />
+    <style>
+        .pt8 {
+            padding-top: 8px;
+        }
+
+        .h1 {
+            height: 1px;
+        }
+
+        .bg-gray {
+            background-color: gray;
+        }
+
+        .select2 {
+            width: auto !important;
+        }
+
+        .mr10 {
+            margin-right: 10px;
+        }
+
+        .mr20 {
+            margin-right: 20px;
+        }
+
+        .border-dashed {
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .fmyahei {
+            font-family: 'Microsoft YaHei';
+        }
+
+        .col-xs-1 {
+            width: auto;
+        }
+
+        .p0 {
+            padding: 0px;
+        }
+
+        .btn-primary {
+            background-color: #00A65A;
+            border-color: #00A65A;
+        }
+            .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #28902D;
+                border-color: #28902D;
+            }
+    </style>
+}
+
+@section Breadcrumb
+{
+    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+    <li class="active">用户提交信息审核（大农户）</li>
+}
+<h3 class="h3 col-xs-offset-2 fmyahei">用户提交信息审核（大农户）</h3>
+<div class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-xs-2">姓名</label>
+        <div class="col-xs-3">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @readonly = "readonly", disabled = "disabled" })
+        </div>
+        <label class="control-label col-xs-2">手机号</label>
+        <div class="col-xs-3">
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @readonly = "readonly", disabled = "disabled" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-2">地址</label>
+        <div class="dropdown col-xs-1">
+            <button class="btn btn-default dropdown-toggle" disabled="disabled" id="ddlProvince" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Model.ProvinceName<span class="caret"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="ddlProvince">
+                <li><a href="#"></a></li>
+            </ul>
+        </div>
+        <span class="pull-left pt8">省</span>
+        <div class="dropdown col-xs-1">
+            <button class="btn btn-default dropdown-toggle" disabled="disabled" id="ddlCity" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Model.CityName<span class="caret"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="ddlCity">
+                <li><a href="#"></a></li>
+            </ul>
+        </div>
+        <span class="pull-left pt8">市</span>
+        <div class="dropdown col-xs-1">
+            <button class="btn btn-default dropdown-toggle" disabled="disabled" id="ddlRegion" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Model.RegionName<span class="caret"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="ddlRegion">
+                <li><a href="#"></a></li>
+            </ul>
+        </div>
+        <span class="pull-left pt8">区/县</span>
+        <div class="col-xs-3">
+            @Html.TextBoxFor(m => m.DetailAddress, new { @class = "form-control", @readonly = "readonly", disabled = "disabled" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-2">申请角色</label>
+        <div class="col-xs-2">
+            <input class="form-control" type="text" value="大农户" readonly="readonly" disabled="disabled" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-2">先锋宝订单号</label>
+        <div class="col-xs-3">
+            @Html.TextBoxFor(m => m.DupontOrderNumbers, new { @class = "form-control", @readonly = "readonly", disabled = "disabled" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-2">已购先锋宝亩数</label>
+        <div class="col-xs-1">
+            @Html.TextBoxFor(m => m.PurchasedProducts, new { @class = "form-control", @readonly = "readonly", disabled = "disabled" })
+        </div>
+        <span class="pull-left pt8">亩</span>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-2">共有土地</label>
+        <div class="col-xs-1">
+            @Html.TextBoxFor(m => m.Land, new { @class = "form-control", @readonly = "readonly", disabled = "disabled" })
+        </div>
+        <span class="pull-left pt8">亩</span>
+    </div>
+
+    <div class="h1 border-dashed" style="background-color:green; width:910px;margin-left:41px"></div>
+    @using (Html.BeginForm())
+    {
+        <h4 class="h4" style="margin-left:45px">角色及权限设定：</h4>
+        <div class="form-group">
+            <label class="control-label col-xs-2 text-left">确定角色</label>
+            <div class="col-xs-1 checkbox">
+                <input type="checkbox" checked="checked" disabled="disabled" />
+            </div>
+            <label class="control-label col-xs-1 p0">级别：</label>
+            <div class="col-xs-4 p0">
+                <select id="RoleLevel" name="star">
+                    <option value="1">一星</option>
+                    <option value="2">二星</option>
+                    <option value="3">三星</option>
+                    <option value="4">四星</option>
+                    <option value="5">五星</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-10 col-xs-offset-2">
+                @Html.Hidden("verificationId", Model.Id)
+                @Html.Hidden("roleType", RoleType.Farmer)
+                <button type="submit" id="Approve" class="btn btn-primary col-xs-2 mr20" name="ApproveForFarmer">同意</button>
+                <button type="submit" id="Reject" class="btn btn-danger col-xs-2" name="Reject">拒绝</button>
+            </div>
+        </div>
+    }
+</div>
+@section HTML_Footer{
+    <script src="/Content/Styles/plugins/select2/select2.min.js"></script>
+<script src="~/Content/Styles/plugins/select2/i18n/zh-CN.js"></script>
+    <script>
+        $(function () {
+            $('#RoleLevel').select2({
+                language: "zh-CN"
+            });
+        });
+    </script>
+}

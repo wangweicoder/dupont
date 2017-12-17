@@ -1,0 +1,43 @@
+FarmerRequirement/SaveRequirement
+错误：未将对象引用设置到对象的实例。FarmerRequirement/SaveRequirement
+---------05/31/2017 11:37:08,223---------
+大农户的订单
+Acreage:30
+Address:116.41369487374,39.92232913727
+Brief:测试数据2
+Chunk:1
+CreateTime:2017/5/31 3:36:04
+CropId:100302
+DemandTypeId:100103
+EndDate:2017-03-26
+Expect_price:0
+Machine_sum:1
+Name:王伟
+OrderId:607
+PhoneNum:13161203896
+SourceType:1
+StartDate:2017-03-24
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+UserId:58
+Encrypt:9df7c2d9540d47dc87969453f9e4a45ec4a26ba600d977d0cd6b7a07b3861caf
+FarmerRequirement/SaveRequirement
+---------05/31/2017 11:49:45,576---------
+大农户的订单
+Acreage:30
+Address:116.41369487374,39.92232913727
+Brief:测试数据2
+Chunk:1
+CreateTime:2017/5/31 3:49:29
+CropId:100302
+DemandTypeId:100103
+EndDate:2017-03-26
+Expect_price:0
+Machine_sum:1
+Name:王伟
+OrderId:608
+PhoneNum:13161203896
+SourceType:1
+StartDate:2017-03-24
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+UserId:58
+Encrypt:85510db915999752f2978cd7c9b1d63f0886385a381556a55695ae38db0f5790

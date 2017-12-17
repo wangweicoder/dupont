@@ -1,0 +1,382 @@
+﻿@model DuPont.Models.Models.MultiModel<List<DuPont.Models.Dtos.Background.Question.SearchQutionOutput>>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+@using Webdiyer.WebControls.Mvc;
+@using DuPont.Extensions;
+@section HTML_Header{
+    <style>
+        /*设置表格为固定布局*/
+        .table-fixed {
+            table-layout: fixed; /* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+        }
+
+            .table-fixed td {
+                width: 100%;
+                word-break: keep-all; /* 不换行 */
+                white-space: nowrap; /* 不换行 */
+                overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+                text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+            }
+
+        /*行高30*/
+        .lh30 {
+            line-height: 30px;
+        }
+
+        /*分割线*/
+        .line {
+            padding-top: 10px;
+            margin: 0px;
+            border-color: #3E7B36;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #3E7B36;
+                border-color: #3E7B36;
+            }
+
+        .table {
+            margin-bottom: 0px;
+        }
+
+        .lightgreen {
+            background-color: #B4DAAC !important;
+        }
+
+        .glyphicon {
+            padding-right: 5px;
+        }
+
+        label {
+            line-height: 30px;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+    </style>
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i>首页</li>
+    <li><i class="fa fa-dashboard"></i>专家咨询</li>
+    <li class="active">问题管理</li>
+}
+<h3 style="margin-top:5px;" class="text-center"><b>问题管理</b></h3>
+<div class="container-fluid">
+    @using (Html.BeginForm("List", "Question", FormMethod.Get, new { @class = "form-horizontal", id = "questionList" }))
+    {
+        <div class="row">
+
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-1 text-nowrap" for="Keywords">关键字</label>
+                <div class="col-xs-12 col-sm-3">
+                    <input type="text" name="Keywords" class="form-control" value="@Request.QueryString["Keywords"]" id="Keywords" placeholder="输入搜索关键字，例如：玉米" />
+                </div>
+                <label class="col-xs-12 col-sm-1 text-nowrap">公开状态</label>
+                <div class="col-xs-12 col-sm-3">
+                    @Html.DropDownList("IsOpen", new List<SelectListItem>
+                   {
+                    new SelectListItem{Text="--请选择状态--",Value=""},
+                    new SelectListItem{Text="已开放",Value="true"},
+                    new SelectListItem{Text="未开放",Value="false"}
+                   }, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-1 text-nowrap">删除状态</label>
+                <div class="col-xs-12 col-sm-3">
+                    @Html.DropDownList("IsDeleted", new List<SelectListItem>{
+                    new SelectListItem{Text="--请选择删除状态--",Value=""},
+                    new SelectListItem{Text="已删除",Value="true"},
+                    new SelectListItem{Text="未删除",Value="false"}
+                }, new { @class = "form-control" })
+                </div>
+                <div class="col-xs-12 col-sm-2 hidden-xs">
+                    <button class="btn btn-block btn-primary btn_submit">检 索 <span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </div>
+            <div class="form-group visible-xs">
+                <div class="col-xs-12 col-sm-2">
+                    <button class="btn btn-block btn-primary btn_submit">检 索 <span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </div>
+        </div>
+        <hr class="line" />
+        <div class="row">
+            <button type="button" class="btn btn-warning" id="btnAddToCarousel"> <span class="glyphicon glyphicon-bullhorn"></span>添加到轮播</button>
+            <button type="button" class="btn btn-danger" id="btnCancelCarousel"> <span class="glyphicon glyphicon-bullhorn"></span>取消轮播</button>
+            <button type="button" class="btn btn-warning" id="btnOpen"> <span class="glyphicon glyphicon-export"></span>公开</button>
+            <button type="button" class="btn btn-danger" id="btnCancelOpen"> <span class="glyphicon glyphicon-export"></span>取消公开</button>
+            <button type="button" class="btn btn-danger" id="btnDelete"> <span class=" glyphicon glyphicon-remove"></span>删除</button>
+            <button type="button" id="ExportExcel" name="ExportExcelWithQuestionList" class="btn btn-default"><span class="glyphicon glyphicon-download"></span> 导出Excel</button>
+        </div>
+    }
+
+    <div class="row">
+        <table class="table table-fixed table-bordered table-hover table-striped" id="questionList">
+            <thead style="background-color:#48A13C;color:#fff">
+                <tr>
+                    <th>
+                        <label for="chkAll">
+                            <input type="checkbox" name="name" id="chkAll" />选择
+                        </label>
+                    </th>
+                    <th>
+                        问题
+                    </th>
+                    <th>
+                        内容
+                    </th>
+                    <th>
+                        开放状态
+                    </th>
+                    <th>
+                        删除状态
+                    </th>
+                    <th>
+                        轮播
+                    </th>
+                    <th>
+                        提问者
+                    </th>
+                    <th class="hidden-xs">
+                        创建时间
+                    </th>
+                    <th class="hidden-xs">
+                        更新时间
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.IsSuccess)
+                {
+                    if (Model.Data != null && Model.Data.Count > 0)
+                    {
+                        foreach (var question in Model.Data)
+                        {
+
+                            <tr>
+                                @{var emptyAlternateString = "<span style=\"color:#cdcdcd;\">未设置</span>";}
+
+                                <td><input type="checkbox" id="chk_question_@question.Id" /></td>
+                                <td>@question.Title</td>
+                                <td>@question.Description</td>
+                                <td>@(question.IsOpen ? "已公开" : "未公开")</td>
+                                <td><span class="@(question.IsDeleted?"red":"green")">@Html.Raw(question.IsDeleted ? "<s>已删除</s>" : "正常")</span></td>
+                                <td><input type="checkbox" class="disabled" disabled="disabled" @(question.IsPutOnCarousel ? "checked=\"checked\"" : "") /></td>
+                                <td>@(Html.Raw(question.CreateUser.DefaultIfEmpty(emptyAlternateString)))</td>
+                                <td class="hidden-xs">@question.CreateTime.ToString("yyyy.MM.dd")</td>
+                                <td class="hidden-xs">@question.LastModifiedTime.ToString("yyyy.MM.dd")</td>
+                                <td><a href="/Question/Detail?questionId=@question.Id">查看</a></td>
+                                @* <td class="hidden-xs">@(Html.Raw(user.Township.DefaultIfEmpty(emptyAlternateString)))</td>
+                                    <td class="hidden-xs">@(Html.Raw(user.Village.DefaultIfEmpty(emptyAlternateString)))</td>
+                                    <td>@user.CreateTime.ToString("yyyy.MM.dd")</td>*@
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="10" align="center">没有匹配的结果!</td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+        @Html.Pager(Model.Pager).Options(o =>
+                        {
+                            o.SetPageIndexParameterName("PageIndex");
+                            o.SetContainerTagName("ul");
+                            o.SetCssClass("pagination");
+                            o.SetCurrentPagerItemTemplate("<li class=\"active\"><a  href=\"#\">{0}</a></li>");
+                            o.SetDisabledPagerItemTemplate("<li class=\"disabled\"><a >{0}</a></li>");
+                            o.SetPagerItemTemplate("<li >{0}</li>");
+                            o.SetId("bootstrappager");
+                            o.SetFirstPageText("首页");
+                            o.SetPrevPageText("上一页");
+                            o.SetNextPageText("下一页");
+                            o.SetLastPageText("最后一页");
+                        })
+    </div>
+</div>
+@section HTML_Footer{
+    <script src="~/Content/Styles/plugins/layer/layer.js"></script>
+    <script>
+
+        //全选复选框
+        var $chkAll = $('#chkAll');
+        $chkAll.change(function () {
+            var that = this;
+            $('#questionList>tbody :checkbox').prop({ checked: that.checked }).trigger('change');
+        });
+
+        var $checkboxList = $('[id^=chk_question_]');
+        $checkboxList.change(function () {
+            var selectCount = 0;
+            $checkboxList.each(function () {
+                if (this.checked) {
+                    selectCount++;
+                }
+            });
+            $(this).closest('tr')[this.checked ? 'addClass' : 'removeClass']('lightgreen');
+
+            if (selectCount > 0 && selectCount == $checkboxList.length) {
+                $chkAll.prop({ checked: true });
+            } else {
+                $chkAll.prop({ checked: false });
+            }
+        });
+
+        $('tr').click(function (event) {
+            if (event.target.tagName === 'INPUT')
+                return;
+
+            var $chk = $(this).find(':checkbox:eq(0)');
+            $chk.prop({ checked: !$chk.prop('checked') }).triggerHandler('change');
+        });
+
+        //公开问题
+        $('#btnOpen').click(function (data) {
+            var selectCount = 0;
+            var questionIds = [];
+            $checkboxList.each(function () {
+                if (this.checked) {
+                    questionIds[selectCount++] = $(this).attr('id').replace('chk_question_', '');
+                }
+            });
+
+            if (selectCount > 0) {
+                layer.confirm('确定要公开这' + selectCount + '个问题?', { icon: 3, title: '提示' }, function () {
+                    var parameter = "Ids=" + questionIds.join('&Ids=');;
+
+                    $.post('/Question/Open', parameter, function (data) {
+                        if (data && data.IsSuccess) {
+                            top.window.Success(data.Message);
+                            location.reload();
+                        }
+                    });
+                });
+            }
+        });
+
+
+        //取消公开问题
+        $('#btnCancelOpen').click(function (data) {
+            var selectCount = 0;
+            var questionIds = [];
+            $checkboxList.each(function () {
+                if (this.checked) {
+                    questionIds[selectCount++] = $(this).attr('id').replace('chk_question_', '');
+                }
+            });
+
+            if (selectCount > 0) {
+                layer.confirm('确定要取消公开这' + selectCount + '个问题?', { icon: 3, title: '提示' }, function () {
+                    var parameter = "Ids=" + questionIds.join('&Ids=');;
+
+                    $.post('/Question/CancelOpen', parameter, function (data) {
+                        if (data && data.IsSuccess) {
+                            top.window.Success(data.Message);
+                            location.reload();
+                        }
+                    });
+                });
+            }
+        });
+
+        //删除问题
+        $('#btnDelete').click(function (data) {
+            var selectCount = 0;
+            var questionIds = [];
+            $checkboxList.each(function () {
+                if (this.checked) {
+                    questionIds[selectCount++] = $(this).attr('id').replace('chk_question_', '');
+                }
+            });
+
+            if (selectCount > 0) {
+                layer.confirm('确定要删除这' + selectCount + '个问题?', { icon: 3, title: '提示' }, function () {
+                    var parameter = "Ids=" + questionIds.join('&Ids=');;
+
+                    $.post('/Question/Delete', parameter, function (data) {
+                        if (data && data.IsSuccess) {
+                            top.window.Success(data.Message);
+                            location.reload();
+                        }
+                    });
+                });
+            }
+        });
+
+        //添加到轮播图
+        $('#btnAddToCarousel').click(function (data) {
+            var selectCount = 0;
+            var questionIds = [];
+            $checkboxList.each(function () {
+                if (this.checked) {
+                    questionIds[selectCount++] = $(this).attr('id').replace('chk_question_', '');
+                }
+            });
+
+            if (selectCount > 0) {
+                layer.confirm('确定要添加这' + selectCount + '个问题到轮播图?', { icon: 3, title: '提示' }, function () {
+                    var parameter = "Ids=" + questionIds.join('&Ids=');;
+
+                    $.post('/Question/AddToCarousel', parameter, function (data) {
+                        if (data && data.IsSuccess) {
+                            top.window.Success(data.Message);
+                            location.reload();
+                        }
+                    });
+                });
+            }
+        });
+
+        //取消轮播图
+        $('#btnCancelCarousel').click(function (data) {
+            var selectCount = 0;
+            var questionIds = [];
+            $checkboxList.each(function () {
+                if (this.checked) {
+                    questionIds[selectCount++] = $(this).attr('id').replace('chk_question_', '');
+                }
+            });
+
+            if (selectCount > 0) {
+                layer.confirm('确定要取消这' + selectCount + '个问题的轮播?', { icon: 3, title: '提示' }, function () {
+                    var parameter = "Ids=" + questionIds.join('&Ids=');;
+
+                    $.post('/Question/CancelCarousel', parameter, function (data) {
+                        if (data && data.IsSuccess) {
+                            top.window.Success(data.Message);
+                            location.reload();
+                        }
+                    });
+                });
+            }
+        });
+
+        $('#ExportExcel').click(function () {
+            location.href = '/Question/ExportExcelWithQuestionList?PageSize=10000&TimeStamp=' + Math.random() + '&' + $('#questionList').serialize();
+        });
+    </script>
+}

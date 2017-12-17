@@ -1,0 +1,549 @@
+﻿@model DuPont.Admin.Presentation.Models.RoleVerificationViewModel
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@using Webdiyer.WebControls.Mvc;
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 角色认证管理</li>
+    <li class="active">角色申请列表</li>
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>用户角色申请列表</title>
+    <style>
+        body {
+            min-height: 600px;
+        }
+
+        .center {
+            margin: 0 auto;
+        }
+
+        .divider {
+            background: green;
+            height: 1px;
+            margin: 10px 0px;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            background-color: #00A65A;
+            border-color: #00A65A;
+        }
+
+        .select {
+            float: left;
+        }
+
+        .tr1 {
+            padding-bottom: 10px;
+        }
+
+        a {
+            font-size: 13px;
+        }
+
+            a:link {
+                color: #48A13C;
+                text-decoration: none;
+            }
+
+            /*未访问：蓝色、无下划线*/
+            a:active {
+                color: red;
+            }
+
+            /*激活：红色*/
+            a:visited {
+                color: purple;
+                text-decoration: none;
+            }
+
+            /*已访问：purple、无下划线*/
+            a:hover {
+                color: blue;
+                text-decoration: underline;
+            }
+
+        /*鼠标移近：红色、下划线*/
+        #tb_rolelist {
+            color: #3C3C3C;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            z-index: 2;
+            color: #fff;
+            cursor: default;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+        .row {
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #48A13C;
+                border-color: #48A13C;
+            }
+
+        .applytime, .selectRegion, .roletype {
+            padding-left: 15px;
+        }
+
+
+
+        .btn {
+            padding: 5px 0px !important;
+        }
+
+        .applytime {
+            width: 75% !important;
+        }
+
+
+        @@media(max-width:533px) {
+            .col-xs-2 {
+                width: 15% !important;
+            }
+        }
+
+        @@media(max-width:768px) {
+            .roletype {
+                width: 95% !important;
+            }
+
+            .col-xs-3 {
+                width: 90% !important;
+            }
+
+            .col-xs-6 {
+                width: 90% !important;
+            }
+        }
+
+        @@media(min-width:768px) and (max-width:849px) {
+            .applytime, .selectRegion, .roletype {
+                width: 35% !important;
+            }
+
+            .roletype {
+                width: 95% !important;
+            }
+        }
+
+        @@media (min-width:851px) {
+            .applytime, .selectRegion {
+                width: 11% !important;
+            }
+
+            .roletype {
+                width: 23% !important;
+            }
+        }
+
+
+
+        /*@@media(max-width:1168px) {
+            .applytime {
+                width: 12% !important;
+            }
+        }*/
+
+        /*屏幕适配*/
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h3 style="margin-left:-1px;margin-top:5px"><b>用户身份认证</b></h3>
+
+        @using (Html.BeginForm("List", ViewContext.RouteData.GetRequiredString("Controller"), new RouteValueDictionary { { "pageIndex", "" } }, FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-xs-6">
+                    <label class="control-label pull-left roletype">角色类别</label>
+                    <div class="col-xs-9">
+                        <select id="RoleId" name="RoleId" class="form-control">
+                            <option value="0">--请选择角色--</option>
+                            <option value="3">大农户</option>
+                            <option value="4">农机手</option>
+                            <option value="5">产业商</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-xs-6">
+                    <label class="control-label col-xs-3">手机号</label>
+                    <div class="col-xs-9">
+                        @if (ViewBag.Where == null)
+                        {
+                            <input type="text" id="PhoneNumber" name="PhoneNumber" value="" class="form-control" />
+                        }
+                        else
+                        {
+                            <input type="text" id="PhoneNumber" name="PhoneNumber" value="@ViewBag.Where.PhoneNumber" class="form-control" />
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <label class="control-label pull-left selectRegion">选择区域</label>
+                    <div class="col-xs-3" style="margin-left:3px">
+                        <select id="selProvince" name="Province" class="form-control">
+                            <option value="0">--请选择省份--</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-3">
+                        <select id="selCity" name="City" class="form-control">
+                            <option value="0">--请选择城市--</option>
+
+                        </select>
+                    </div>
+                    <div class="col-xs-3">
+                        <select id="selDistrict" name="Region" class="form-control">
+                            <option value="0">--请选择区/县--</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <label class="control-label applytime pull-left">申请时间</label>
+                    <div class="col-xs-4">
+                        <div class="input-daterange input-group" id="datepicker">
+                            @if (ViewBag.StartTime != null && ViewBag.EndTime != null)
+                            {
+                                <input type="text" class="input-sm form-control" name="starttime" id="starttime" value="@ViewBag.StartTime.ToString()" />
+                                <span class="input-group-addon"><b>到</b></span>
+                                <input type="text" class="input-sm form-control" name="endtime" id="endtime" value="@ViewBag.EndTime.ToString()" />
+                            }
+                            else
+                            {
+                                <input type="text" class="input-sm form-control" name="starttime" id="starttime" value="" />
+                                <span class="input-group-addon"><b>到</b></span>
+                                <input type="text" class="input-sm form-control" name="endtime" id="endtime" value="" />
+                            }
+                        </div>
+                    </div>
+                    <div class="col-xs-2 pull-left">
+                        <input class="btn btn-block btn-primary pull-left" id="btn_submit" type="submit" name="name" value="检索" />
+                    </div>
+                </div>
+
+            </div>
+        }
+
+
+        <div class="divider" style=" width:950px"></div>
+        <table class="table table-bordered table-hover" id="tb_rolelist">
+            <thead style="background-color: #48A13C; height: 36px; color: #FFFFFF; font-size: 13px; ">
+                <tr>
+                    <td style="width:156px">申请角色</td>
+                    <td style="width:132px">姓名</td>
+                    <td style="width:126px">电话</td>
+                    <td style="width:88px">省</td>
+                    <td style="width:90px">市</td>
+                    <td style="width:126px">区/县</td>
+                    <td style="width:100px">申请时间</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.PendingAuditList)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(item.RoleName, "Detail", new { verificationId = item.Id, roleId = item.RoleId })</td>
+                        <td>@item.UserName</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@(String.IsNullOrEmpty(item.Province) ? "无" : item.Province)</td>
+                        <td>@(String.IsNullOrEmpty(item.City) ? "无" : item.City)</td>
+                        <td>@(String.IsNullOrEmpty(item.Region) ? "无" : item.Region)</td>
+                        <td>@(item.CreateTime.ToString("yyyy.MM.dd"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div>
+            @Html.Pager(Model.Pager).Options(o => o.SetPageIndexParameterName("PageIndex").SetPagerItemTemplate("{0}&nbsp;")).Options(o =>
+           {
+               o.SetPageIndexParameterName("PageIndex");
+               o.SetContainerTagName("ul");
+               o.SetCssClass("pagination");
+               o.SetCurrentPagerItemTemplate("<li class=\"active\"><a href=\"#\">{0}</a></li>");
+               o.SetDisabledPagerItemTemplate("<li class=\"disabled\"><a>{0}</a></li>");
+               o.SetPagerItemTemplate("<li>{0}</li>");
+               o.SetId("bootstrappager");
+               o.SetFirstPageText("首页");
+               o.SetPrevPageText("上一页");
+               o.SetNextPageText("下一页");
+               o.SetLastPageText("最后一页");
+           })
+        </div>
+    </div>
+
+    @section HTML_Footer{
+        <link href="/Content/Styles/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+        <script src="/Content/Styles/plugins/datepicker/bootstrap-datepicker.js"></script>
+        <script src="/Content/Styles/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+        <script>
+            //获取url中的参数
+            function getQueryStringByName(name) {
+                var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+                if (result == null || result.length < 1) {
+
+                    return "";
+                }
+                return result[1];
+            }
+            $('.input-daterange').datepicker({
+                todayBtn: true,
+                clearBtn: true,
+                language: "zh-CN",
+                orientation: "top auto"
+            });
+        </script>
+        @*三级联动脚本*@
+        <script type="text/javascript">
+            var $province = null;
+            var $city = null;
+            var $region = null;
+            var $role = null;
+            $(function () {
+                $province = $("#selProvince");
+                $city = $("#selCity");
+                $region = $("#selDistrict");
+                $role = $('#RoleId');
+                var options = {
+                    url: '/Verification/GetAreaChild',
+                    type: 'post',
+                    data: { "ParentAId": "0" },
+                    success: function (data) {
+                        if (data && data.Entity) {
+                            var html = '';
+                            $.each(data.Entity, function (i, v) {
+
+                                if (v.AID == getQueryStringByName('Province')) {
+                                    html += '<option selected value="' + v.AID + '">' + v.DisplayName + '</option>';
+                                }
+                                else {
+                                    html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                                }
+                            });
+
+                            $province.append(html);
+                            var Province = '@(Model.Wheremodel.Province)';
+                            $province.val(Province);
+                            getcity(1);
+                        };
+                    },
+                };
+                $.ajax(options);
+
+                getcity();
+
+                getregion();
+                //选择省份获取对应的城市
+                $province.change(function () {
+                    if ($province.val() == 0) {
+                        $city.empty().append('<option value="0">--请选择城市--</option>');
+                    }
+                    else {
+                        getcity(0);
+                    }
+                    $region.empty().append('<option value="0">--请选择区/县--</option>');
+                    //$city.;//--请选择城市--  //--请选择区/县--
+                    //$region.append('<option value="0">--请选择区/县--</option>');
+
+
+                });
+                //选择城市获取对应的区县
+                $city.change(function () {
+                    if ($city.val() == 0) {
+                        $region.empty().append('<option value="0">--请选择区/县--</option>');
+                    }
+                    else { getregion(0); }
+                    //$region.append('<option value="0">--请选择区/县--</option>');
+
+                });
+
+                //检索
+                $("#btn_submit").click(function () {
+                    var url = "/Verification/list?RoleId=" + $("#RoleId").val() + "&PhoneNumber=" + $("#PhoneNumber").val() + "&Province=" + $("#selProvince").val() + "&City=" + $("#selCity").val() + "&Region=" + $("#selDistrict").val() + "&StartTime=" + $("#starttime").val() + "&EndTime=" + $("#endtime").val() + "";
+                    location.href = url;
+                    return false;
+                });
+                //给角色类别设置默认值
+                var roleId = getQueryStringByName('RoleId');
+                if (roleId != "") {
+                    $role.val(roleId);
+                }
+                var RoleId=@(Model.Wheremodel.RoleId);
+                var PhoneNumber='@(Model.Wheremodel.PhoneNumber)';
+
+                var StartTime='@(Model.Wheremodel.StartTime.ToString()!= "0001/1/1 0:00:00" ? Model.Wheremodel.StartTime.ToString():"")';
+                var EndTime='@(Model.Wheremodel.EndTime.ToString() != "0001/1/1 0:00:00" ? Model.Wheremodel.EndTime.ToString() : "")';
+
+                $("#RoleId").val(RoleId);
+
+                $("#PhoneNumber").val(PhoneNumber);
+                //$("#selProvince").val(Province);
+                //$("#selCity").val(Region);
+                //$("#selDistrict").val(City);
+                if(StartTime!=""){var stTime=new Date(StartTime);$("#starttime").val(stTime.getFullYear()+'年'+(stTime.getMonth()+1)+'月'+stTime.getDate()+'日');}
+                if(EndTime!=""){var endTime=new Date(EndTime);$("#endtime").val(endTime.getFullYear()+'年'+(endTime.getMonth()+1)+'月'+endTime.getDate()+'日');}
+            });
+            //获取城市
+            function getcity(state) {
+                var selValue = $province.val();;
+                if (selValue == "0") {
+                    if (getQueryStringByName('Province') == "0" || getQueryStringByName('Province') == "") {
+                        return;
+                    }
+                    else {
+                        selValue = getQueryStringByName('Province');
+                    }
+                }
+                $("#selCity option:gt(0)").remove();
+                var options = {
+                    url: '/Verification/GetAreaChild',
+                    type: 'post',
+                    data: { "ParentAId": selValue },
+                    success: function (data) {//data在这
+                        if (data && data.Entity) {
+                            var html = '';
+                            $.each(data.Entity, function (i, v) {
+                                if (v.AID == getQueryStringByName('City')) {
+                                    html += '<option selected value="' + v.AID + '">' + v.DisplayName + '</option>';
+                                }
+                                else {
+                                    html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                                }
+
+                            });
+                            $city.append(html);
+                            var City='@(Model.Wheremodel.City)';
+                            if(City!=0&&state!=0)
+                            {
+                                $city.val(City);
+                                getregion(1);}
+                        };
+                    },
+                };
+                $.ajax(options);
+            }
+            //获取区县
+            function getregion(state) {
+                var selValue = $city.val();;
+                if (selValue == "0") {
+                    if (getQueryStringByName('City') == "0" || getQueryStringByName('City') == "") {
+                        return;
+                    }
+                    else {
+                        selValue = getQueryStringByName('City');
+                    }
+                }
+                $("#selDistrict option:gt(0)").remove();
+                var options = {
+                    url: '/Verification/GetAreaChild',
+                    type: 'post',
+                    data: { "ParentAId": selValue },
+                    success: function (data) {//data在这
+                        if (data && data.Entity) {
+                            var html = '';
+                            $.each(data.Entity, function (i, v) {
+                                if (v.AID == getQueryStringByName('Region')) {
+                                    html += '<option selected value="' + v.AID + '">' + v.DisplayName + '</option>';
+                                }
+                                else {
+                                    html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                                }
+                            });
+                            $region.append(html);
+
+                            var Region='@(Model.Wheremodel.Region)';
+                            if(Region!=0&&state!=0){$region.val(Region);}
+                        };
+                    },
+                };
+                $.ajax(options);
+            }
+        </script>
+        @*设置table行样式*@
+        <script>
+
+            var table = document.getElementById("tb_rolelist")
+            var tbody = table.getElementsByTagName("tbody")[0]
+            var trs = tbody.getElementsByTagName("tr")
+            for (var i = 0; i < trs.length; i++) {
+                if (i % 2 == 0) {
+                    trs[i].style.backgroundColor = "#ECF0F5";
+                }
+                else {
+                    trs[i].style.backgroundColor = "#FFFFFF";
+                }
+            }
+
+
+        </script>
+
+
+
+
+
+    }
+    @*<div class="row">
+        <div class="col-xs-3">
+            <div class="form-group">
+                <label class="control-label col-xs-6">申请角色类别</label>
+                <div class="col-xs-2">
+                    <input type="text" name="RoleType" id="RoleType" />
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-offset-1 col-xs-2">
+            <div class="form-group">
+                <label class="control-label col-xs-6">手机号</label>
+                <div class="col-xs-2">
+                    <input type="text" name="PhoneNumber" id="PhoneNumber" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label class="control-label col-xs-6">申请区域</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <label class="control-label col-xs-6">申请时间</label>
+                    <div class="col-xs-2">
+                        <input type="text" name="StartTime" id="EndTime" />
+                        <span>到</span>
+                        <input type="text" name="EndTime" id="EndTime" />
+                    </div>
+                </div>
+            </div>
+        </div>*@
+</body>
+</html>

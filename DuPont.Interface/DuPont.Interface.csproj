@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{12893A21-45D8-451A-A104-65DA8E1AE93C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DuPont.Interface</RootNamespace>
+    <AssemblyName>DuPont.Interface</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IAdminUser.cs" />
+    <Compile Include="IApp_Version.cs" />
+    <Compile Include="IArea.cs" />
+    <Compile Include="IArticle.cs" />
+    <Compile Include="IArticleCategory.cs" />
+    <Compile Include="IAuthProvider.cs" />
+    <Compile Include="IBusiness.cs" />
+    <Compile Include="IBusinessDemand_Response.cs" />
+    <Compile Include="IBusinessVerificationRepository.cs" />
+    <Compile Include="ICarouselRepository.cs" />
+    <Compile Include="ICommon.cs" />
+    <Compile Include="IExpertPermission.cs" />
+    <Compile Include="IExpertQuestion.cs" />
+    <Compile Include="IExpertQuestionReply.cs" />
+    <Compile Include="IFarm.cs" />
+    <Compile Include="IFarmArea.cs" />
+    <Compile Include="IFarmBooking.cs" />
+    <Compile Include="IFarmerDemandResponse.cs" />
+    <Compile Include="IFarmerVerficationInfoRepository.cs" />
+    <Compile Include="IFileInfoRepository.cs" />
+    <Compile Include="ILeaningGarden.cs" />
+    <Compile Include="ILearningGardenCarousel.cs" />
+    <Compile Include="ILog.cs" />
+    <Compile Include="ILogRepository.cs" />
+    <Compile Include="IMachineDemandTypeRL.cs" />
+    <Compile Include="INotification.cs" />
+    <Compile Include="IOperator.cs" />
+    <Compile Include="IOperatorInfoVerifciationRepository.cs" />
+    <Compile Include="IPermission.cs" />
+    <Compile Include="IPermissionProvider.cs" />
+    <Compile Include="IPersonalNotification.cs" />
+    <Compile Include="IPublicNotification.cs" />
+    <Compile Include="IPublished_Demand.cs" />
+    <Compile Include="IMenu.cs" />
+    <Compile Include="IMenu_Role.cs" />
+    <Compile Include="IFarmerRequirement.cs" />
+    <Compile Include="IQQUser.cs" />
+    <Compile Include="IRepositoryBase.cs" />
+    <Compile Include="IRoleVerification.cs" />
+    <Compile Include="ISendNotificationResult.cs" />
+    <Compile Include="ISms.cs" />
+    <Compile Include="ISmsMessage.cs" />
+    <Compile Include="IUserRoleDemandTypeLevelRL.cs" />
+    <Compile Include="IUserToken.cs" />
+    <Compile Include="IWeChatUser.cs" />
+    <Compile Include="ISuppliers_Sarea.cs" />
+    <Compile Include="ISysLog.cs" />
+    <Compile Include="ISysSetting.cs" />
+    <Compile Include="ISys_Dictionary.cs" />
+    <Compile Include="IUser.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="IUser_Password_History.cs" />
+    <Compile Include="IUser_Role.cs" />
+    <Compile Include="IVisitNotification.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DuPont.Models\DuPont.Models.csproj">
+      <Project>{b468a183-87cb-4cae-b03d-e9c1132c340a}</Project>
+      <Name>DuPont.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

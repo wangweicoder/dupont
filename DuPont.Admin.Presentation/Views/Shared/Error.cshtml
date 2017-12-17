@@ -1,0 +1,29 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+<style type="text/css">
+    .breadcrumb {
+        display: none;
+    }
+    .auto{
+        margin:0px auto;
+    }
+    .red{
+        color:red;
+    }
+</style>
+<div class="panel panel-warning col-md-offset-3 col-md-4" style="margin-top: 160px;height: 160px;">
+    <div class="panel-heading">
+        <h3 class="panel-title">提示信息</h3>
+    </div>
+    <div class="panel-body">
+        <span class="glyphicon glyphicon-ban-circle red"></span>&nbsp;参数无效!
+
+    </div>
+    <div class="panel-footer">
+        <a href="/@Model.ControllerName/@Model.ActionName" class="btn btn-primary">点击返回</a>
+    </div>
+</div>

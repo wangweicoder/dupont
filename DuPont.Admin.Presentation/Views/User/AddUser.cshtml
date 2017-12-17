@@ -1,0 +1,409 @@
+﻿@model DuPont.Models.ViewModel.UserViewModel
+
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+<style type="text/css">
+    .field-validation-error {
+        color: red;
+    }
+
+    .row {
+        margin-top: 15px;
+    }
+
+    .control-label {
+        text-align: right;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #48A13C;
+        border-color: #48A13C;
+    }
+
+        .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+</style>
+
+
+
+
+
+<!--面包屑导航-->
+@section Breadcrumb
+{
+    <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+    <li class="active">添加角色</li>
+}
+
+<div class="container-fluid">
+
+    @using (Html.BeginForm("", "User", FormMethod.Post, new { id = "formData" }))
+    {
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.UserName, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UserName)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.LoginUserName, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(model => model.LoginUserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LoginUserName)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.Password, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.conformPhoneNumber, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    @Html.PasswordFor(model => model.conformPhoneNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.conformPhoneNumber)
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.Role, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    <select id="Role" name="Role" class="form-control">
+                        @if (ViewBag.IsSuperAdmin)
+                        {
+                            <option value="2">管理员</option>
+                        }
+                        <option value="6">经销商</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.Province, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    <select id="selProvince1" name="Province" class="form-control">
+                        <option value="0">--请选择省份--</option>
+                    </select>
+                    <span id="selProvince_error"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.City, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-6">
+                    <select id="selCity1" name="City" class="form-control">
+                        <option value="0">--请选择城市--</option>
+                    </select>
+                    <span id="selCity_error"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.Region, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    <select id="selRegion1" name="Region" class="form-control">
+                        <option value="0">--请选择区/县--</option>
+                    </select>
+                    <span id="selRegion_error"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.Township, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    <select id="selTownship1" name="Township" class="form-control">
+
+                        <option value="0">--请选择乡镇--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.Village, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    <select id="selVillage1" name="Village" class="form-control">
+                        <option value="0">--请选择村--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.DetailedAddress, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    @Html.TextAreaFor(model => model.DetailedAddress, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DetailedAddress)
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                @Html.LabelFor(model => model.DPoint, new { @class = "control-label col-xs-3" })
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(model => model.DPoint, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DPoint)
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="col-xs-offset-4 col-xs-6">
+                    <input id="submitButton" type="submit" value="保存" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section HTML_Footer{
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    var postUrl = "";
+    jQuery(function ($) {
+        var $formData = $("#formData");
+        $formData.submit(function () {
+
+            if (!$formData.valid()) {
+                return false;
+            }
+            var formdata = $("#formData").serializeArray();
+            var val = $("#Role").val();
+            //debugger;
+            if (val == "6") {
+                postUrl = "/User/AddUser";
+            } else if (val == "2") {
+                postUrl = "/User/AddManger";
+            }
+
+
+            $.ajax({
+                async: true,
+                url: postUrl,
+
+                type: 'post',
+                data: formdata,
+                dataType: 'json',
+                success: function (json) {
+                    if (json.success) {
+                        top.window.Success("添加成功! 正在跳转到登录页...");
+                        setTimeout(function () {
+                            top.window.location.href = "/account/login";
+                        }, 2000);
+                    }
+                    else {
+                        top.window.Warn(json.responseText);
+                    }
+                }
+            });
+
+            return false;
+        });
+    });
+
+
+</script>
+
+
+
+    @*五级联动脚本添加经销商*@
+    <script type="text/javascript">
+        $('#UserName').focus();
+
+
+        var $province1 = null;
+        var $city1 = null;
+        var $region1 = null;
+        var $township1 = null;
+        var $village1 = null;
+        //获取城市
+        function getcity1() {
+
+            var selValue = $province1.val();
+            if (selValue == "0") {
+                return;
+            }
+            $("#selCity1 option:gt(0)").remove();
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": selValue },
+                success: function (data) {//data在这
+                    if (data && data.Entity) {
+                        var html = '';
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $city1.append(html);
+
+                    };
+                },
+            };
+            $.ajax(options);
+        }
+        //获取区县
+        function getregion1() {
+            var selValue = $city1.val();
+            if (selValue == "0") {
+                return;
+            }
+            $("#selRegion1 option:gt(0)").remove();
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": selValue },
+                success: function (data) {//data在这
+                    if (data && data.Entity) {
+                        var html = '';
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $region1.append(html);
+
+                    };
+                },
+            };
+            $.ajax(options);
+        }
+        //获取乡镇
+        function gettownship1() {
+            var selValue = $region1.val();
+            if (selValue == "0") {
+                return;
+            }
+            $("#selTownship1 option:gt(0)").remove();
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": selValue },
+                success: function (data) {//data在这
+                    if (data && data.Entity) {
+                        var html = '';
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $township1.append(html);
+
+                    };
+                },
+            };
+            $.ajax(options);
+        }
+        //获取村
+        function getvillage1() {
+            var selValue = $township1.val();
+            if (selValue == "0") {
+                return;
+            }
+            $("#selVillage1 option:gt(0)").remove();
+            var options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": selValue },
+                success: function (data) {//data在这
+                    if (data && data.Entity) {
+                        var html = '';
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $village1.append(html);
+                    };
+                },
+            };
+            $.ajax(options);
+        }
+        $(function () {
+            $province1 = $("#selProvince1");
+            $city1 = $("#selCity1");
+            $region1 = $("#selRegion1");
+            $township1 = $("#selTownship1");
+            $village1 = $("#selVillage1");
+            options = {
+                url: '/Verification/GetAreaChild',
+                type: 'post',
+                data: { "ParentAId": "0" },
+                success: function (data) {
+                    if (data && data.Entity) {
+                        var html = '';
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $province1.append(html);
+                    };
+                },
+            }
+            $.ajax(options);
+            //选择省份获取对应的城市
+            $province1.change(function () {
+                $city1.empty();
+                $region1.empty();
+                $township1.empty();
+                $village1.empty();
+                $city1.append('<option value="0">--请选择城市--</option>');
+                $region1.append('<option value="0">--请选择区/县--</option>');
+                $township1.append('<option value="0">--请选择乡镇--</option>');
+                $village1.append('<option value="0">--请选择村--</option>');
+                getcity1();
+            });
+            //选择城市获取对应的区县
+            $city1.change(function () {
+                $region1.empty();
+                $township1.empty();
+                $village1.empty();
+                $region1.append('<option value="0">--请选择区/县--</option>');
+                $township1.append('<option value="0">--请选择乡镇--</option>');
+                $village1.append('<option value="0">--请选择村--</option>');
+                getregion1();
+            });
+            //选择区县获取乡镇
+            $region1.change(function () {
+                $township1.empty();
+                $village1.empty();
+                $township1.append('<option value="0">--请选择乡镇--</option>');
+                $village1.append('<option value="0">--请选择村--</option>');
+                gettownship1();
+            });
+            //选择乡镇获取村
+            $township1.change(function () {
+                $village1.empty();
+                $village1.append('<option value="0">--请选择村--</option>');
+                getvillage1();
+            });
+        });
+    </script>
+
+}

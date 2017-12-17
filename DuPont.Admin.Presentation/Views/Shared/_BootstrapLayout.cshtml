@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript">
+        if (top.window.location.pathname !== location.pathname) {
+            if (location.pathname && location.pathname.toLowerCase() === '/account/login') {
+                top.window.location.href = location.origin + location.pathname;
+            }
+        }
+    </script>
+    <!--CSS 重置样式库-->
+    <link href="~/Content/normalize.css" rel="stylesheet" />
+    <link href="/Content/toastr.min.css" rel="stylesheet" />
+    <link href="/Content/Styles/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+
+    <style>
+        body {
+            background-color: #ECF0F5;
+        }
+    </style>
+
+    @RenderSection("HTML_Header", false)
+</head>
+<body>
+    <div class="content-wrapper">
+        <!--内容头部-->
+        <section class="content-header">
+            <ol class="breadcrumb">
+                @RenderSection("Breadcrumb", false)
+            </ol>
+        </section>
+        <!-- 页面主体内容部分 -->
+        <section class="content">
+            <div>
+
+                @RenderBody()
+
+            </div>
+        </section>
+    </div>
+    <script src="/Content/Styles/dist/vendor/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    @*<script src="/Content/Styles/bootstrap/js/bootstrap.min.js"></script>*@
+    <script src="~/Content/Styles/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="~/Content/Styles/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="~/Content/Styles/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+    <script>
+        //toastr.options = {
+        //    "closeButton": false,
+        //    "debug": false,
+        //    "newestOnTop": false,
+        //    "progressBar": false,
+        //    "positionClass": "toast-top-center",
+        //    "preventDuplicates": true,
+        //    "onclick": null,
+        //    "showDuration": "300",
+        //    "hideDuration": "1000",
+        //    "timeOut": "1500",
+        //    "extendedTimeOut": "1000",
+        //    "showEasing": "swing",
+        //    "hideEasing": "linear",
+        //    "showMethod": "fadeIn",
+        //    "hideMethod": "fadeOut"
+        //};
+    @if (TempData["Message"] != null)
+    {
+        @:top.window.Success('@TempData["Message"].ToString().Replace("'", " ")');
+            }
+    else if (TempData["Error"] != null)
+    {
+        @:top.window.Warn('@Html.Raw(TempData["Error"].ToString().Replace("'", " ").Replace("\r\n", "<br />"))');
+            }
+
+        var HtmlUtil = {
+            /*1.用正则表达式实现html转码*/
+            htmlEncodeByRegExp: function(str) {
+                var s = "";
+                if (str.length == 0) return "";
+                s = str.replace(/&/g, "&amp;");
+                s = s.replace(/</g, "&lt;");
+                s = s.replace(/>/g, "&gt;");
+                s = s.replace(/ /g, "&nbsp;");
+                s = s.replace(/\'/g, "&#39;");
+                s = s.replace(/\"/g, "&quot;");
+                return s;
+            },
+            /*2.用正则表达式实现html解码*/
+            htmlDecodeByRegExp: function(str) {
+                var s = "";
+                if (str.length == 0) return "";
+                s = str.replace(/&amp;/g, "&");
+                s = s.replace(/&lt;/g, "<");
+                s = s.replace(/&gt;/g, ">");
+                s = s.replace(/&nbsp;/g, " ");
+                s = s.replace(/&#39;/g, "\'");
+                s = s.replace(/&quot;/g, "\"");
+                return s;
+            }
+        };
+    </script>
+    @RenderSection("HTML_Footer", false)
+
+</body>
+</html>

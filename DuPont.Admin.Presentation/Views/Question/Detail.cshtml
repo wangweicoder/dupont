@@ -1,0 +1,85 @@
+﻿@model DuPont.Models.Models.SingleModel<DuPont.Models.Dtos.Background.Question.QuestionDetailWithReplyListOutput>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+@using DuPont.Models.Dtos.Background.Question
+@using Webdiyer.WebControls.Mvc;
+@using DuPont.Extensions;
+@using DuPont.Utility;
+@section HTML_Header{
+    <style type="text/css">
+        .question-content{
+            border: 1px dashed #958F8F;
+            min-height: 120px;
+            width: 50%;
+            padding:10px;
+        }
+    </style>
+}
+
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 专家咨询</li>
+    <li class="active">问题详情</li>
+}
+@using (Html.BeginForm())
+{
+    <div class="container-fluid">
+        @if (Model.IsSuccess)
+        {
+            <div class="row">
+
+                <h3>@Model.Data.Title</h3>
+                <p>提问者:@Model.Data.CreateUser</p>
+                <p><b>发布时间：</b><span style="color: blue">@Model.Data.CreateTime</span>&nbsp;&nbsp;<b>更新时间：</b><span style="color:blue">@Model.Data.LastModifiedTime</span></p>
+                <p class="question-content">
+                    @Model.Data.Description
+                </p>
+            </div>
+            <hr />
+            if (Model.Data.ReplyList != null)
+            {
+                foreach (var reply in Model.Data.ReplyList)
+                {
+                    <div class="row">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img class="media-object" src="/Content/Styles/dist/img/role_@(reply.RoleId).png" style="width: 64px; height: 64px;" alt="">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h6 class="media-heading">@reply.UserName</h6>
+                                <p>@reply.Content<br /><span style="color: gray; font-size: 0.1em;">@TimeHelper.DateDiff(reply.ReplyTime, DateTime.Now)</span></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                var pager = new PagedList<string>(new string[0], (int)ViewBag.PageIndex, (int)ViewBag.PageSize, (int)ViewBag.RecordCount);
+                @Html.Pager(pager).Options(o =>
+                {
+                    o.SetPageIndexParameterName("PageIndex");
+                    o.SetContainerTagName("ul");
+                    o.SetCssClass("pagination");
+                    o.SetCurrentPagerItemTemplate("<li class=\"active\"><a  href=\"#\">{0}</a></li>");
+                    o.SetDisabledPagerItemTemplate("<li class=\"disabled\"><a >{0}</a></li>");
+                    o.SetPagerItemTemplate("<li >{0}</li>");
+                    o.SetId("bootstrappager");
+                    o.SetFirstPageText("首页");
+                    o.SetPrevPageText("上一页");
+                    o.SetNextPageText("下一页");
+                    o.SetLastPageText("最后一页");
+                });
+            }
+            else
+            {
+                <p>暂无评论!</p>
+            }
+        }
+    </div>
+}

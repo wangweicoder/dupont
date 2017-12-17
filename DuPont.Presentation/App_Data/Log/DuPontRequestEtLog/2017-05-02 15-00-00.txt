@@ -1,0 +1,34 @@
+Operator/ReplyFarmerRequirement
+---------05/02/2017 15:11:01,458---------
+靠谱作业农机手接受订单
+Address:116.39564503788,39.92998577808
+Credit:1
+cur_time:2
+id:165
+Name:e田农机手
+NickName:E田农机手
+OtherMachinery:其他农机
+PhoneNumber:15725505192
+Token:1
+userId:2845
+encrypt:b6f7c86aa0e1c9244adf31029bbca08f146b92a618abf3e2191707f954d59fc5
+Operator/CommentRequirement
+---------05/02/2017 15:13:37,402---------
+先锋帮的农机手评价大农户CommentString:评价大农户
+FarmerName:
+Id:251
+OperatoName:
+OrderState:100508
+Score:4
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:f6ee9dab11bae513859648537e69431169eb61d39aa7b2c272e535c7571c185a
+FarmerRequirement/CommentRequirementForOperator
+---------05/02/2017 15:41:06,415---------
+先锋帮大农户评价靠谱作业的农机手
+CommentString:评价靠谱作业农机手
+FarmerUserId:
+Id:165
+OperatorUserId:
+Score:5
+Token:84ebfed3-5240-4d12-84b5-48f9b0b63410
+Encrypt:c9a76091aa870a799d8ff6d44d7ca610afd0a3e3d4eea9ff4faef6140e9c10ca

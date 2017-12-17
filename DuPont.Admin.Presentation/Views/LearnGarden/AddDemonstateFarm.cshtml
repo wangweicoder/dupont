@@ -1,0 +1,222 @@
+﻿@model DuPont.Models.Dtos.Background.LearningWorld.DemonstateFarmDetailViewModel
+@{
+    ViewBag.PageTitle = "添加示范农场";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+@section HTML_Header{
+
+    <style>
+        /*行高30*/
+        .lh20 {
+            line-height: 20px;
+        }
+
+        /*分割线*/
+        .line {
+            padding-top: 10px;
+            margin: 0px;
+            border-color: #3E7B36;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #3E7B36;
+                border-color: #3E7B36;
+            }
+    </style>
+    <link href="~/Content/Styles/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+    <link href="~/Content/Styles/plugins/iCheck/flat/green.css" rel="stylesheet" />
+
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 学习园地</li>
+    <li class="active">添加示范农场</li>
+}
+<h3 style="margin-top: 5px;" class="text-center"><b>@ViewBag.PageTitle</b></h3>
+<div class="container-fluid">
+    @using (Html.BeginForm("AddDemonstateFarm", "LearnGarden", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label text-nowrap col-xs-12 col-sm-1 lh20">农场名称</label>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "农场名称" })
+                </div>
+                <label class="control-label text-nowrap col-xs-12 col-sm-1 lh20">农场面积</label>
+                <div class="col-xs-12 col-sm-4 ">
+                    @Html.TextBoxFor(m => m.PlantArea, new { @class = "form-control", placeholder = "农场面积" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label text-nowrap col-xs-12 col-sm-1 lh20">播种时间</label>
+                <div class="col-xs-12 col-sm-4 ">
+                    @Html.TextBoxFor(m => m.SowTime, new { @class = "form-control", placeholder = "播种时间" })
+                </div>
+                <label class="control-label text-nowrap col-xs-12 col-sm-1 lh20">主要品种</label>
+                <div class="col-xs-12 col-sm-4 ">
+                    @Html.TextBoxFor(m => m.Variety, new { @class = "form-control", placeholder = "主要品种" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-1 text-nowrap lh20">所属地址</label>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" name="ProvinceAid" id="ProvinceAid">
+                        <option value="value">--请选择省份--</option>
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" name="CityAid" id="CityAid">
+                        <option value="value">--请选择城市--</option>
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" name="RegionAid" id="RegionAid">
+                        <option value="value">--请选择区/县--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label text-nowrap col-xs-12 col-sm-1 lh20">种植要点</label>
+                <div class="col-xs-12 col-sm-4 ">
+                    @Html.TextAreaFor(m => m.PlantPoint, new { @class = "form-control", placeholder = "种植要点" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-1 text-nowrap lh20">是否开放</label>
+                <div class="col-xs-12 col-sm-4 ">
+                    @*<input type="checkbox" name="IsOpen" class="minimal" id="IsOpen" @((Model != null && Model.IsOpen == "on") ? "checked" : "") />*@
+                    @Html.CheckBoxFor(m => m.IsOpen, new { @class = "minimal" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-1 text-nowrap lh20">开放时间</label>
+                <div class="col-xs-12 col-sm-4">
+                    <div class="input-group input-daterange">
+                        @Html.TextBoxFor(m => m.OpenStartDate, new { @class = "form-control input-sm" })
+                        <span class="input-group-addon">到</span>
+                        @Html.TextBoxFor(m => m.OpenEndDate, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-offset-1 col-sm-3">
+                    <button type="submit" class="btn btn-block btn-primary">添加</button>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+@section HTML_Footer{
+    <script src="~/Content/Styles/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/Content/Styles/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+    <script src="~/Content/Styles/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        function LoadProvinceList() {
+            $.post("/Verification/GetAreaChild", { "ParentAId": "0" }, function (data) {
+                if (data && data.Entity) {
+                    var $area = $("#ProvinceAid");
+                    var html = "<option value='0'>--请选择省份--</option>";
+                    $.each(data.Entity, function (i, v) {
+                        html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                    });
+                    $area.empty().append(html);
+                    var selectedValue='@Request.Form["ProvinceAid"]';
+                    if (selectedValue.length > 1) {
+                        $area.val(selectedValue).triggerHandler('change');
+                    }
+                };
+            });
+        }
+
+        function LoadCityList(provinceAid) {
+            $.post("/Verification/GetAreaChild", { "ParentAId": provinceAid }, function (data) {
+                if (data && data.Entity) {
+                    var $area = $("#CityAid");
+                    var html = "<option value='0'>--请选择城市--</option>";
+                    $.each(data.Entity, function (i, v) {
+                        html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                    });
+                    $area.empty().append(html);
+                    var selectedValue = '@Request.Form["CityAid"]';
+                    if (selectedValue.length > 1) {
+                        $area.val(selectedValue).triggerHandler('change');
+                    }
+                };
+            });
+        }
+
+        function LoadRegionList(cityAid) {
+            $.post("/Verification/GetAreaChild", { "ParentAId": cityAid }, function (data) {
+                if (data && data.Entity) {
+                    var $area = $("#RegionAid");
+                    var html = "<option value='0'>--请选择区/县--</option>";
+                    $.each(data.Entity, function (i, v) {
+                        html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                    });
+                    $area.empty().append(html);
+                    var selectedValue = '@Request.Form["RegionAid"]';
+                    if (selectedValue.length > 1) {
+                        $area.val(selectedValue);
+                    }
+                };
+            });
+        }
+
+        $(function () {
+            //绑定复选框
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_flat-green',
+                radioClass: 'iradio_flat'
+            }).on('ifChecked', function (event) {
+                $('#OpenStartDate,#OpenEndDate').prop({ disabled: false });
+            }).on('ifUnchecked', function (event) {
+                $('#OpenStartDate,#OpenEndDate').prop({ disabled: true }).val('');
+            });
+
+            if (!$('#IsOpen').is(':checked')) {
+                $('#OpenStartDate,#OpenEndDate').prop({ disabled: true })
+            }
+
+            //绑定日期输入框
+            $('.input-daterange').datepicker({
+                todayBtn: false,
+                clearBtn: false,
+                autoclose: true,
+                language: "zh-CN",
+                orientation: "top auto"
+            });
+
+            $("#ProvinceAid").change(function () {
+                $('#CityAid').children(':gt(0)').remove().val('0');
+                $('#RegionAid').children(':gt(0)').remove().val('0');
+                var selectedValue = $(this).val();
+                if (selectedValue != 0) {
+                    LoadCityList(selectedValue);
+                }
+            });
+
+            $("#CityAid").change(function () {
+                $('#RegionAid').children(':gt(0)').remove().val('0');
+                var selectedValue = $(this).val();
+                if (selectedValue != 0) {
+                    LoadRegionList(selectedValue);
+                }
+            });
+
+            LoadProvinceList();
+        });
+    </script>
+}

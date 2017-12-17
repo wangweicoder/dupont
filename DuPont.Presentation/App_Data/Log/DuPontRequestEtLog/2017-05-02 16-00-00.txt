@@ -1,0 +1,42 @@
+Operator/ReplyFarmerRequirement
+---------05/02/2017 16:01:05,581---------
+靠谱作业农机手接受订单
+Address:116.39564503788,39.92998577808
+Credit:1
+cur_time:2
+id:165
+Name:e田农机手
+NickName:E田农机手
+OtherMachinery:其他农机
+PhoneNumber:15725505192
+Token:1
+userId:2845
+encrypt:b6f7c86aa0e1c9244adf31029bbca08f146b92a618abf3e2191707f954d59fc5
+Operator/ReplyFarmerRequirement
+---------05/02/2017 16:03:19,020---------
+靠谱作业农机手接受订单
+Address:116.39564503788,39.92998577808
+Credit:1
+cur_time:2
+id:165
+Name:e田农机手
+NickName:E田农机手
+OtherMachinery:其他农机
+PhoneNumber:15725505192
+Token:1
+userId:2845
+encrypt:b6f7c86aa0e1c9244adf31029bbca08f146b92a618abf3e2191707f954d59fc5
+Operator/ReplyFarmerRequirement
+---------05/02/2017 16:05:25,606---------
+靠谱作业农机手接受订单
+Address:116.39564503788,39.92998577808
+Credit:1
+cur_time:2
+id:165
+Name:e田农机手
+NickName:E田农机手
+OtherMachinery:其他农机
+PhoneNumber:15725505192
+Token:7A18956F6DB040A485379DC6A80B80A2
+userId:2845
+encrypt:6afef08f61a73f7bc11a1d6636b8327c380048e11b4100b2f0b0b9f8813267d0

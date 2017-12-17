@@ -1,0 +1,498 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model DuPont.Models.Dtos.Background.Demand.FarmerDemandViewModel
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 需求管理</li>
+    <li class="active">大农户需求管理列表</li>
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>大农户需求管理列表</title>
+    <style>
+        body {
+            min-height: 600px;
+        }
+
+        .center {
+            margin: 0 auto;
+        }
+
+        .divider {
+            background: green;
+            height: 1px;
+            margin: 10px 0px;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            background-color: #00A65A;
+            border-color: #00A65A;
+        }
+
+        .select {
+            float: left;
+        }
+
+        .tr1 {
+            padding-bottom: 10px;
+        }
+
+        a {
+            font-size: 13px;
+        }
+
+            a:link {
+                color: #48A13C;
+                text-decoration: none;
+            }
+
+            /*未访问：蓝色、无下划线*/
+            a:active {
+                color: red;
+            }
+
+            /*激活：红色*/
+            a:visited {
+                color: purple;
+                text-decoration: none;
+            }
+
+            /*已访问：purple、无下划线*/
+            a:hover {
+                color: blue;
+                text-decoration: underline;
+            }
+
+        /*鼠标移近：红色、下划线*/
+        #tb_rolelist {
+            color: #3C3C3C;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            z-index: 2;
+            color: #fff;
+            cursor: default;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+        .row {
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #48A13C;
+                border-color: #48A13C;
+            }
+
+        .applytime, .selectRegion, .roletype {
+            padding-left: 15px;
+        }
+
+        .applytime {
+            width: 75% !important;
+        }
+
+
+        @@media(max-width:533px) {
+            .col-xs-2 {
+                width: 15% !important;
+            }
+        }
+
+        @@media(max-width:768px) {
+            .roletype {
+                width: 95% !important;
+            }
+
+            .col-xs-3 {
+                width: 90% !important;
+            }
+
+            .col-xs-6 {
+                width: 90% !important;
+            }
+        }
+
+        @@media(min-width:768px) and (max-width:849px) {
+            .applytime, .selectRegion, .roletype {
+                width: 35% !important;
+            }
+
+            .roletype {
+                width: 95% !important;
+            }
+        }
+
+        @@media (min-width:851px) {
+            .applytime, .selectRegion {
+                width: 11% !important;
+            }
+
+            .roletype {
+                width: 23% !important;
+            }
+        }
+
+
+
+        /*@@media(max-width:1168px) {
+                .applytime {
+                    width: 12% !important;
+                }
+            }*/
+
+        /*屏幕适配*/
+    </style>
+
+</head>
+<body>
+    <h3 style="margin-top: 5px;" class="text-center"><b>大农户需求管理</b></h3>
+    <div class="container-fluid">
+        @using (Html.BeginForm("ArticleList", "LearnGarden", FormMethod.Post))
+        {
+            <div class="row form-group">
+                <label class="col-xs-12 col-sm-1 text-nowrap lh20">需求类型</label>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" id="article-DemandType"></select>
+                </div>
+                <label class="col-xs-12 col-sm-1 text-nowrap lh20">需求状态</label>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" id="article-PublishState"></select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="col-xs-12 col-sm-1 text-nowrap lh20">所属地区</label>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" name="ProvinceAid" id="ProvinceAid">
+                        <option value="">--请选择省份--</option>
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" name="CityAid" id="CityAid">
+                        <option value="">--请选择城市--</option>
+                    </select>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <select class="form-control" name="RegionAid" id="RegionAid">
+                        <option value="">--请选择区/县--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="col-xs-12 col-sm-1 text-nowrap lh20">删除状态</label>
+                <div class="col-xs-12 col-sm-3">
+                    @Html.DropDownList("IsDeleted", new List<SelectListItem>{
+                    new SelectListItem{Text="--请选择删除状态--",Value=""},
+                    new SelectListItem{Text="已删除",Value="true"},
+                    new SelectListItem{Text="未删除",Value="false"}
+                }, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="row  form-group">
+                <div class="col-xs-12 col-sm-2">
+                    <button class="btn btn-block btn-primary" type="button" id="btnSearch"><span class="glyphicon glyphicon-search"></span> 搜 索</button>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    <button class="btn btn-block btn-danger" type="button" id="btnClock">关 闭</button>
+                </div>
+            </div>
+        }
+        <div class="divider" style=" width:950px"></div>
+        <div class="row">
+            <div class="col-xs-2">
+                <button type="button" id="ExportExcel" class="btn btn-default"><span class="glyphicon glyphicon-download"></span> 导出Excel</button>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover" id="tb_rolelist">
+            <thead style="background-color: #48A13C; height: 36px; color: #FFFFFF; font-size: 13px; ">
+                <tr>
+                    <td>选择</td>
+                    <td>发起人</td>
+                    <td>需求类型</td>
+                    <td>需求状态</td>
+                    <td>省</td>
+                    <td>市</td>
+                    <td>区/县</td>
+                    <td>删除状态</td>
+                    <td>发起时间</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.PendingAuditList)
+                {
+                    <tr>
+                        <td><input type="checkbox" id="chk_@item.Id" @(item.PublishState.Equals("系统关闭") ? "disabled=\"disabled\"" : "") /></td>
+                        <td>@item.CreateUser</td>
+                        <td>@item.DemandType</td>
+                        <td>@item.PublishState</td>
+                        <td>@(String.IsNullOrEmpty(item.Province) ? "无" : item.Province)</td>
+                        <td>@(String.IsNullOrEmpty(item.City) ? "无" : item.City)</td>
+                        <td>@(String.IsNullOrEmpty(item.Region) ? "无" : item.Region)</td>
+                        <td>
+                            @if (item.IsDeleted)
+                            {
+                                <s><span style="color:red">已删除</span></s>
+                            }
+                            else
+                            {
+                                @:正常
+                            }
+                        </td>
+
+                        <td>@(item.CreateTime.ToString("yyyy.MM.dd"))</td>
+                        <td>@Html.ActionLink("查看", "FarmerDetail", new { DemandId = item.Id })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+            @Html.Pager(Model.Pager).Options(o => o.SetPageIndexParameterName("PageIndex").SetPagerItemTemplate("{0}&nbsp;")).Options(o =>
+                   {
+                       o.SetPageIndexParameterName("PageIndex");
+                       o.SetContainerTagName("ul");
+                       o.SetCssClass("pagination");
+                       o.SetCurrentPagerItemTemplate("<li class=\"active\"><a href=\"#\">{0}</a></li>");
+                       o.SetDisabledPagerItemTemplate("<li class=\"disabled\"><a>{0}</a></li>");
+                       o.SetPagerItemTemplate("<li>{0}</li>");
+                       o.SetId("bootstrappager");
+                       o.SetFirstPageText("首页");
+                       o.SetPrevPageText("上一页");
+                       o.SetNextPageText("下一页");
+                       o.SetLastPageText("最后一页");
+                   })
+
+        </div>
+    </div>
+    @section HTML_Footer{
+        <link href="/Content/Styles/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+        <script src="/Content/Styles/plugins/datepicker/bootstrap-datepicker.js"></script>
+        <script src="/Content/Styles/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+        <script src="~/Content/Styles/plugins/layer/layer.js"></script>
+
+        <script>
+            var search_DemandTypeValue = "@Model.Wheremodel.DemandTypeId";
+            var search_PublishStateValue = "@Model.Wheremodel.PublishStateId";
+            var search_Province = "@Model.Wheremodel.ProvinceAid";
+            var search_City = "@Model.Wheremodel.CityAid";
+            var search_Region = "@Model.Wheremodel.RegionAid";
+
+
+            function LoadProvinceList() {
+                $.post("/Verification/GetAreaChild", { "ParentAId": "0" }, function (data) {
+                    if (data && data.Entity) {
+                        var $area = $("#ProvinceAid");
+                        var html = "<option value=''>--请选择省份--</option>";
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $area.empty().append(html);
+                        var selectedValue = '@Request["ProvinceAid"]';
+                        if (selectedValue.length > 1) {
+                            $area.val(selectedValue).triggerHandler('change');
+                        }
+
+                        if (search_Province != "0") {
+                            $area.val(search_Province);
+                        }
+                    };
+                });
+            }
+
+            function LoadCityList(provinceAid) {
+                $.post("/Verification/GetAreaChild", { "ParentAId": provinceAid }, function (data) {
+                    if (data && data.Entity) {
+                        var $area = $("#CityAid");
+                        var html = "<option value=''>--请选择城市--</option>";
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $area.empty().append(html);
+                        var selectedValue = '@Request["CityAid"]';
+                        if (selectedValue.length > 1) {
+                            $area.val(selectedValue).triggerHandler('change');
+                        }
+
+                        if (search_City != "0") {
+                            $area.val(search_City);
+                        }
+                    };
+                });
+            }
+
+            function LoadRegionList(cityAid) {
+                $.post("/Verification/GetAreaChild", { "ParentAId": cityAid }, function (data) {
+                    if (data && data.Entity) {
+                        var $area = $("#RegionAid");
+                        var html = "<option value=''>--请选择区/县--</option>";
+                        $.each(data.Entity, function (i, v) {
+                            html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                        });
+                        $area.empty().append(html);
+                        var selectedValue = '@Request["RegionAid"]';
+                        if (selectedValue.length > 1) {
+                            $area.val(selectedValue);
+                        }
+
+                        if (search_Region != "0") {
+                            $area.val(search_Region);
+                        }
+                    };
+                });
+            }
+
+            LoadProvinceList();
+
+            $("#ProvinceAid").change(function () {
+                $('#CityAid').children(':gt(0)').remove().val('');
+                $('#RegionAid').children(':gt(0)').remove().val('');
+                var selectedValue = $(this).val();
+                if (selectedValue != 0) {
+                    LoadCityList(selectedValue);
+                }
+            });
+
+            $("#CityAid").change(function () {
+                $('#RegionAid').children(':gt(0)').remove().val('');
+                var selectedValue = $(this).val();
+                if (selectedValue != 0) {
+                    LoadRegionList(selectedValue);
+                }
+            });
+
+            var table = document.getElementById("tb_rolelist");
+            var tbody = table.getElementsByTagName("tbody")[0];
+            var trs = tbody.getElementsByTagName("tr");
+            for (var i = 0; i < trs.length; i++) {
+                if (i % 2 == 0) {
+                    trs[i].style.backgroundColor = "#ECF0F5";
+                }
+                else {
+                    trs[i].style.backgroundColor = "#FFFFFF";
+                }
+            }
+
+            $.get("/DemandGet/SelectList?code=100800", function (data) {
+                if (data.Entity && data.IsSuccess) {
+                    var $articleCategory = $('#article-DemandType');
+                    var html = '<option value="0">请选择类型</option>';
+                    for (var i = 0; i < data.Entity.length; i++) {
+                        var dataItem = data.Entity[i];
+                        html += '<option value="' + dataItem.CatId + '">' + dataItem.CatName + '</option>';
+
+                    }
+
+                    $articleCategory.html(html);
+                    if (search_DemandTypeValue) {
+                        $articleCategory.val(search_DemandTypeValue);
+                    }
+                }
+            });
+            function getQueryStringByName(name) {
+                var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+                if (result == null || result.length < 1) {
+
+                    return "";
+                }
+                return result[1];
+            }
+            $.get("/DemandGet/SelectList?code=100500", function (data) {
+                if (data.Entity && data.IsSuccess) {
+                    var $articleCategory = $('#article-PublishState');
+                    var html = '<option value="0">请选择状态</option>';
+                    for (var i = 0; i < data.Entity.length; i++) {
+                        var dataItem = data.Entity[i];
+                        html += '<option value="' + dataItem.CatId + '">' + dataItem.CatName + '</option>';
+
+                    }
+
+                    $articleCategory.html(html);
+                    if (search_PublishStateValue) {
+                        $articleCategory.val(search_PublishStateValue);
+                    }
+                }
+            });
+            var $checkboxList = $('[id^=chk_]');
+            $checkboxList.change(function () {
+                var selectCount = 0;
+                $checkboxList.each(function () {
+                    if (this.checked) {
+                        selectCount++;
+                    }
+                });
+            });
+            $("#btnClock").click(function () {
+                var selectCount = 0;
+                var ids = [];
+                $checkboxList.each(function () {
+                    if (this.checked) {
+                        ids[selectCount++] = $(this).attr('id').replace('chk_', '');
+                    }
+                });
+                layer.confirm('确认要关闭这' + selectCount + '条?', { icon: 3, title: '提示' }, function (index) {
+                    var parameter = "Ids=" + ids;
+                    var index = layer.msg('处理中,请稍后...', { icon: 16, time: 15 * 1000 });
+                    $.post('/Demand/FarmerClose', parameter, function (data) {
+                        if (data != null) {
+                            top.window.Success("关闭成功!");
+                            layer.close(index);
+                            location.reload();
+                        }
+                    });
+                });
+
+            });
+
+            $("#btnSearch").click(function () {
+                var categoryId = $('#article-DemandType').val();
+                var publishStateId = $('#article-PublishState').val();
+                var provinceAid = $('#ProvinceAid').val();
+                var cityAid = $('#CityAid').val();
+                var regionAid = $('#RegionAid').val();
+                var isDeleted = $('#IsDeleted').val();
+                var parameters = {
+                    "DemandTypeId": categoryId, "PublishStateId": publishStateId,
+                    "ProvinceAid": provinceAid, "CityAid": cityAid, "RegionAid": regionAid,
+                    "IsDeleted": isDeleted
+                };
+
+                location.href = '/Demand/FarmerList?' + $.param(parameters) + '&timestamp=' + Math.random();
+            });
+
+            $('#ExportExcel').click(function () {
+                var categoryId = $('#article-DemandType').val();
+                var publishStateId = $('#article-PublishState').val();
+                var provinceAid = $('#ProvinceAid').val();
+                var cityAid = $('#CityAid').val();
+                var regionAid = $('#RegionAid').val();
+                var isDeleted = $('#IsDeleted').val();
+                var parameters = {
+                    "DemandTypeId": categoryId, "PublishStateId": publishStateId,
+                    "ProvinceAid": provinceAid, "CityAid": cityAid, "RegionAid": regionAid,
+                    "IsDeleted": isDeleted
+                };
+
+                location.href = '/Demand/ExportExcelWithFarmList?pageSize=10000&' + $.param(parameters) + '&timestamp=' + Math.random();
+            });
+        </script>
+    }
+</body>
+</html>

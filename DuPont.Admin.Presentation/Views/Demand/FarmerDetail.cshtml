@@ -1,0 +1,312 @@
+﻿@model DuPont.Admin.Presentation.Models.FarmerDetailModel
+@using Webdiyer.WebControls.Mvc
+@{
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 需求管理</li>
+    <li class="active">大农户需求详情</li>
+}
+@section HTML_Header
+{
+    <link href="/Content/Styles/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="/Content/Styles/plugins/zoom/css/zoom.css" rel="stylesheet" />
+    <style>
+        .pt8 {
+            padding-top: 8px;
+        }
+
+        .h1 {
+            height: 1px;
+        }
+
+        .bg-gray {
+            background-color: gray;
+        }
+
+        .select2 {
+            width: auto !important;
+            height: 32px !important;
+        }
+
+        .mr10 {
+            margin-right: 10px;
+        }
+
+        .mr20 {
+            margin-right: 20px;
+        }
+
+        .border-dashed {
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .fmyahei {
+            font-family: 'Microsoft YaHei';
+        }
+
+        .pt0 {
+            padding-top: 0px;
+        }
+
+        .mt0 {
+            margin-top: 0px !important;
+        }
+
+        .mb0 {
+            margin-bottom: 0px;
+        }
+
+        .p0 {
+            padding: 0px !important;
+        }
+
+        .p-l0 {
+            padding-left: 0px;
+        }
+
+        .p-r0 {
+            padding-right: 0px;
+        }
+
+        .wauto {
+            width: auto;
+        }
+
+        .mb20 {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #00A65A;
+            border-color: #00A65A;
+        }
+
+        .gallery-container {
+            width: 505px;
+            margin: 0 auto;
+        }
+
+        .gallery {
+            list-style-type: none;
+            float: left;
+            background: #ffffff;
+            padding: 20px 20px 10px 20px;
+            margin: 0;
+            -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+            .gallery li {
+                float: left;
+                padding: 0 10px 10px 0;
+            }
+
+                .gallery li:nth-child(6n) {
+                    padding-right: 0;
+                }
+
+                .gallery li a, .gallery li img {
+                    float: left;
+                }
+
+        #zoom {
+            top: 5%;
+            left: 10%;
+            height: 60%;
+            width: 80%;
+        }
+
+            #zoom .content {
+            }
+
+                #zoom .content img {
+                    display: block;
+                    height: 400px;
+                }
+
+        .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+            color: #fff;
+            background-color: #28902D;
+            border-color: #28902D;
+        }
+    </style>
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>大农户需求详情</title>
+</head>
+<body>
+    <h3 class="text-center">大农户需求详情</h3>
+    <div class="h1 border-dashed" style="background-color:green; width:935px;margin-left:58px"></div>
+    <div class="container" style="width:1048px;height:695.2px">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-2">发起人</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+
+                </div>
+                <label class="control-label col-md-2">需求类型</label>
+                <div class="col-md-4">
+                    <select class="form-control" disabled="disabled">
+                        <option>@Model.DemandType</option>
+                    </select>
+                    @*@Html.TextBoxFor(m => m.DemandType, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })*@
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">需求状态</label>
+                <div class="col-md-4">
+                    <select class="form-control" disabled="disabled">
+                        <option>@Model.PublishState</option>
+                    </select>
+                    @*@Html.TextBoxFor(m => m.PublishState, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })*@
+
+                </div>
+                <label class="control-label col-md-2">期望日期</label>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.ExpectedDate, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">期望价格上限</label>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.ExpectedEndPrice, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                </div>
+                <span class="pull-left pt8">元</span>
+                <label class="control-label col-md-3">期望价格下限</label>
+                <div class="col-md-3">
+
+                    @Html.TextBoxFor(m => m.ExpectedStartPrice, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+
+                </div>
+                <span class="pull-left pt8">元</span>
+            </div>
+            @*<div class="form-group">
+                    <label class="control-label col-md-2">期望价格上限</label>
+                    <div class="col-md-2">
+                        @Model.ExpectedEndPrice
+                    </div>
+                    <label class="control-label col-md-2">期望价格下限</label>
+                    <div class="col-md-2">
+                        @Model.ExpectedStartPrice
+                    </div>
+                </div>*@
+            <div class="form-group">
+                <label class="control-label col-md-2">地址</label>
+                <div class="col-md-10">
+                    <div class="col-md-2  p-l0 wauto" style="position:relative">
+                        <select class="form-control" disabled="disabled">
+                            <option>@Model.Province</option>
+                        </select>
+                    </div>
+
+                    <label class="control-label col-md-1 p-l0" @(string.IsNullOrEmpty(Model.Province) ? "hidden=\"hidden\"" : "")>省</label>
+
+                    <div class="col-md-2  p-l0 wauto" @(string.IsNullOrEmpty(Model.City) ? "hidden=\"hidden\"" : "")>
+
+                        <select class="form-control" disabled="disabled">
+                            <option value="value">@Model.City</option>
+                        </select>
+                    </div>
+                    <label class="control-label col-md-1 p-l0" @(string.IsNullOrEmpty(Model.City) ? "hidden=\"hidden\"" : "")>市</label>
+                    <div class="col-md-2  p-l0 wauto" @(string.IsNullOrEmpty(Model.Region) ? "hidden=\"hidden\"" : "")>
+                        <select class="form-control" disabled="disabled">
+                            <option value="value">@Model.Region</option>
+                        </select>
+                    </div>
+                    <label class="control-label col-md-1 p-l0 p-r0 wauto" @(string.IsNullOrEmpty(Model.Region) ? "hidden=\"hidden\"" : "")>区/县</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">农作物</label>
+                <div class="checkbox col-md-4">
+                    @Html.TextBoxFor(m => m.Crop, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+
+
+                </div>
+                <label class="control-label col-md-2">品种</label>
+                <div class="checkbox col-md-4">
+                    @Html.TextBoxFor(m => m.Variety, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">田间亩数</label>
+                <div class="checkbox col-md-4">
+                    @Html.TextBoxFor(m => m.Acres, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+
+
+                </div>
+                <label class="control-label col-md-2">发起时间</label>
+                <div class="checkbox col-md-4">
+                    @Html.TextBoxFor(m => m.CreateTime, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">摘要</label>
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.Brief, new { disabled = "disabled", @readonly = "readonly" })
+                    @*@Model.Brief*@
+                </div>
+            </div>
+        </div>
+
+        <h4 class="text-center">应答列表</h4>
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <table class="table table-bordered table-hover text-center">
+                    <thead style="background-color: #48A13C; height: 36px;color: #FFFFFF; font-size: 13px; ">
+                        <tr>
+                            <th>
+                                应答人手机号
+                            </th>
+                            <th>
+                                收到的评价
+                            </th>
+                            <th>
+                                应答时间
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.ReplyList != null && Model.ReplyList.Any())
+                        {
+                            foreach (var reply in Model.ReplyList)
+                            {
+                                <tr>
+                                    <td>@reply.PhoneNumber</td>
+                                    <td>@(reply.Comments ?? "未评价")</td>
+                                    <td>@reply.ReplyTime.ToString("yyyy.MM.dd")</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" align="center">暂无应答人信息!</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

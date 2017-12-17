@@ -1,0 +1,360 @@
+﻿@model DuPont.Models.Models.MultiModel<List<DuPont.Models.Dtos.Background.LearningWorld.FarmListOutput>>
+@{
+    ViewBag.PageTitle = "示范农场列表";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+@using Webdiyer.WebControls.Mvc;
+@section HTML_Header{
+    <style>
+        table {
+            table-layout: fixed; /* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+        }
+
+        td {
+            width: 100%;
+            word-break: keep-all; /* 不换行 */
+            white-space: nowrap; /* 不换行 */
+            overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+            text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #48A13C;
+            border-color: #48A13C;
+        }
+
+            .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary {
+                color: #fff;
+                background-color: #3E7B36;
+                border-color: #3E7B36;
+            }
+
+        .lightgreen {
+            background-color: #B4DAAC !important;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+    </style>
+    <link href="~/Content/Styles/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+    <link href="~/Content/Styles/plugins/iCheck/square/green.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+}
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i>示范农场管理</li>
+    <li class="active">农场列表</li>
+}
+<h3 style="margin-top: 5px;" class="text-center"><b>@ViewBag.PageTitle</b></h3>
+<div class="container-fluid">
+    @using (Html.BeginForm("FarmList", "LearnGarden", FormMethod.Get))
+    {
+        <div class="row form-group">
+            <label class="control-label col-xs-12 col-sm-1 text-nowrap">农场名称</label>
+            <div class="col-xs-12 col-sm-3">
+                <input type="text" name="Keywords" id="Keywords" class="form-control" placeholder="农场名称" value="@Request["Keywords"]" />
+            </div>
+        </div>
+        <div class="row form-group">
+            <label for="IsOpen" class="control-label col-xs-12 col-sm-1 text-nowrap">开放状态</label>
+            <div class="col-xs-12 col-sm-3">
+                @Html.DropDownList("IsOpen", new List<SelectListItem>{
+                    new SelectListItem{Text="--请选择开放状态--",Value=""},
+                    new SelectListItem{Text="已开放",Value="true"},
+                    new SelectListItem{Text="未开放",Value="false"}
+                }, new { @class = "form-control" })
+            </div>
+            <label for="IsDeleted" class="control-label col-xs-12 col-sm-1 text-nowrap">删除状态</label>
+            <div class="col-xs-12 col-sm-3">
+                @Html.DropDownList("IsDeleted", new List<SelectListItem>{
+                    new SelectListItem{Text="--请选择删除状态--",Value=""},
+                    new SelectListItem{Text="已删除",Value="true"},
+                    new SelectListItem{Text="未删除",Value="false"}
+                }, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row form-group">
+            <label class="col-xs-12 col-sm-1 text-nowrap lh20">所属地区</label>
+            <div class="col-xs-12 col-sm-3">
+                <select class="form-control" name="ProvinceAid" id="ProvinceAid">
+                    <option value="">--请选择省份--</option>
+                </select>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <select class="form-control" name="CityAid" id="CityAid">
+                    <option value="">--请选择城市--</option>
+                </select>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <select class="form-control" name="RegionAid" id="RegionAid">
+                    <option value="">--请选择区/县--</option>
+                </select>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-xs-12 col-sm-2">
+                <button type="submit" class="btn btn-block btn-primary"><span class="glyphicon glyphicon-search"></span> 搜 索</button>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-xs-12 col-sm-2">
+                <button class="btn btn-danger" type="button" id="btnDelete" disabled><span class="glyphicon glyphicon-remove"></span> 删除</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-bordered table-hover text-center">
+                    <thead style="background-color: #48A13C; height: 36px;color: #FFFFFF; font-size: 13px; ">
+                        <tr>
+                            <th class="col-xs-1"><label><input type="checkbox" id="checkAll" /></label>选择</th>
+                            <th>
+                                农场名称
+                            </th>
+                            <th class="col-sm-1 col-xs-1">
+                                已开放
+                            </th>
+                            <th class="col-sm-1 col-xs-1">
+                                已删除
+                            </th>
+                            <th class="col-sm-1 col-xs-2 hidden-xs">
+                                省份
+                            </th>
+                            <th class="hidden-xs">
+                                城市
+                            </th>
+                            <th class="hidden-xs">
+                                地区
+                            </th>
+
+                            <th class="text-nowrap">
+                                开放时间
+                            </th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.IsSuccess && Model.Data.Any())
+                        {
+                            var emptyAlternateString = "<span style=\"color:#cdcdcd;\">未设置</span>";
+                            foreach (var farm in Model.Data)
+                            {
+                                <tr>
+                                    <td><input type="checkbox" id="chk_item_@farm.Id" /></td>
+                                    <td>@Html.ActionLink(@farm.Name, "EditDemonstateFarm", new { farmId = @farm.Id })</td>
+                                    <td><div class="state  @(farm.IsOpen ? "iradio_square-green checked" : "")"></div>   @*<input type="checkbox" @(farm.IsOpen ? "checked" : "") disabled />*@</td>
+                                    <td><span class="@(farm.IsDeleted ? "red" : "green")">@Html.Raw(farm.IsDeleted ? "<s>已删除</s>" : "正常")</span></td>
+                                    <td class="hidden-xs">@farm.Province</td>
+                                    <td class="hidden-xs">@farm.City</td>
+                                    <td class="hidden-xs">@farm.Region</td>
+                                    <td class="text-nowrap">@Html.Raw("开始：" + (farm.OpenStartDate == null ? emptyAlternateString : farm.OpenStartDate.Value.ToString("yyyy.MM.dd")))<br />@Html.Raw("截止：" + (farm.OpenEndDate == null ? emptyAlternateString : farm.OpenEndDate.Value.ToString("yyyy.MM.dd")))</td>
+                                    <td><a href="/LearnGarden/AddExhibitionAreaForDemonstateFarm?FarmId=@farm.Id&FarmName=@farm.Name"><span class="glyphicon glyphicon-plus-sign"></span> 添加分区</a><br /><a href="/LearnGarden/FarmBookList?FarmId=@farm.Id"><span class="glyphicon glyphicon-user"></span> 查看报名</a></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="9" align="center">没有匹配的结果!</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                @if (Model != null && Model.IsSuccess)
+                {
+                    @Html.Pager(Model.Pager).Options(o =>
+                        {
+                            o.SetPageIndexParameterName("PageIndex");
+                            o.SetContainerTagName("ul");
+                            o.SetCssClass("pagination");
+                            o.SetCurrentPagerItemTemplate("<li class=\"active\"><a  href=\"#\">{0}</a></li>");
+                            o.SetDisabledPagerItemTemplate("<li class=\"disabled\"><a >{0}</a></li>");
+                            o.SetPagerItemTemplate("<li >{0}</li>");
+                            o.SetId("bootstrappager");
+                            o.SetFirstPageText("首页");
+                            o.SetPrevPageText("上一页");
+                            o.SetNextPageText("下一页");
+                            o.SetLastPageText("最后一页");
+                        })
+                }
+
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <div>
+                            <iframe style="width:100%;height:500px;" src="" scrolling="no"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section HTML_Footer{
+    <script src="~/Content/Styles/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/Content/Styles/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+    <script src="~/Content/Styles/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/Content/Styles/plugins/layer/layer.js"></script>
+    <script>
+        //$('input[type=checkbox]').iCheck({
+        //    checkboxClass: 'icheckbox_square-green',
+        //    radioClass: 'iradio_square-green',
+        //    // increaseArea: '50%' // optional
+        //}).on('ifToggled', function () {
+        //    $(this).trigger('change');
+        //});;
+        function LoadProvinceList() {
+            $.post("/Verification/GetAreaChild", { "ParentAId": "0" }, function (data) {
+                if (data && data.Entity) {
+                    var $area = $("#ProvinceAid");
+                    var html = "<option value=''>--请选择省份--</option>";
+                    $.each(data.Entity, function (i, v) {
+                        html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                    });
+                    $area.empty().append(html);
+                    var selectedValue = '@Request["ProvinceAid"]';
+                    if (selectedValue.length > 1) {
+                        $area.val(selectedValue).triggerHandler('change');
+                    }
+                };
+            });
+        }
+
+        function LoadCityList(provinceAid) {
+            $.post("/Verification/GetAreaChild", { "ParentAId": provinceAid }, function (data) {
+                if (data && data.Entity) {
+                    var $area = $("#CityAid");
+                    var html = "<option value=''>--请选择城市--</option>";
+                    $.each(data.Entity, function (i, v) {
+                        html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                    });
+                    $area.empty().append(html);
+                    var selectedValue = '@Request["CityAid"]';
+                    if (selectedValue.length > 1) {
+                        $area.val(selectedValue).triggerHandler('change');
+                    }
+                };
+            });
+        }
+
+        function LoadRegionList(cityAid) {
+            $.post("/Verification/GetAreaChild", { "ParentAId": cityAid }, function (data) {
+                if (data && data.Entity) {
+                    var $area = $("#RegionAid");
+                    var html = "<option value=''>--请选择区/县--</option>";
+                    $.each(data.Entity, function (i, v) {
+                        html += '<option value="' + v.AID + '">' + v.DisplayName + '</option>';
+                    });
+                    $area.empty().append(html);
+                    var selectedValue = '@Request["RegionAid"]';
+                    if (selectedValue.length > 1) {
+                        $area.val(selectedValue);
+                    }
+                };
+            });
+        }
+
+        $(function () {
+            LoadProvinceList();
+
+            $("#ProvinceAid").change(function () {
+                $('#CityAid').children(':gt(0)').remove().val('');
+                $('#RegionAid').children(':gt(0)').remove().val('');
+                var selectedValue = $(this).val();
+                if (selectedValue != 0) {
+                    LoadCityList(selectedValue);
+                }
+            });
+
+            $("#CityAid").change(function () {
+                $('#RegionAid').children(':gt(0)').remove().val('');
+                var selectedValue = $(this).val();
+                if (selectedValue != 0) {
+                    LoadRegionList(selectedValue);
+                }
+            });
+
+            //全选
+            var $checkboxList = $('[id^=chk_item_]');
+            var $btnDelete = $('#btnDelete');
+            var $chkAll = $('#checkAll');
+            $chkAll.change(function () {
+                $checkboxList.prop({ checked: $chkAll.prop('checked') }).trigger('change');
+            });
+            $checkboxList.change(function () {
+                var selectCount = 0;
+                $checkboxList.each(function () {
+                    if (this.checked) {
+                        selectCount++;
+                    }
+                });
+
+                if (selectCount > 0) {
+                    if ($checkboxList.length == selectCount) {
+                        $chkAll.prop({ checked: true });
+                    } else {
+                        $chkAll.prop({ checked: false });
+                    }
+                    $btnDelete.prop({ disabled: false });
+                } else {
+                    $btnDelete.prop({ disabled: true });
+                    $chkAll.prop({ checked: false });
+                }
+
+                $(this).closest('tr')[this.checked ? 'addClass' : 'removeClass']('lightgreen');
+            });
+
+            //删除选中的农场
+            $btnDelete.click(function () {
+                var selectCount = 0;
+                var selectedItemIds = [];
+                $checkboxList.each(function () {
+                    if (this.checked) {
+                        selectedItemIds[selectCount++] = $(this).attr('id').replace('chk_item_', '');
+                    }
+                });
+                layer.confirm('确认要删除这' + selectCount + '条?', { icon: 3, title: '提示' }, function (index) {
+                    var parameter = "farmId=" + selectedItemIds.join('&farmId=');
+                    var index = layer.msg('处理中,请稍后...', { icon: 16, time: 15 * 1000 });
+                    $.post('/LearnGarden/DeleteFarm', parameter, function (data) {
+                        if (data == "1") {
+                            top.window.Success("删除成功!");
+                            layer.close(index);
+                            location.reload();
+                        }
+                    });
+                });
+            });
+
+            $('tr').click(function (event) {
+                if (event.target.tagName === 'INPUT')
+                    return;
+
+                var $chk = $(this).find(':checkbox:eq(0)');
+                if (!$chk.prop('checked')) {
+                    $chk.prop({ checked: true });
+                } else {
+                    $chk.prop({ checked: false });
+                }
+
+                $chk.triggerHandler('change');
+            });
+        });
+    </script>
+}

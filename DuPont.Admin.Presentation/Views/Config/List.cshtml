@@ -1,0 +1,61 @@
+﻿@model List<DuPont.Models.Dtos.Background.Config.SystemSettingViewModel>
+@{
+    ViewBag.PageTitle = "系统配置列表";
+    Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
+}
+
+@section HTML_Header{
+    <style>
+        table {
+            table-layout: fixed; /* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+        }
+
+        td {
+            width: 100%;
+            word-break: keep-all; /* 不换行 */
+            white-space: nowrap; /* 不换行 */
+            overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+            text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+        }
+    </style>
+}
+
+@section Breadcrumb
+{
+    <li><i class="fa fa-dashboard"></i> 首页</li>
+    <li><i class="fa fa-dashboard"></i> 后台管理</li>
+    <li class="active">配置项列表</li>
+}
+<h3 style="margin-top: 5px;" class="text-center"><b>@ViewBag.PageTitle</b></h3>
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table table-bordered table-hover text-center">
+            <thead style="background-color: #48A13C; height: 36px;color: #FFFFFF; font-size: 13px; ">
+                <tr>
+                    <th>编号</th>
+                    <th>配置项值</th>
+                    <th>描述</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model == null || Model.Count == 0)
+                {
+                    <tr><td colspan="4">没有数据!</td></tr>
+                }
+                else
+                {
+                    foreach (var setting in Model)
+                    {
+                        <tr>
+                            <td>@setting.SETTING_ID</td>
+                            <td>@setting.SETTING_VALUE</td>
+                            <td>@setting.COMMENT</td>
+                            <td>@Html.ActionLink("修改", "Detail", new { id = setting.ID })</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ͨ��ajax��ȡjson���ݵ�ʵ�ִ���</title>
+    <script src="Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        //用标签实现跨域
+        function shu(data) {
+            alert(data);
+        }
+    </script>
+    <!--<script type="text/javascript" src="http://localhost:2489/Common/Getjsonpd?ParentAId=0&callback=shu"></script>-->
+</head>
+<body>
+    <div id="ok"></div>
+    <script>
+        $(function () {
+            requestjson();
+            //$.ajax({
+            //    type: "GET",
+            //    dataType: "jsonp",
+            //    url: "http://localhost:2489/da.json",               
+            //    data: {},
+            //    success: function (data, state) {
+            //        if (state == "success") {
+            //            alert(data);
+            //        }
+            //    },
+            //    error: function (xmlHttpRequest, textStatus, error) {
+            //        console.log(xmlHttpRequest.status);
+            //        console.log(textStatus);
+            //        console.log(error);
+            //    }
+
+            //});
+           
+            function addcontent(data) {
+                alert(data);
+                var str = "";
+                $.each(data, function (index, obj) {
+                    str += "<a href='" + obj["url"] + "' target='_blank'><img src='" + obj["img"] + "' /></a>";
+                });
+                $("#ok").append(str);
+            }
+        });
+        
+        function requestjson()
+        {
+            var options = {
+                type: "get",
+                dataType: "jsonp",
+                //async: true,
+                url: "http://localhost:2489/Common/Getjsonpd",
+                data: { ParentAId: 0 },
+                success: function (data, state) {
+                    if (state == "success") {
+                        alert(data.rankName);
+                    }
+                },
+                error: function (xmlHttpRequest, textStatus, error) {
+                    console.log(xmlHttpRequest.status);
+                    console.log(textStatus);
+                    console.log(error);
+                }
+                //jsonpCallback:"shu"
+            };
+            $.ajax(options);                
+        }
+    </script>
+    
+    
+        </body>
+</html>

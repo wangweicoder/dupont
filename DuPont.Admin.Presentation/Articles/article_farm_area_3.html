@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>aa</title>
+    <meta name="viewport" content="width=device-width" />
+    <!--CSS 重置样式库-->
+    <link href="/Content/normalize.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #fff;
+            padding-bottom: 50px;
+        }
+
+        h1, p {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        h1 {
+            font-size: 25px;
+            padding: 10px 0px;
+        }
+
+        .content {
+            background-color: #fff;
+        }
+
+        .article-description {
+            width: 80%;
+            margin: 0px auto;
+            text-align: center;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .article-content {
+            margin-top: 20px;
+            width: 80%;
+            margin: 0px auto;
+            overflow-wrap: break-word;
+        }
+
+        .wp50 {
+            width: 50%;
+        }
+
+        .ml20 {
+            margin-left: 20px;
+        }
+
+        .pt10 {
+            padding-top: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="content-wrapper">
+        <!-- 页面主体内容部分 -->
+        <section class="content">
+            <h1 style="text-align:center">aa</h1>
+            <div class="article-description">
+                <p class="pt10"><label></label><label class="ml20">发布日期：<span style="color:blue">2016.03.23</span></label></p>
+            </div>
+            <hr />
+            <div class="article-content">
+                <p><img src="http://localhost:28847/upload/2016-03-23/3678e5d9-f764-45e2-ae0c-97d37da9128d.jpg" _src="http://localhost:28847/upload/2016-03-23/3678e5d9-f764-45e2-ae0c-97d37da9128d.jpg"/></p>
+            </div>
+        </section><!-- /.content -->
+    </div>
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script>
+        $(function () {
+            $('img').each(function (i, v) {
+
+                $(v).attr('onload', 'adapt(this)');
+            });
+        });
+
+        function adapt(obj) {
+            var screenWidth = screen.width;
+            var $img = $(obj);
+
+            var imgWidth = $img.width(); //图片实际宽度
+            if (imgWidth < screenWidth) {
+                $img.attr("style", "width: auto");
+            } else {
+                $img.attr("style", "width: 100%");
+            }
+        }
+    </script>
+</body>
+</html>
