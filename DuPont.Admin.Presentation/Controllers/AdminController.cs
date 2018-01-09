@@ -60,14 +60,17 @@ namespace DuPont.Admin.Presentation.Controllers
             var postParas = new Dictionary<string, string>(){
                         {"userId",userId.ToString()}
                     };
-
+            postParas.Add("PageIndex", input.PageIndex.ToString());
+            postParas.Add("PageSize", input.PageSize.ToString());
             if (postParas.ContainsKey(DataKey.UserId) == false)
             {
                 postParas.Add(DataKey.UserId, GetLoginInfo().User.Id.ToString());
             }
             var result = RestSharpHelper.PostWithApplicationJson<ResponseResult<List<T_MENU>>>(GetCurrentUrl(this), postParas, GetCertificationFilePath(), GetCertificationPwd());
             var model = new MultiModel<List<T_MENU>>(result.IsSuccess, input.PageIndex, input.PageSize, (int)result.TotalNums, result.Entity);
-            return View(model);            
+            var resultm = new { total = result.TotalNums, rows = result.Entity };
+            return Json(resultm,JsonRequestBehavior.AllowGet);
         }
+        
 	}
 }
