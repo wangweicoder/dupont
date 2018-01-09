@@ -229,6 +229,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\Styles\bootstrap\css\bootstrap-table.css" />
+    <Content Include="Content\Styles\bootstrap\js\bootstrap-table-zh-CN.js" />
+    <Content Include="Content\Styles\bootstrap\js\bootstrap-table.js" />
     <Content Include="Content\Styles\dist\css\fonts.css" />
     <Content Include="Content\Styles\dist\img\role_3.png" />
     <Content Include="Content\Styles\dist\img\role_4.png" />
@@ -1850,6 +1853,7 @@
     <Content Include="Views\LearnGarden\EditDemonstateFarm.cshtml" />
     <Content Include="Views\Config\List.cshtml" />
     <Content Include="Views\Config\Detail.cshtml" />
+    <Content Include="Views\Admin\MenuManager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Styles\plugins\ueditor\images\" />

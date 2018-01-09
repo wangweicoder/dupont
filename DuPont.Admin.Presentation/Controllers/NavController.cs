@@ -46,7 +46,7 @@ namespace DuPont.Admin.Presentation.Controllers
                     postParas.Add(DataKey.UserId, GetLoginInfo().User.Id.ToString());
                 }
                 var reponseObj = RestSharpHelper.PostWithApplicationJson<ResponseResult<List<T_MENU>>>(GetCurrentUrl(this), postParas, GetCertificationFilePath(), GetCertificationPwd());
-                var menuString = HttpAsynchronousTool.CustomHttpWebRequestPost(GetCurrentUrl(this), postParas, GetCertificationFilePath(), GetCertificationPwd());
+                //var menuString = HttpAsynchronousTool.CustomHttpWebRequestPost(GetCurrentUrl(this), postParas, GetCertificationFilePath(), GetCertificationPwd());
                 if (reponseObj != null && reponseObj.IsSuccess)
                 {
                     return PartialView("MenuPartial", reponseObj.Entity);

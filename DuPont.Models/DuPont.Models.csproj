@@ -113,6 +113,7 @@
     <Compile Include="Dtos\Foreground\Account\UpdatePasswordInput.cs" />
     <Compile Include="Dtos\Foreground\Account\UpdatePasswordOutput.cs" />
     <Compile Include="Dtos\Foreground\BaseModel.cs" />
+    <Compile Include="Dtos\Foreground\Common\MenuInput.cs" />
     <Compile Include="Dtos\Foreground\Common\NearbyOperatorListInput.cs" />
     <Compile Include="Dtos\Foreground\Expert\ExpertMyQuestionListInput.cs" />
     <Compile Include="Dtos\Foreground\Expert\ExpertMyQuestionListOutput.cs" />

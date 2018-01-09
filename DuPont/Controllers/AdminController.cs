@@ -1,4 +1,7 @@
-﻿using DuPont.Interface;
+﻿using DuPont.Global.ActionResults;
+using DuPont.Interface;
+using DuPont.Models.Dtos.Foreground.Common;
+using DuPont.Models.Models;
 // ***********************************************************************
 // Assembly         : DuPont
 // Author           : 毛文君
@@ -22,10 +25,13 @@ namespace DuPont.Controllers
 {
     public class AdminController:Controller
     {
+        private IMenu menuRepository;
+        private IMenu_Role menuRoleRepository;
         
-        public AdminController()
+        public AdminController(IMenu menu,IMenu_Role menurole)
         {
-           
+            this.menuRepository = menu;
+            this.menuRoleRepository = menurole;
         }
 
         //
@@ -33,6 +39,18 @@ namespace DuPont.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult FindWithPager(MenuInput input)
+        {
+            using (ResponseResult<List<T_MENU>> result = new ResponseResult<List<T_MENU>>())
+            {
+                IList<T_MENU> menuList = null;
+                
+                menuList = this.menuRepository.GetAll(menu => menu.Visible);
+                result.IsSuccess = true;
+                result.Entity = menuList.ToList().Skip((input.PageIndex - 1) * input.PageSize).Take(input.PageSize).OrderBy(mnu => mnu.Order).ToList();
+                return new JsonResultEx(result);
+            }
         }
 	}
 }
