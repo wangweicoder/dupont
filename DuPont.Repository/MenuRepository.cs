@@ -85,16 +85,16 @@ namespace DuPont.Repository
             }
             return null;
         }
-        public IList<T_MENU> GetMenuList(System.Linq.Expressions.Expression<Func<T_MENU, bool>> predicate, int pageIndex, int pageSize, out long reocrdCount, WhereModel wheremodel)
+        public IList<T_MENU> GetMenuList(System.Linq.Expressions.Expression<Func<T_MENU, bool>> predicate, int pageIndex, int pageSize, out long reocrdCount)
         {
 
             using (var dbContext = new DuPont_TestContext())
             {
                 var listQuery = dbContext.T_MENU.Where(predicate)
-                       .OrderBy(p => p.ParentId).Skip((pageIndex - 1) * pageSize).Take(pageSize).Future();
-                var totalCountQuery = dbContext.T_MENU.Where(predicate).FutureCount();
-                reocrdCount = totalCountQuery.Value;
-                return listQuery.ToList();
+                       .OrderBy(p => p.ParentId).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                var totalCountQuery = dbContext.T_MENU.Where(predicate).ToList().Count;
+                reocrdCount = totalCountQuery;
+                return listQuery;
             }
         }
     }

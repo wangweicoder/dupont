@@ -108,7 +108,7 @@
                 sortable: true
             }, {
                 field: 'Visible',
-                title: '是不显示',
+                title: '是否显示',
                 sortable: true
             }, {
                 field: 'Id',
@@ -144,45 +144,76 @@
                 EditViewById(id, 'view');
             },
             onExpandRow: function (index, row, $detail) {
-                oInit.InitSubTable(index, row, $detail);
+                InitSubTable(index, row, $detail);
             }
         });
+        //初始化子表格    
+        InitSubTable = function (index, row, $detail) {
+            var parentid = row.Id;
+            var cur_table = $detail.html('<table></table>').find('table');
+            $(cur_table).bootstrapTable({
+                url: '/Admin/GetChildrenMenu',
+                method: 'get',
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                sortOrder: "asc",                   //排序方式
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行             
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                //得到查询的参数
+                queryParams: function (params) {
+                    //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                    var temp = {
+                        ParentId: parentid
+                    };
+                    return temp;
+                },
+                //queryParams: { ParentId: parentid },
+                //ajaxOptions: { ParentId: parentid },
+                //clickToSelect: true,
+                //detailView: false,//父子表
+                //uniqueId: "Id",
+                //pageSize: 10,
+                //pageList: [10, 25],
+                columns: [{
+                    checkbox: true,
+                    //visible: true,
+                    disabled : false,//设置是否可用
+                     checked : true//设置选中
+                }, {
+                    field: 'MenuName',
+                    title: '菜单名称',
+                    sortable: true
+                }, {
+                    field: 'Visible',
+                    title: '是否显示',
+                    sortable: true
+                }, {
+                    field: 'Id',
+                    title: '编号',
+                    sortable: true,
+
+                }, {
+                    field: 'ParentId',
+                    title: '父级编号',
+
+                }, {
+                    field: 'Url',
+                    title: '地址'
+                }, {
+                    field: 'Order',
+                    title: '顺序',
+                    sortable: true
+                }, ],
+                //无线循环取子表，直到子表里面没有记录
+                //onExpandRow: function (index, row, $Subdetail) {
+                //    InitSubTable(index, row, $Subdetail);
+                //}
+            });
+        };
+        //
     };
-    //初始化子表格
-    //初始化子表格(无线循环)
-    oInit.InitSubTable = function (index, row, $detail) {
-        var parentid = row.ParentId;
-        var cur_table = $detail.html('<table></table>').find('table');
-        $(cur_table).bootstrapTable({
-            url: '/Admin/GetChildrenMenu',
-            method: 'get',
-            queryParams: { strParentID: parentid },
-            ajaxOptions: { strParentID: parentid },
-            clickToSelect: true,
-            detailView: false,//父子表
-            uniqueId: "ID",
-            pageSize: 10,
-            pageList: [10, 25],
-            columns: [{
-                checkbox: true
-            }, {
-                field: 'MenuName',
-                title: '菜单名称'
-            }, {
-                field: 'Url',
-                title: '菜单URL'
-            }, {
-                field: 'ParentId',
-                title: '父级菜单'
-            }, {
-                field: 'MENU_LEVEL',
-                title: '菜单级别'
-            }, ],
-            //无线循环取子表，直到子表里面没有记录
-            onExpandRow: function (index, row, $Subdetail) {
-                oInit.InitSubTable(index, row, $Subdetail);
-            }
-        });
-    };
+   
 </script>
 }
