@@ -52,6 +52,11 @@ namespace DuPont.Admin.Presentation.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 菜单列表分页显示
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public ActionResult FindWithPager(MenuInput input)
         {
             //获取用户的角色信息
@@ -67,7 +72,7 @@ namespace DuPont.Admin.Presentation.Controllers
                 postParas.Add(DataKey.UserId, GetLoginInfo().User.Id.ToString());
             }
             var result = RestSharpHelper.PostWithApplicationJson<ResponseResult<List<T_MENU>>>(GetCurrentUrl(this), postParas, GetCertificationFilePath(), GetCertificationPwd());
-            var model = new MultiModel<List<T_MENU>>(result.IsSuccess, input.PageIndex, input.PageSize, (int)result.TotalNums, result.Entity);
+            //var model = new MultiModel<List<T_MENU>>(result.IsSuccess, input.PageIndex, input.PageSize, (int)result.TotalNums, result.Entity);
             var resultm = new { total = result.TotalNums, rows = result.Entity };
             return Json(resultm,JsonRequestBehavior.AllowGet);
         }

@@ -18,6 +18,6 @@ namespace DuPont.Interface
 {
     public interface IMenu : IRepository<T_MENU>
     {
-        //IList<Entities.T_MENU> GetAll(System.Linq.Expressions.Expression<Func<Entities.T_MENU, bool>> predicate);
+        IList<T_MENU> GetMenuList(System.Linq.Expressions.Expression<Func<T_MENU,bool>> predicate,int pageIndex, int pageSize, out long reocrdCount, WhereModel wheremodel);
     }
 }

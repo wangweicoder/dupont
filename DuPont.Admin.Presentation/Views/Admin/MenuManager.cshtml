@@ -1,4 +1,4 @@
-﻿@model DuPont.Models.Models.MultiModel<List<DuPont.Models.Models.T_MENU>>
+﻿
 @{
     ViewBag.Title = "MenuManager";
     Layout = "~/Views/Shared/_BootstrapLayout.cshtml";
@@ -21,7 +21,7 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                        <label class="control-label col-sm-1" for="txt_search_departmentname">部门名称</label>
+                        <label class="control-label col-sm-1" for="txt_search_departmentname">名称</label>
                         <div class="col-sm-3">
                             <input type="text" class="form-control" id="txt_search_departmentname">
                         </div>
@@ -37,7 +37,7 @@
             </div>
         </div>
 
-        <div id="toolbar" class="btn-group">
+       <div id="toolbar" class="btn-group">
             <button id="btn_add" type="button" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
@@ -60,7 +60,7 @@
         
     });
     var $table;
-    //初始化bootstrap-table的内容 http://www.cnblogs.com/landeanfen/p/4993979.html
+    //初始化bootstrap-table的内容 
     function InitMainTable() {
         //记录页面bootstrap-table全局变量$table，方便应用
         var queryUrl = '/Admin/FindWithPager'
@@ -143,6 +143,45 @@
                 var id = row.ID;
                 EditViewById(id, 'view');
             },
+            onExpandRow: function (index, row, $detail) {
+                oInit.InitSubTable(index, row, $detail);
+            }
+        });
+    };
+    //初始化子表格
+    //初始化子表格(无线循环)
+    oInit.InitSubTable = function (index, row, $detail) {
+        var parentid = row.ParentId;
+        var cur_table = $detail.html('<table></table>').find('table');
+        $(cur_table).bootstrapTable({
+            url: '/Admin/GetChildrenMenu',
+            method: 'get',
+            queryParams: { strParentID: parentid },
+            ajaxOptions: { strParentID: parentid },
+            clickToSelect: true,
+            detailView: false,//父子表
+            uniqueId: "ID",
+            pageSize: 10,
+            pageList: [10, 25],
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'MenuName',
+                title: '菜单名称'
+            }, {
+                field: 'Url',
+                title: '菜单URL'
+            }, {
+                field: 'ParentId',
+                title: '父级菜单'
+            }, {
+                field: 'MENU_LEVEL',
+                title: '菜单级别'
+            }, ],
+            //无线循环取子表，直到子表里面没有记录
+            onExpandRow: function (index, row, $Subdetail) {
+                oInit.InitSubTable(index, row, $Subdetail);
+            }
         });
     };
 </script>

@@ -45,10 +45,12 @@ namespace DuPont.Controllers
             using (ResponseResult<List<T_MENU>> result = new ResponseResult<List<T_MENU>>())
             {
                 IList<T_MENU> menuList = null;
-                
-                menuList = this.menuRepository.GetAll(menu => menu.Visible);
+                long recordCount;
+                WhereModel wheremodel = new WhereModel();
+                menuList = this.menuRepository.GetMenuList(menu => menu.Visible,(input.PageIndex - 1) * input.PageSize,input.PageSize,out recordCount,wheremodel);
                 result.IsSuccess = true;
-                result.Entity = menuList.ToList().Skip((input.PageIndex - 1) * input.PageSize).Take(input.PageSize).OrderBy(mnu => mnu.Order).ToList();
+                result.Entity = menuList.ToList();
+                result.TotalNums = recordCount;
                 return new JsonResultEx(result);
             }
         }
